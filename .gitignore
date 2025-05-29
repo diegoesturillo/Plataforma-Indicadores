@@ -4,6 +4,6 @@
 .Ruserdata
 renv/library/
 renv/staging/
-.xlsx
+*.xlsx
 bd_cuidados.RData
 datos_ema.RData
