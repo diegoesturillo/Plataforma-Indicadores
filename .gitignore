@@ -4,7 +4,6 @@
 .Ruserdata
 renv/library/
 renv/staging/
-echo "/01-input/data-orig/" >> .gitignore
-echo "*.xlsx" >> .gitignore
+.xlsx
 bd_cuidados.RData
 datos_ema.RData
