@@ -4,6 +4,7 @@
 .Ruserdata
 renv/library/
 renv/staging/
-*.xlsx
+BD_CUIDADOS_REC.xlsx
+CONSOLIDADO EMA 2018-2024_USACH.xlsx
 bd_cuidados.RData
 datos_ema.RData
