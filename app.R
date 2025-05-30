@@ -106,7 +106,8 @@ ui <- navbarPage(
                    actionButton("go_area", "Matrícula por área del conocimiento", class = "button"),
                    actionButton("go_titulados", "Titulación por género y área del conocimiento", class = "button"),
                    actionButton("go_desglose_titulados", "Desglose titulación por área del conocimiento", class = "button"),
-                   actionButton("go_cuidados_corresp", "Cuidados y corresponsabilidad", class = "button")
+                   actionButton("go_cuidados_corresp", "Cuidados y corresponsabilidad", class = "button"),
+                   actionButton("go_lgbt", "LGBTQIA+", class = "button")
                )
              )
            )
@@ -225,7 +226,7 @@ ui <- navbarPage(
                         column(6, plotlyOutput("p11"))),
                fluidRow(
                  column(12, align = "center",
-                         div(style = "width: 50%;", plotlyOutput("p12")))
+                        div(style = "width: 50%;", plotlyOutput("p12")))
                )
              )
            )
@@ -378,10 +379,11 @@ ui <- navbarPage(
                       font-size: 16px;
                       color: #333;
                       box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
-               "En esta sección se puede ver la distribución de cuidados de niñas, niños y adolescentes (NNA) y personas adultas con dependencia funcional en el estamento académico por género."
+               "En esta sección se puede ver la distribución de cuidados de niñas, niños y adolescentes (NNA) y personas adultas con dependencia funcional en la comunidad universitaria."
              ),
              fluidRow(
-               column(12, plotlyOutput("p34")),
+               column(12, align = "center",
+                      div(style = "width: 50%;", plotlyOutput("p34"))),
                # Línea separadora con título
                fluidRow(
                  column(12, 
@@ -390,14 +392,70 @@ ui <- navbarPage(
                  )
                ),
                
-               # Segundo y tercer gráfico (abajo)
                fluidRow(
                  column(6, plotlyOutput("p35")),
-                 column(6, plotlyOutput("p36"))
-               )
+                 column(6, plotlyOutput("p36")),
+                 fluidRow(
+                   column(12, align = "center",
+                          div(style = "width: 50%;", plotlyOutput("p37"))),
+                 fluidRow(
+                   column(12, 
+                          tags$hr(style = "border-top: 2px solid #00A499; margin: 30px 0;"),
+                          h4("Estrategias individuales de conciliación, efectos subjetivos y apoyos desde la comunidad", style = "text-align: center; color: #00A499; font-weight: bold;")
+               ),
+               fluidRow(
+                 column(6, plotlyOutput("p38")),
+                 column(6, plotlyOutput("p39")),
+                 
+                 fluidRow(
+                   column(12, align = "center",
+                          div(style = "width: 50%;", plotlyOutput("p40")))
              )
            ))
-)
+))))),
+# Cuidados y corresponsabilidad----
+tabPanel("LGBTQIA+",
+         fluidPage(
+           div(
+             style = "background-color: #f0f0f0;
+                      border-left: 6px solid #00A499;
+                      border-right: 6px solid #00A499;
+                      padding: 15px 20px;
+                      margin-bottom: 20px;
+                      border-radius: 8px;
+                      font-size: 16px;
+                      color: #333;
+                      box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
+             "En esta sección se pueden ver distintos indicadores relativos a la experiencia de vida de la comunidad LGBTQIA+ en la universidad."
+           ),
+           fluidRow(
+             column(6, plotlyOutput("p42")),
+             column(6, plotlyOutput("p43"))
+           ),
+           fluidRow(
+             column(6, plotlyOutput("p44")),
+             column(6, plotlyOutput("p45"))
+           ),
+           fluidRow(
+             column(6, plotlyOutput("p46")),
+             column(6, plotlyOutput("p47"))
+           ),
+           fluidRow(
+             column(6, plotlyOutput("p48")),
+             column(6, plotlyOutput("p49"))
+           ),
+           fluidRow(
+             column(6, plotlyOutput("p50")),
+             column(6, plotlyOutput("p51"))
+           ),
+           fluidRow(
+             column(6, plotlyOutput("p52")),
+             column(6, plotlyOutput("p53")),
+           fluidRow(
+               column(12, align = "center",
+                      div(style = "width: 50%;", plotlyOutput("p54")))
+           
+         )))))
 
 # Server----
 
@@ -436,6 +494,9 @@ server <- function(input, output, session) {
   observeEvent(input$go_cuidados_corresp, {
     updateTabsetPanel(session, "tabs", selected = "Cuidados y corresponsabilidad")
     })
+  observeEvent(input$go_lgbt, {
+    updateTabsetPanel(session, "tabs", selected = "LGBTQIA+")
+  })
   
   # Plots----
   output$p1 <- renderPlotly({ p1 })
@@ -474,6 +535,24 @@ server <- function(input, output, session) {
   output$p34 <- renderPlotly({ p34 })
   output$p35 <- renderPlotly({ p35 })
   output$p36 <- renderPlotly({ p36 })
+  output$p37 <- renderPlotly({ p37 })
+  output$p38 <- renderPlotly({ p38 })
+  output$p39 <- renderPlotly({ p39 })
+  output$p40 <- renderPlotly({ p40 })
+  output$p41 <- renderPlotly({ p41 })
+  output$p42 <- renderPlotly({ p42 })
+  output$p43 <- renderPlotly({ p43 })
+  output$p44 <- renderPlotly({ p44 })
+  output$p45 <- renderPlotly({ p45 })
+  output$p46 <- renderPlotly({ p46 })
+  output$p47 <- renderPlotly({ p47 })
+  output$p48 <- renderPlotly({ p48 })
+  output$p49 <- renderPlotly({ p49 })
+  output$p50 <- renderPlotly({ p50 })
+  output$p51 <- renderPlotly({ p51 })
+  output$p52 <- renderPlotly({ p52 })
+  output$p53 <- renderPlotly({ p53 })
+  output$p53 <- renderPlotly({ p54 })
 }
 
 shinyApp(ui, server)

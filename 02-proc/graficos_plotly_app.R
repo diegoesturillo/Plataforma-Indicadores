@@ -32,6 +32,9 @@ load(here("01-input", "data-proc", "titulados.RData"))
 # Para cuidados y corresponsabilidad
 load(here("01-input", "data-proc", "bd_cuidados.RData"))
 
+# Para Encuesta LGBTQIA+
+load(here("01-input", "data-proc", "bd_lgbt.RData"))
+
 
 # Gráfico. Cantidad de académicos por género en la USACH (2018-2024)----
 # Calcular proporciones
@@ -1808,7 +1811,74 @@ p33
 
 #///////////////////////////////////////////////////////////////////////////////
 # Gráficos Encuesta Cuidados y Corresponsabilidad
+# Gráfico. Proporción de personas cuidadas según grupo etario
+# Preparar datos
+tipo_cuidado <- cuidados %>%
+  filter(!is.na(menores_mayores)) %>%
+  count(menores_mayores, name = "conteo") %>%
+  ungroup() %>%
+  mutate(
+    porcentaje = conteo/sum(conteo)*100
+  ) %>%
+  mutate(menores_mayores = recode(menores_mayores,
+                                  "Solo menores" = "Sólo NNA",
+                                  "Solo mayores" = "Sólo personas adultas con dependencia funcional",
+                                  "Menores y mayores" = "Ambos")) %>%
+  mutate(menores_mayores = factor(menores_mayores,
+                                  levels = c("Sólo NNA", 
+                                             "Sólo personas adultas con dependencia funcional", 
+                                             "Ambos"),
+                                  ordered = T)) %>%
+  mutate(hovertext = paste0(
+    "<b>Tipo de cuidado:</b> ", menores_mayores, "<br>",
+    "<b>Cantidad:</b> ", conteo, "<br>",
+    "<b>Porcentaje:</b> ", round(porcentaje, 0), "%"
+  ))
 
+# Graficar
+p34 <- plot_ly(
+  data = tipo_cuidado,
+  x = ~menores_mayores,
+  y = ~porcentaje,
+  color = ~menores_mayores,  
+  colors = c("Sólo NNA" = "red4", 
+             "Sólo personas adultas con dependencia funcional" = "steelblue3", 
+             "Ambos" = "grey80"),
+  type = "bar",
+  text = ~hovertext,
+  hoverinfo = "text",
+  textposition = "none",
+  marker = list(line = list(color = "white", width = 1))  
+) %>%
+  layout(
+    barmode = "group",
+    title = list(text = "<b>Gráfico 34. Proporción de personas cuidadas según grupo etario</b>", 
+                 x = 0.5, 
+                 font = list(size = 13)),
+    xaxis = list(title = "",
+                 categoryorder = "array",  
+                 categoryarray = c("Sólo NNA", "Sólo personas adultas con dependencia funcional", "Ambos")),
+    yaxis = list(title = "",
+                 ticksuffix = "%",
+                 range = c(0,100)),  
+    legend = list(
+      orientation = "v",
+      x = 1.05,  
+      y = 0.5,
+      xanchor = "left",
+      title = list(text = "<b>Persona(s) cuidada(s)</b>")
+    ),
+    margin = list(r = 150,  
+                  b = 50, t = 50),
+    hoverlabel = list(
+      bgcolor = "white",
+      font = list(color = "black")
+    )
+  )
+
+p34
+
+#///////////////////////////////////////////////////////////////////////////////
 # Gráfico. Cuidado de NNA y personas adultas por género----
 # Preparar datos
 # Calcular porcentajes por tipo de cuidado y género
@@ -1836,7 +1906,7 @@ porcentajes <- cuidados %>%
     )
   )
 
-p34 <- plot_ly(
+p35 <- plot_ly(
   data = porcentajes,
   x = ~genero,
   y = ~porcentaje,
@@ -1849,7 +1919,7 @@ p34 <- plot_ly(
 ) %>%
   layout(
     barmode = "group",
-    title = list(text = "<b>Gráfico 34. Distribución del trabajo de cuidado por género</b>", 
+    title = list(text = "<b>Gráfico 35. Distribución del trabajo de cuidado por género</b>", 
                  x = 0.5, font = list(size = 13)),
     xaxis = list(title = ""),
     yaxis = list(
@@ -1865,7 +1935,8 @@ p34 <- plot_ly(
     ),
     margin = list(r = 120)  
   )
-p34
+
+p35
 
 #///////////////////////////////////////////////////////////////////////////////
 # Gráfico. Cantidad de horas dedicadas al cuidado----
@@ -1898,7 +1969,7 @@ horas_cuidado <- cuidados %>%
   )
 
 # Graficar
-p35 <- plot_ly(
+p36 <- plot_ly(
   data = horas_cuidado,
   x = ~horas_cuidado,
   y = ~porcentaje,
@@ -1912,7 +1983,7 @@ p35 <- plot_ly(
   layout(
     barmode = "group",
     title = list(
-      text = "<b> Gráfico 35. Distribución de horas diarias de cuidado por género</b>",
+      text = "<b> Gráfico 36. Distribución de horas diarias de cuidado por género</b>",
       x = 0.5,
       font = list(size = 13)
     ),
@@ -1934,7 +2005,7 @@ p35 <- plot_ly(
     yaxis = list(title = "Porcentaje (%)", range = c(0, 100))
   )
 
-p35
+p36
 
 #///////////////////////////////////////////////////////////////////////////////
 # Gráfico. Días de cuidado por género
@@ -1965,7 +2036,7 @@ dias_cuidado <- cuidados %>%
   )
 
 # Gráfico de barras agrupadas 
-p36 <- plot_ly(
+p37 <- plot_ly(
   data = dias_cuidado,
   x = ~dias_cuidado,
   y = ~porcentaje,
@@ -1979,7 +2050,7 @@ p36 <- plot_ly(
   layout(
     barmode = "group",
     title = list(
-      text = "<b> Gráfico 36. Distribución de días semanales de cuidado por género</b>",
+      text = "<b> Gráfico 37. Distribución de días semanales de cuidado por género</b>",
       x = 0.5,
       font = list(size = 13)
     ),
@@ -2002,4 +2073,1032 @@ p36 <- plot_ly(
     yaxis = list(title = "Porcentaje (%)")
   )
 
-p36
+p37
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. Estrategias de conciliación individual----
+# Preparar los datos
+organizar <- cuidados %>%
+  select(starts_with("organizar_")) %>%
+  pivot_longer(cols = everything(), 
+               names_to = "tipo_organizacion", 
+               values_to = "respuesta") %>%
+  filter(!is.na(respuesta)) %>%
+  mutate(
+    tipo_organizacion = recode(
+      tipo_organizacion, 
+      "organizar_1" = "Requiere apoyo de integrante del núcleo familiar",
+      "organizar_2" = "Requiere apoyo de familiares o amistades",
+      "organizar_3" = "Requiere apoyo de una persona contratada",
+      "organizar_4" = "Requiere apoyo de un servicio contratado",
+      "organizar_5" = "Lo hace solo/a/e"
+    ),
+    tipo_organizacion = factor(tipo_organizacion,
+                               levels = c("Requiere apoyo de integrante del núcleo familiar",
+                                          "Requiere apoyo de familiares o amistades",
+                                          "Requiere apoyo de una persona contratada",
+                                          "Requiere apoyo de un servicio contratado",
+                                          "Lo hace solo/a/e"),  
+                               ordered = T),
+    respuesta = factor(respuesta, 
+                       levels = c("Nunca", "A veces", "Frecuentemente", "Siempre", "No aplica"),
+                       ordered = T)
+  ) %>%
+  group_by(tipo_organizacion) %>%
+  summarise(
+    total_respuestas = n(),
+    positivas = sum(respuesta %in% c("Siempre", "Frecuentemente"), na.rm = T),
+    porcentaje = positivas/total_respuestas*100,
+    .groups = 'drop'
+  ) %>%
+  mutate(
+    texto_tooltip = paste0(
+      "<b>Porcentaje: ", round(porcentaje, 0), "%</b>"
+    )
+  )
+
+# Graficar
+p38 <- plot_ly(
+  data = organizar,
+  x = ~porcentaje,
+  y = ~tipo_organizacion,
+  type = "bar",
+  orientation = "h",
+  hoverinfo = "text",
+  text = ~texto_tooltip,
+  textposition = 'none',
+  marker = list(
+    color = "#8D69F3",
+    line = list(color = "#2d3e50", width = 1.5),
+    opacity = 0.8
+  )
+) %>%
+  layout(
+    title = list(
+      text = "<b>Gráfico 38. Estrategias individuales de conciliación laboral/académica y familiar</b>",
+      x = 0.05,
+      font = list(size = 13),
+      xanchor = "left",
+      pad = list(b = 10, t = 10)
+    ),
+    xaxis = list(
+      title = "",
+      range = c(0, 100),
+      ticksuffix = "%",
+      showgrid = T,
+      zerolinecolor = "#E5E5E5"
+    ),
+    yaxis = list(
+      title = "",
+      tickfont = list(size = 12),
+      categoryorder = "array"
+    ),
+    margin = list(l = 300, r = 50, b = 80, t = 100),
+    hoverlabel = list(
+      bgcolor = "white",
+      bordercolor = "#8D69F3",
+      font = list(color = "black", size = 12),
+      align = "left"
+    ),
+    plot_bgcolor = "rgba(0,0,0,0)",
+    paper_bgcolor = "rgba(0,0,0,0)"
+  )
+
+p38
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. Efectos subjetivos en las personas cuidadoras por género----
+# Preparar datos
+efectos <- cuidados %>%
+  mutate(
+    across(
+      starts_with("efecto_"),
+      ~ case_when(
+        .x == "1 (Muy en Desacuerdo)" ~ 1,
+        .x == "2" ~ 2,
+        .x == "3" ~ 3,
+        .x == "4" ~ 4,
+        .x == "5 (Muy de Acuerdo)" ~ 5,
+        T ~ NA_real_
+    ))) %>%
+  filter(genero %in% c("Femenino", "Masculino")) %>%
+  select(starts_with("efecto"), genero) %>%
+  pivot_longer(
+    cols = starts_with("efecto_"),
+    names_to = "efecto",
+    values_to = "valor"
+  ) %>%
+  filter(!is.na(valor), !is.na(genero)) %>%
+  mutate(
+    efecto = recode(efecto,
+                    "efecto_1" = "Estrés",
+                    "efecto_2" = "Cansancio permanente",
+                    "efecto_3" = "No poder desarrollar trayectoria laboral/académica",
+                    "efecto_4" = "No tener suficiente tiempo libre",
+                    "efecto_5" = "Me siento bien de cuidar una persona",
+                    "efecto_6" = "No tiene ningún efecto"),
+    positivo = valor %in% c(4, 5)
+  ) %>%
+  group_by(efecto, genero) %>%
+  summarise(
+    total = n(),
+    positivos = sum(positivo),
+    porcentaje = positivos/total*100,
+    .groups = 'drop'
+  )
+
+# Calcular totales
+totales <-  efectos %>%
+  group_by(efecto) %>%
+  summarise(
+    genero = "Total",
+    total = sum(total),
+    positivos = sum(positivos),
+    porcentaje = positivos/total * 100
+  )
+
+# Combinar ambos datasets
+efectos_totales <- bind_rows(efectos, totales) %>%
+  mutate(
+    efecto = factor(efecto, levels = c("Estrés", "Cansancio permanente", "No poder desarrollar trayectoria laboral/académica",
+                                       "No tener suficiente tiempo libre", "Me siento bien de cuidar una persona",
+                                       "No tiene ningún efecto")),
+    genero = factor(genero, levels = c("Femenino", "Masculino", "Total")),
+    texto_tooltip = paste0("Porcentaje: ", round(porcentaje, 0), "%")
+  )
+
+# Graficar
+p39 <- plot_ly(
+  data = efectos_totales,
+  x = ~porcentaje,
+  y = ~efecto,
+  color = ~genero,
+  colors = c("Femenino" = "#8D69F3", "Masculino" = "#41776E", "Total" = "grey80"),
+  type = "bar",
+  orientation = "h",
+  hoverinfo = "text",
+  text = ~texto_tooltip,
+  textposition = "none",
+  marker = list(
+    line = list(color = "white", width = 1),
+    opacity = 0.8  #
+  )
+) %>%
+  layout(
+    title = list(
+      text = "<b>Gráfico 39. Efectos del cuidado por género</b>",
+      x = 0.3, 
+      font = list(size = 13),
+      xanchor = "left",
+      pad = list(t = 20)  
+    ),
+    xaxis = list(
+      title = "",
+      range = c(0, 100),
+      ticksuffix = "%",
+      showgrid = T,
+      gridcolor = "#f0f0f0",  
+      zerolinecolor = "#f0f0f0"
+    ),
+    yaxis = list(
+      title = "",
+      tickfont = list(size = 12),
+      ticklen = 10,  
+      tickcolor = "transparent",  
+      automargin = T,  
+      margin = list(l = 20) 
+    ),
+    barmode = "group",
+    margin = list(l = 220, r = 150, b = 80, t = 100),  
+    hoverlabel = list(
+      bgcolor = "white",
+      font = list(color = "black", size = 12),
+      bordercolor = "#8D69F3"
+    ),
+    legend = list(
+      orientation = "v", 
+      x = 1.02,  
+      y = 0.5,   
+      xanchor = "left", 
+      title = list(text = "<b>Género</b>", font = list(size = 12)),
+      font = list(size = 11),
+      bgcolor = "rgba(255,255,255,0.7)"  
+    ),
+    plot_bgcolor = "rgba(0,0,0,0)",  
+    paper_bgcolor = "rgba(0,0,0,0)")
+
+p39
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. Apoyos desde la comunidad universitaria----
+apoyos <- cuidados %>%
+  select(starts_with("apoyo_")) %>%
+  pivot_longer(cols = everything(), 
+               names_to = "apoyo", 
+               values_to = "respuesta") %>%
+  filter(!is.na(respuesta)) %>%
+  mutate(
+    apoyo = recode(
+      apoyo, 
+      "apoyo_1" = "Jefatura",
+      "apoyo_2" = "Pares",
+      "apoyo_3" = "Jefatura de carrera",
+      "apoyo_4" = "Organización estudiantil",
+      "apoyo_5" = "Organización gremial"
+    ),
+    apoyo = factor(apoyo,
+                               levels = c("Jefatura",
+                                          "Pares",
+                                          "Jefatura de carrera",
+                                          "Organización estudiantil",
+                                          "Organización gremial"),  
+                               ordered = T),
+    respuesta = factor(respuesta, 
+                       levels = c("Nunca", "A veces", "Frecuentemente", "Siempre", "No aplica"),
+                       ordered = T)
+  ) %>%
+  group_by(apoyo) %>%
+  summarise(
+    total_respuestas = n(),
+    positivas = sum(respuesta %in% c("Siempre", "Frecuentemente"), na.rm = T),
+    porcentaje = positivas/total_respuestas*100,
+    .groups = 'drop'
+  ) %>%
+  mutate(
+    texto_tooltip = paste0(
+      "<b>Porcentaje: ", round(porcentaje, 0), "%</b>"
+    )
+  )
+
+# Graficar
+p40 <- plot_ly(
+  data = apoyos,
+  x = ~porcentaje,
+  y = ~apoyo,
+  type = "bar",
+  orientation = "h",
+  hoverinfo = "text",
+  text = ~texto_tooltip,
+  textposition = 'none',
+  marker = list(
+    color = "#8D69F3",
+    line = list(color = "#2d3e50", width = 1.5),
+    opacity = 0.8
+  )
+) %>%
+  layout(
+    title = list(
+      text = "<b>Gráfico 41. Apoyos desde la comunidad universitaria</b>",
+      x = 0.25,
+      font = list(size = 13),
+      xanchor = "left",
+      pad = list(b = 10, t = 10)
+    ),
+    xaxis = list(
+      title = "",
+      range = c(0, 100),
+      ticksuffix = "%",
+      showgrid = T,
+      zerolinecolor = "#E5E5E5"
+    ),
+    yaxis = list(
+      title = "",
+      tickfont = list(size = 12)
+    ),
+    margin = list(l = 300, r = 50, b = 80, t = 100),
+    hoverlabel = list(
+      bgcolor = "white",
+      bordercolor = "#8D69F3",
+      font = list(color = "black", size = 12),
+      align = "left"
+    ),
+    plot_bgcolor = "rgba(0,0,0,0)",
+    paper_bgcolor = "rgba(0,0,0,0)"
+  )
+
+p40
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráficos Encuesta LGBTQIA+
+# Gráfico. Respeto de derechos de personas LGBTQIA+ según identidad de género----
+# Preparar datos
+respeto_1 <- bd_lgbt_2 %>%
+  filter(ident_gen != "Otro (especifique)") %>%
+  group_by(ident_gen) %>%
+  summarise(
+    total_respuestas = n(),
+    positivas = sum(x6_1 == "Sí", na.rm = T),
+    porcentaje = positivas/total_respuestas*100,
+    .groups = 'drop'
+  ) %>%
+  mutate(
+    texto_tooltip = paste0(
+      "Cantidad de personas: ", total_respuestas, "<br>",
+      "Porcentaje: ", round(porcentaje, 0), "%</b>"
+    )
+  )
+# Gráficar
+p42 <- plot_ly(
+  data = respeto_1,
+  x = ~ident_gen,
+  y = ~porcentaje,
+  marker = list(color = "#FF69B4"),
+  type = "bar",
+  text = ~paste0(porcentaje, "%"),
+  hoverinfo = "text",
+  hovertext = ~texto_tooltip,
+  textposition = 'none'
+) %>%
+  layout(
+    title = "Gráfico 42. Respeto de derechos de personas LGBT según identidad de género",
+    font = list(size = 12),
+    xaxis = list(title = ""),
+    yaxis = list(title = "", 
+                 range = c(0, 100),
+                 ticksuffix = "%")
+  )
+
+p42
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. Respeto de derechos LGBTQIA+ según orientación sexual----
+# Preparar datos
+respeto_2 <- bd_lgbt_2 %>%
+  filter(orient_sex != "Otro (especifique)" & orient_sex != "demisexual") %>%
+  group_by(orient_sex) %>%
+  summarise(
+    total_respuestas = n(),
+    positivas = sum(x6_1 == "Sí", na.rm = T),
+    porcentaje = positivas/total_respuestas*100,
+    .groups = 'drop'
+  ) %>%
+  mutate(
+    texto_tooltip = paste0(
+      "Cantidad de personas: ", total_respuestas, "<br>",
+      "Porcentaje: ", round(porcentaje, 0), "%</b>"
+    )
+  )
+# Gráficar
+p43 <- plot_ly(
+  data = respeto_2,
+  x = ~orient_sex,
+  y = ~porcentaje,
+  marker = list(color = "#FF69B4"),
+  type = "bar",
+  text = ~paste0(porcentaje, "%"),
+  hoverinfo = "text",
+  hovertext = ~texto_tooltip,
+  textposition = 'none'
+) %>%
+  layout(
+    title = "Gráfico 43. Respeto de derechos de personas LGBT según orientación sexual",
+    font = list(size = 12),
+    xaxis = list(title = ""),
+    yaxis = list(title = "", 
+                 range = c(0, 100),
+                 ticksuffix = "%")
+  )
+
+p43
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. Sufrió discriminación en la Usach por identidad de género----
+# Preparar datos
+discr_1 <- bd_lgbt_2 %>%
+  mutate(ident_gen = case_when(
+    ident_gen == "Transmasculino" ~ "Trans",
+    ident_gen == "Transfemenino" ~ "Trans",
+    T ~ ident_gen
+  )) %>%
+  filter(ident_gen %in% c("Femenino", "Masculino", "Género diverso", "Trans")) %>%
+  group_by(ident_gen) %>%
+  summarise(
+    total_respuestas = n(),
+    positivas = sum(x6_2 == "Sí", na.rm = T),
+    porcentaje = positivas/total_respuestas*100,
+    .groups = 'drop'
+  ) %>%
+  mutate(
+    texto_tooltip = paste0(
+      "Cantidad de personas: ", total_respuestas, "<br>",
+      "Porcentaje: ", round(porcentaje, 0), "%</b>"))
+  
+# Gráficar
+p44 <- plot_ly(
+  data = discr_1,
+  x = ~ident_gen,
+  y = ~porcentaje,
+  marker = list(color = "#FF69B4"),
+  type = "bar",
+  text = ~paste0(porcentaje, "%"),
+  hoverinfo = "text",
+  hovertext = ~texto_tooltip,
+  textposition = 'none'
+) %>%
+  layout(
+    title = "Gráfico 44. ¿Sufrió discriminación alguna vez en la Usach?",
+    font = list(size = 12),
+    xaxis = list(title = ""),
+    yaxis = list(title = "", 
+                 ticksuffix = "%")
+  )
+
+p44
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. Sufrió discriminación en la Usach por orientación sexual---
+# Preparar datos
+discr_2 <- bd_lgbt_2 %>%
+  filter(orient_sex %in% c("Demisexual", "Pansexual", "Gay", "Lesbiana", "Bisexual")) %>%
+  group_by(orient_sex) %>%
+  summarise(
+    total_respuestas = n(),
+    positivas = sum(x6_3 == "Sí", na.rm = T),
+    porcentaje = positivas/total_respuestas*100,
+    .groups = 'drop'
+  ) %>%
+  mutate(
+    texto_tooltip = paste0(
+      "Cantidad de personas: ", total_respuestas, "<br>",
+      "Porcentaje: ", round(porcentaje, 0), "%</b>"))
+
+# Gráficar
+p45 <- plot_ly(
+  data = discr_2,
+  x = ~orient_sex,
+  y = ~porcentaje,
+  marker = list(color = "#FF69B4"),
+  type = "bar",
+  text = ~paste0(porcentaje, "%"),
+  hoverinfo = "text",
+  hovertext = ~texto_tooltip,
+  textposition = 'none'
+) %>%
+  layout(
+    title = "Gráfico 45. ¿Sufrió discriminación alguna vez en la Usach durante 2023?",
+    font = list(size = 12),
+    xaxis = list(title = ""),
+    yaxis = list(title = "", 
+                 ticksuffix = "%")
+  )
+
+p45
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. Situaciones de violencia por identidad de género----
+# Preparar datos - Femenino
+violencias_fem <- bd_lgbt_2 %>%
+  filter(ident_gen == "Femenino") %>%
+  select(ident_gen, x7_3, x7_4, x7_9) %>%
+  group_by(ident_gen) %>%
+  summarise(
+    total_respuestas = n(),
+    positivas_1 = sum(x7_3 == "Sí", na.rm = T),
+    positivas_2 = sum(x7_4 == "Sí", na.rm = T),
+    positivas_3 = sum(x7_9 == "Sí", na.rm = T),
+    porcentaje_1 = positivas_1/total_respuestas*100,
+    porcentaje_2 = positivas_2/total_respuestas*100,
+    porcentaje_3 = positivas_3/total_respuestas*100,
+    .groups = 'drop'
+  )
+# Pivotar datos
+violencias_fem_1 <- violencias_fem %>%
+  pivot_longer(
+    cols = starts_with("porcentaje_"),
+    names_to = "tipo_violencia",
+    values_to = "porcentaje"
+  ) %>%
+  mutate(
+    tipo_violencia = case_when(
+      tipo_violencia == "porcentaje_1" ~ "Hostigamiento por ser LGBTQIA+",
+      tipo_violencia == "porcentaje_2" ~ "Le ridiculizaron por ser LGBTQIA+",
+      tipo_violencia == "porcentaje_3" ~ "Le acosaron sexualmente",
+      T ~ tipo_violencia
+    )
+  )
+
+# Graficar
+p46 <- plot_ly(
+  data = violencias_fem_1,
+  x = ~tipo_violencia,          
+  y = ~porcentaje,              
+  type = "bar",
+  color = ~tipo_violencia,      
+  marker = list(color = "steelblue2"), 
+  text = ~paste0(round(porcentaje, 1), "%"), 
+  textposition = 'none',
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Porcentaje:", round(porcentaje, 1), "%"
+  )
+) %>%
+  layout(
+    title = "Gráfico 46. Tipos de violencia experimentadas por identidad de género - Femenino",
+    font = list(size = 12),
+    xaxis = list(title = ""),
+    yaxis = list(title = "", ticksuffix = "%"),
+    barmode = "group",          
+    showlegend = FALSE      
+  )
+
+p46
+
+#///////////////////////////////////////////////////////////////////////////////
+# Preparar datos - Masculino
+violencias_masc <- bd_lgbt_2 %>%
+  filter(ident_gen == "Masculino") %>%
+  select(ident_gen, x7_1, x7_3, x7_4,) %>%
+  group_by(ident_gen) %>%
+  summarise(
+    total_respuestas = n(),
+    positivas_1 = sum(x7_1 == "Sí", na.rm = T),
+    positivas_2 = sum(x7_3 == "Sí", na.rm = T),
+    positivas_3 = sum(x7_4 == "Sí", na.rm = T),
+    porcentaje_1 = positivas_1/total_respuestas*100,
+    porcentaje_2 = positivas_2/total_respuestas*100,
+    porcentaje_3 = positivas_3/total_respuestas*100,
+    .groups = 'drop'
+  )
+# Pivotar datos
+violencias_masc_1 <- violencias_masc %>%
+  pivot_longer(
+    cols = starts_with("porcentaje_"),
+    names_to = "tipo_violencia",
+    values_to = "porcentaje"
+  ) %>%
+  mutate(
+    tipo_violencia = case_when(
+      tipo_violencia == "porcentaje_1" ~ "Le insultaron por ser LGBTQIA+",
+      tipo_violencia == "porcentaje_2" ~ "Le hostigaron por ser LGBTQIA+",
+      tipo_violencia == "porcentaje_3" ~ "Le ridiculizaron por ser LGBTQIA+",
+      T ~ tipo_violencia
+    )
+  )
+
+# Graficar
+p47 <- plot_ly(
+  data = violencias_masc_1,
+  x = ~tipo_violencia,          
+  y = ~porcentaje,              
+  type = "bar",
+  color = ~tipo_violencia,      
+  marker = list(color = "green4"),  
+  textposition = 'none',
+  text = ~paste0(round(porcentaje, 1), "%"),    
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Porcentaje:", round(porcentaje, 1), "%"
+  )
+) %>%
+  layout(
+    title = "Gráfico 47. Tipos de violencia experimentadas por identidad de género - Masculino",
+    font = list(size = 12),
+    xaxis = list(title = ""),
+    yaxis = list(title = "", ticksuffix = "%"),
+    barmode = "group",          
+    showlegend = FALSE      
+  )
+
+p47
+
+#///////////////////////////////////////////////////////////////////////////////
+# Preparar datos - Trans
+violencias_trans <- bd_lgbt_2 %>%
+  mutate(ident_gen = case_when(
+    ident_gen == "Transmasculino" ~ "Trans",
+    ident_gen == "Transfemenino" ~ "Trans",
+    T ~ ident_gen
+  )) %>%
+  filter(ident_gen == "Trans") %>%
+  select(ident_gen, x7_4, x7_8,) %>%
+  group_by(ident_gen) %>%
+  summarise(
+    total_respuestas = n(),
+    positivas_1 = sum(x7_4 == "Sí", na.rm = T),
+    positivas_2 = sum(x7_8 == "Sí", na.rm = T),
+    porcentaje_1 = positivas_1/total_respuestas*100,
+    porcentaje_2 = positivas_2/total_respuestas*100,
+    .groups = 'drop')
+
+# Pivotar datos
+violencias_trans_1 <- violencias_trans %>%
+  pivot_longer(
+    cols = starts_with("porcentaje_"),
+    names_to = "tipo_violencia",
+    values_to = "porcentaje"
+  ) %>%
+  mutate(
+    tipo_violencia = case_when(
+      tipo_violencia == "porcentaje_1" ~ "Le ridiculizaron por ser LGBTQIA+",
+      tipo_violencia == "porcentaje_2" ~ "Le negaron o dificultaron el derecho a registrar su identidad",
+      T ~ tipo_violencia
+    )
+  )
+
+# Graficar
+p48 <- plot_ly(
+  data = violencias_trans_1,
+  x = ~tipo_violencia,          
+  y = ~porcentaje,              
+  type = "bar",
+  color = ~tipo_violencia,      
+  marker = list(color = "purple3"), 
+  textposition = 'none',
+  text = ~paste0(round(porcentaje, 1), "%"),    
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Porcentaje:", round(porcentaje, 1), "%"
+  )
+) %>%
+  layout(
+    title = "Gráfico 48. Tipos de violencia experimentadas por identidad de género - Trans",
+    font = list(size = 12),
+    xaxis = list(title = ""),
+    yaxis = list(title = "", ticksuffix = "%"),
+    barmode = "group",          
+    showlegend = FALSE      
+  )
+
+p48
+
+#///////////////////////////////////////////////////////////////////////////////
+# Preparar datos - Género diverso
+violencias_gd <- bd_lgbt_2 %>%
+  filter(ident_gen == "Género diverso") %>%
+select(ident_gen, x7_4, x7_6, x7_8,) %>%
+  group_by(ident_gen) %>%
+  summarise(
+    total_respuestas = n(),
+    positivas_1 = sum(x7_4 == "Sí", na.rm = T),
+    positivas_2 = sum(x7_6 == "Sí", na.rm = T),
+    positivas_3 = sum(x7_8 == "Sí", na.rm = T),
+    porcentaje_1 = positivas_1/total_respuestas*100,
+    porcentaje_2 = positivas_2/total_respuestas*100,
+    porcentaje_3 = positivas_3/total_respuestas*100,
+    .groups = 'drop')
+
+# Pivotar datos
+violencias_gd_1 <- violencias_gd %>%
+  pivot_longer(
+    cols = starts_with("porcentaje_"),
+    names_to = "tipo_violencia",
+    values_to = "porcentaje"
+  ) %>%
+  mutate(
+    tipo_violencia = case_when(
+      tipo_violencia == "porcentaje_1" ~ "Le ridiculizaron por ser LGBTQIA+",
+      tipo_violencia == "porcentaje_2" ~ "Le trataron sin respetar el género",
+      tipo_violencia == "porcentaje_3" ~ "Le negaron o dificultaron el derecho a registrar su identidad",
+      T ~ tipo_violencia
+    )
+  )
+
+# Graficar
+p49 <- plot_ly(
+  data = violencias_gd_1,
+  x = ~tipo_violencia,          
+  y = ~porcentaje,              
+  type = "bar",
+  color = ~tipo_violencia,      
+  marker = list(color = "#FF69B4"),
+  textposition = 'none',
+  text = ~paste0(round(porcentaje, 1), "%"),    
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Porcentaje:", round(porcentaje, 1), "%"
+  )
+) %>%
+  layout(
+    title = "Gráfico 49. Tipos de violencia experimentadas por identidad de género - Género diverso",
+    font = list(size = 12),
+    xaxis = list(title = ""),
+    yaxis = list(title = "", ticksuffix = "%"),
+    barmode = "group",          
+    showlegend = FALSE      
+  )
+
+p49
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. Situaciones de violencia por orientación sexual----
+# Preparar datos - Lesbiana
+violencias_lesb <- bd_lgbt_2 %>%
+  filter(orient_sex == "Lesbiana") %>%
+  select(orient_sex, x7_1, x7_2, x7_4, x7_6, x7_9) %>%
+  group_by(orient_sex) %>%
+  summarise(
+    total_respuestas = n(),
+    positivas_1 = sum(x7_1 == "Sí", na.rm = T),
+    positivas_2 = sum(x7_2 == "Sí", na.rm = T),
+    positivas_3 = sum(x7_4 == "Sí", na.rm = T),
+    positivas_4 = sum(x7_6 == "Sí", na.rm = T),
+    positivas_5 = sum(x7_9 == "Sí", na.rm = T),
+    porcentaje_1 = positivas_1/total_respuestas*100,
+    porcentaje_2 = positivas_2/total_respuestas*100,
+    porcentaje_3 = positivas_3/total_respuestas*100,
+    porcentaje_4 = positivas_4/total_respuestas*100,
+    porcentaje_5 = positivas_5/total_respuestas*100,
+    .groups = 'drop')
+# Pivotar datos
+violencias_lesb_1 <- violencias_lesb %>%
+  pivot_longer(
+    cols = starts_with("porcentaje_"),
+    names_to = "tipo_violencia",
+    values_to = "porcentaje"
+  ) %>%
+  mutate(
+    tipo_violencia = case_when(
+      tipo_violencia == "porcentaje_1" ~ "Le insultaron por ser LGBTQIA+",
+      tipo_violencia == "porcentaje_2" ~ "Le gritaron por ser LGBTQIA+",
+      tipo_violencia == "porcentaje_3" ~ "Le ridiculizaron por ser LGBTQIA+",
+      tipo_violencia == "porcentaje_4" ~ "Le trataron sin respetar el género",
+      tipo_violencia == "porcentaje_5" ~ "Le acosaron sexualmente",
+      T ~ tipo_violencia
+    )
+  )
+
+# Graficar
+p50 <- plot_ly(
+  data = violencias_lesb_1,
+  x = ~tipo_violencia,          
+  y = ~porcentaje,              
+  type = "bar",
+  color = ~tipo_violencia,      
+  marker = list(color = "skyblue2"),
+  textposition = 'none',
+  text = ~paste0(round(porcentaje, 1), "%"),    
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Porcentaje:", round(porcentaje, 1), "%"
+  )
+) %>%
+  layout(
+    title = "Gráfico 50. Tipos de violencia experimentadas por orientación sexual - Lesbiana",
+    font = list(size = 12),
+    xaxis = list(title = ""),
+    yaxis = list(title = "", ticksuffix = "%"),
+    barmode = "group",          
+    showlegend = FALSE      
+  )
+
+p50
+
+#///////////////////////////////////////////////////////////////////////////////
+# Preparar datos - Gay
+violencias_gay <- bd_lgbt_2 %>%
+  filter(orient_sex == "Gay") %>%
+  select(orient_sex, x7_1, x7_2, x7_3, x7_4, x7_6) %>%
+  group_by(orient_sex) %>%
+  summarise(
+    total_respuestas = n(),
+    positivas_1 = sum(x7_1 == "Sí", na.rm = T),
+    positivas_2 = sum(x7_2 == "Sí", na.rm = T),
+    positivas_3 = sum(x7_3 == "Sí", na.rm = T),
+    positivas_4 = sum(x7_4 == "Sí", na.rm = T),
+    positivas_5 = sum(x7_6 == "Sí", na.rm = T),
+    porcentaje_1 = positivas_1/total_respuestas*100,
+    porcentaje_2 = positivas_2/total_respuestas*100,
+    porcentaje_3 = positivas_3/total_respuestas*100,
+    porcentaje_4 = positivas_4/total_respuestas*100,
+    porcentaje_5 = positivas_5/total_respuestas*100,
+    .groups = 'drop')
+
+# Pivotar datos
+violencias_gay_1 <- violencias_gay %>%
+  pivot_longer(
+    cols = starts_with("porcentaje_"),
+    names_to = "tipo_violencia",
+    values_to = "porcentaje"
+  ) %>%
+  mutate(
+    tipo_violencia = case_when(
+      tipo_violencia == "porcentaje_1" ~ "Le insultaron por ser LGBTQIA+",
+      tipo_violencia == "porcentaje_2" ~ "Le gritaron por ser LGBTQIA+",
+      tipo_violencia == "porcentaje_3" ~ "Le hostigaron por ser LGBTQIA+",
+      tipo_violencia == "porcentaje_4" ~ "Le ridiculizaron por ser LGBTQIA+",
+      tipo_violencia == "porcentaje_5" ~ "Le trataron sin respetar el género",
+      T ~ tipo_violencia
+    )
+  )
+
+# Graficar
+p51 <- plot_ly(
+  data = violencias_gay_1,
+  x = ~tipo_violencia,          
+  y = ~porcentaje,              
+  type = "bar",
+  color = ~tipo_violencia,      
+  marker = list(color = "brown"),
+  textposition = 'none',
+  text = ~paste0(round(porcentaje, 1), "%"),    
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Porcentaje:", round(porcentaje, 1), "%"
+  )
+) %>%
+  layout(
+    title = "Gráfico 51. Tipos de violencia experimentadas por orientación sexual - Gay",
+    font = list(size = 12),
+    xaxis = list(title = ""),
+    yaxis = list(title = "", ticksuffix = "%"),
+    barmode = "group",          
+    showlegend = FALSE      
+  )
+
+p51
+
+#///////////////////////////////////////////////////////////////////////////////
+# # Preparar datos - Bisexual
+violencias_bi <- bd_lgbt_2 %>%
+  filter(orient_sex == "Bisexual") %>%
+  select(orient_sex, x7_1, x7_4, x7_6, x7_9) %>%
+  group_by(orient_sex) %>%
+  summarise(
+    total_respuestas = n(),
+    positivas_1 = sum(x7_1 == "Sí", na.rm = T),
+    positivas_2 = sum(x7_4 == "Sí", na.rm = T),
+    positivas_3 = sum(x7_6 == "Sí", na.rm = T),
+    positivas_4 = sum(x7_9 == "Sí", na.rm = T),
+    porcentaje_1 = positivas_1/total_respuestas*100,
+    porcentaje_2 = positivas_2/total_respuestas*100,
+    porcentaje_3 = positivas_3/total_respuestas*100,
+    porcentaje_4 = positivas_4/total_respuestas*100,
+    .groups = 'drop')
+
+# Pivotar datos
+violencias_bi_1 <- violencias_bi %>%
+  pivot_longer(
+    cols = starts_with("porcentaje_"),
+    names_to = "tipo_violencia",
+    values_to = "porcentaje"
+  ) %>%
+  mutate(
+    tipo_violencia = case_when(
+      tipo_violencia == "porcentaje_1" ~ "Le insultaron por ser LGBTQIA+",
+      tipo_violencia == "porcentaje_2" ~ "Le ridiculizaron por ser LGBTQIA+",
+      tipo_violencia == "porcentaje_3" ~ "Le trataron sin respetar el género",
+      tipo_violencia == "porcentaje_4" ~ "Le acosaron sexualmente",
+      T ~ tipo_violencia
+    )
+  )
+
+# Graficar
+p52 <- plot_ly(
+  data = violencias_bi_1,
+  x = ~tipo_violencia,          
+  y = ~porcentaje,              
+  type = "bar",
+  color = ~tipo_violencia,      
+  marker = list(color = "#FF69B4"),
+  textposition = 'none',
+  text = ~paste0(round(porcentaje, 1), "%"),    
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Porcentaje:", round(porcentaje, 1), "%"
+  )
+) %>%
+  layout(
+    title = "Gráfico 52. Tipos de violencia experimentadas por orientación sexual - Bisexual",
+    font = list(size = 12),
+    xaxis = list(title = ""),
+    yaxis = list(title = "", ticksuffix = "%"),
+    barmode = "group",          
+    showlegend = FALSE      
+  )
+
+p52
+
+#///////////////////////////////////////////////////////////////////////////////
+# # Preparar datos - Pansexual
+violencias_pan<- bd_lgbt_2 %>%
+  filter(orient_sex == "Pansexual") %>%
+  select(orient_sex, x7_3, x7_4, x7_6, x7_9) %>%
+  group_by(orient_sex) %>%
+  summarise(
+    total_respuestas = n(),
+    positivas_1 = sum(x7_3 == "Sí", na.rm = T),
+    positivas_2 = sum(x7_4 == "Sí", na.rm = T),
+    positivas_3 = sum(x7_6 == "Sí", na.rm = T),
+    positivas_4 = sum(x7_9 == "Sí", na.rm = T),
+    porcentaje_1 = positivas_1/total_respuestas*100,
+    porcentaje_2 = positivas_2/total_respuestas*100,
+    porcentaje_3 = positivas_3/total_respuestas*100,
+    porcentaje_4 = positivas_4/total_respuestas*100,
+    .groups = 'drop')
+
+# Pivotar datos
+violencias_pan_1 <- violencias_pan %>%
+  pivot_longer(
+    cols = starts_with("porcentaje_"),
+    names_to = "tipo_violencia",
+    values_to = "porcentaje"
+  ) %>%
+  mutate(
+    tipo_violencia = case_when(
+      tipo_violencia == "porcentaje_1" ~ "Le hostigaron por ser LGBTQIA+",
+      tipo_violencia == "porcentaje_2" ~ "Le ridiculizaron por ser LGBTQIA+",
+      tipo_violencia == "porcentaje_3" ~ "Le trataron sin respetar el género",
+      tipo_violencia == "porcentaje_4" ~ "Le acosaron sexualmente",
+      T ~ tipo_violencia
+    )
+  )
+
+# Graficar
+p53 <- plot_ly(
+  data = violencias_pan_1,
+  x = ~tipo_violencia,          
+  y = ~porcentaje,              
+  type = "bar",
+  color = ~tipo_violencia,      
+  marker = list(color = "gray90"),
+  textposition = 'none',
+  text = ~paste0(round(porcentaje, 1), "%"),    
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Porcentaje:", round(porcentaje, 1), "%"
+  )
+) %>%
+  layout(
+    title = "Gráfico 52. Tipos de violencia experimentadas por orientación sexual - Pansexual",
+    font = list(size = 12),
+    xaxis = list(title = ""),
+    yaxis = list(title = "", ticksuffix = "%"),
+    barmode = "group",          
+    showlegend = FALSE      
+  )
+
+p53
+
+# //////////////////////////////////////////////////////////////////////////////
+# Gráfico. Experiencia en la universidad como persona LGTBQIA+----
+experiencias <- bd_lgbt_1 %>%
+  select(x5_1:x5_7) %>%
+  pivot_longer(
+    cols = x5_1:x5_7,
+    names_to = "variable",
+    values_to = "respuesta"
+  ) %>%
+  mutate(
+    variable = case_when(
+      variable == "x5_1" ~ "Ayuda psicosocial",
+      variable == "x5_2" ~ "Salud sexual y reproductiva",
+      variable == "x5_3" ~ "Infraestructura",
+      variable == "x5_4" ~ "Temáticas de interés",
+      variable == "x5_5" ~ "Sensibilización y prevención en VG",
+      variable == "x5_6" ~ "Cursos de formación",
+      variable == "x5_7" ~ "Espacio seguro",
+      TRUE ~ variable  # Mantener original si no coincide
+    )
+  ) %>%
+  mutate(
+    categoria = case_when(
+      respuesta %in% c(1, 2) ~ "Negativo",
+      respuesta %in% c(3, 4) ~ "Positivo",
+      TRUE ~ NA_character_
+    )
+  ) %>%
+  filter(!is.na(categoria)) %>%  # Excluir NA explícitamente
+  group_by(variable) %>%
+  summarise(
+    total_respuestas = n(),
+    negativas = sum(categoria == "Negativo"),
+    positivas = sum(categoria == "Positivo"),
+    porcentaje_neg = (negativas / total_respuestas) * 100,
+    porcentaje_pos = (positivas / total_respuestas) * 100,
+    .groups = 'drop'
+  ) %>%
+  pivot_longer(
+    cols = starts_with("porcentaje_"),
+    names_to = "categoria",
+    values_to = "porcentaje",
+    names_prefix = "porcentaje_"
+  ) %>%
+  mutate(
+    categoria = ifelse(categoria == "neg", "Negativa", "Positiva")  # Corregir nombres
+  )
+
+# Gráfico (versión corregida)
+p54 <- plot_ly(
+  data = experiencias,
+  x = ~variable,
+  y = ~porcentaje,
+  color = ~categoria,
+  colors = c("Negativa" = "#41776E", "Positiva" = "#8D69F3"),
+  type = "bar",
+  text = ~paste0(round(porcentaje, 1), "%"),
+  textposition = "none",
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Valoración:", categoria,
+    "<br>Porcentaje:", round(porcentaje, 1), "%"
+  )
+) %>%
+  layout(
+    title = "Experiencia en la universidad como persona LGBTQIA+",
+    xaxis = list(title = "", categoryorder = "array", categoryarray = unique(experiencias$variable)),
+    yaxis = list(title = "", range = c(0, 100), ticksuffix = "%"),
+    barmode = "stack",
+    legend = list(title = list(text = "Valoración"))
+  )
+
+p54
