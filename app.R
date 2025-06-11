@@ -89,9 +89,13 @@ ui <- navbarPage(
                class = "welcome-panel",
                h1(class = "welcome-title", "Plataforma interactiva de visualización: Sistema de Indicadores de Género Estratégicos (SIGEs)"),
                p(class = "welcome-subtitle", "Visualización de indicadores clave de la participación de mujeres en la comunidad universitaria"),
-               tags$a(href = "https://github.com/diegoesturillo/indicadores-usach", target = "_blank",
-                      tags$img(src = "usach-p1.png", height = "200px", style = "margin-top: 50px;",
-                               style = "margin-bottom: 20px; cursor: pointer;")
+               tags$a(href = "https://github.com/diegoesturillo/Plataforma-Indicadores", target = "_blank",
+                      tags$img(src = "logo_ogd.png", height = "200px", 
+                               style = "margin-top: 50px; margin-bottom: 20px; cursor: pointer;")
+               ),
+               tags$div(
+                 tags$img(src = "vicaviged_dged_n.png", height = "100px", 
+                          style = "display: block; margin-left: auto; margin-right: auto; margin-bottom: 20px;")
                ),
                br(),
                br(),
@@ -107,7 +111,7 @@ ui <- navbarPage(
                    actionButton("go_titulados", "Titulación por género y área del conocimiento", class = "button"),
                    actionButton("go_desglose_titulados", "Desglose titulación por área del conocimiento", class = "button"),
                    actionButton("go_cuidados_corresp", "Cuidados y corresponsabilidad", class = "button"),
-                   actionButton("go_lgbt", "LGBTQIA+", class = "button")
+                   actionButton("go_lgbt", "LGBTIQA+", class = "button")
                )
              )
            )
@@ -141,12 +145,11 @@ ui <- navbarPage(
                    style = "font-size: 17px; line-height: 1.6;"),
                  
                  tags$ul(style = "font-size: 17px; padding-left: 20px; line-height: 1.6;",
-                         tags$li("La información aquí presentada corresponde al período 2018–2024. Sin embargo, para algunos años no se dispone de información completa."),
-                         tags$li("Los datos para construir los gráficos fueron recolectados y procesados desde las distintas versiones de la Encuesta Mujeres en la Academia (EMA). 
-                                 A su vez, se contrastaron con datos oficiales del Servicio de Información de Educación Superior (SIES) del Ministerio de Educación (MINEDUC)."),
                          tags$li("No se graficaron datos sobre el puesto de rectoría y prorrectoría, ya que implican un (1) solo puesto."),
                          tags$li("La información del gráfico de publicaciones académicas para el año 2024 considera el reporte al mes de agosto, por lo que no representa el total final."),
                          tags$li("Los gráficos fueron elaborados utilizando herramientas interactivas, permitiendo mayor exploración por parte de la persona usuaria."),
+                         tags$li("Haciendo un click en una variable de interés, esta se retira de la visualización. Con doble click, esta se puede ver de forma aislada."),
+                         tags$li("Al pasar el cursor por el gráfico, se despliega un menú con diversas funciones en la parte superior. Una de estas ('compare data on hover') permite comparar los todos los puntos del gráfico. Esto es especialmente útil para aquellos gráficos de líneas donde se solapan los valores."),
                          tags$li("Toda la información ha sido anonimizada y se presenta con fines exclusivamente analíticos.")
                  ),
                  
@@ -154,7 +157,7 @@ ui <- navbarPage(
                  div(style = "background-color: #EA7600; color: white; padding: 15px; border-radius: 5px; font-size: 16px;",
                      strong("Nota:"),
                      span(" Esta plataforma se actualizará periódicamente. 
-                     Para mayor detalle sobre la metodología o los datos, contactar al Observatorio de Género y Diversidad, unidad anclada a la Dirección de Género, Equidad y Diversidad de la USACH 
+                     Para mayor detalle sobre la metodología o los datos, contactar al Observatorio Género y Diversidad, unidad anclada a la Dirección de Género, Equidad y Diversidad de la USACH 
                           (direccion.genero@usach.cl).")
                  )
              )
@@ -162,8 +165,8 @@ ui <- navbarPage(
   ),
   # Estamento académico----
   tabPanel("Estamento académico",
-         div(
-           style = "background-color: #f0f0f0;
+           div(
+             style = "background-color: #f0f0f0;
                   border-left: 6px solid #00A499;
                   border-right: 6px solid #00A499;
                   padding: 15px 20px;
@@ -172,8 +175,10 @@ ui <- navbarPage(
                   font-size: 16px;
                   color: #333;
                   box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
-           "En esta sección se muestra una caracterización del estamento académico por género, grado académico y edad promedio, tanto en la USACH como en el conglomerado AMA para el periodo 2018-2024."
-         ),
+             tags$p("En esta sección se muestra una caracterización del estamento académico por género y grado académico para el periodo 2018-2024."),
+             tags$p("Para ver datos y porcentajes en cada año del gráfico seleccionado, pase el cursor sobre el punto de interés."),
+             tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada.")
+           ),
          fluidPage(
            fluidRow(
              column(6, plotlyOutput("p1")),
@@ -195,7 +200,10 @@ ui <- navbarPage(
                       font-size: 16px;
                       color: #333;
                       box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
-               "En esta sección se pueden visualizar las diferencias de jerarquía académica por género, considerando los distintos niveles de la carrera académica para el periodo 2018-2024."
+               tags$p("En esta sección se pueden visualizar las diferencias de jerarquía académica por género, considerando los distintos niveles de la carrera académica para el periodo 2018-2024."
+             ),
+             tags$p("Para ver datos y porcentajes en cada año del gráfico seleccionado, pase el cursor sobre el punto de interés."),
+             tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada.")
              ),
              fluidRow(
                column(6, plotlyOutput("p5")),
@@ -216,10 +224,14 @@ ui <- navbarPage(
                       font-size: 16px;
                       color: #333;
                       box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
-               "Indicador de producción científica y académica en la USACH, diferenciada por género y área del conocimiento para el periodo 2018-2024."
+               tags$p("Indicador de producción científica y académica en la USACH, diferenciada por género y área del conocimiento para el periodo 2018-2024."
+             ),
+             tags$p("Para ver datos y porcentajes en cada año del gráfico seleccionado, pase el cursor sobre el punto de interés."),
+             tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada.")
              ),
              fluidRow(
-               column(12, plotlyOutput("p7")),
+               column(12, align = "center",
+                      div(style = "width: 50%;", plotlyOutput("p7"))),
                fluidRow(column(6, plotlyOutput("p8")),
                         column(6, plotlyOutput("p9"))),
                fluidRow(column(6, plotlyOutput("p10")),
@@ -244,7 +256,10 @@ ui <- navbarPage(
                       font-size: 16px;
                       color: #333;
                       box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
-               "Visualización de la representación femenina en cargos directivos dentro de la universidad para el periodo 2018-2024."
+               tags$p("Visualización de la representación femenina en cargos directivos dentro de la universidad para el periodo 2018-2024."
+             ),
+             tags$p("Para ver datos y porcentajes en cada año del gráfico seleccionado, pase el cursor sobre el punto de interés."),
+             tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada.")
              ),
              fluidRow(
                column(6, plotlyOutput("p13")),
@@ -271,7 +286,10 @@ ui <- navbarPage(
                       font-size: 16px;
                       color: #333;
                       box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
-               "En esta sección se muestra la distribución de la matrícula estudiantil total, de 1er año y la tasa de retención de 1er año por género para el periodo 2018-2024."
+               tags$p("En esta sección se muestra la distribución de la matrícula estudiantil total, de 1er año y la tasa de retención de 1er año por género para el periodo 2018-2024."
+             ),
+             tags$p("Para ver datos y porcentajes en cada año del gráfico seleccionado, pase el cursor sobre el punto de interés."),
+             tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada.")
              ),
              fluidRow(
                column(6, plotlyOutput("p17")),
@@ -279,7 +297,14 @@ ui <- navbarPage(
              ),
              br(),
              fluidRow(
-               column(12, plotlyOutput("p19"))
+               column(12, 
+                      tags$hr(style = "border-top: 2px solid #00A499; margin: 30px 0;"),
+                      h4(style = "text-align: center; color: #00A499; font-weight: bold;")
+               )
+             ),
+             fluidRow(
+               column(12, align = "center",
+                      div(style = "width: 50%;", plotlyOutput("p19")))
              )
            )
   ),
@@ -296,11 +321,20 @@ ui <- navbarPage(
                       font-size: 16px;
                       color: #333;
                       box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
-               "En esta sección se puede comparar la matrícula estudiantil total, de 1er año y la tasa de retención de 1er año por género y área del conocimiento genérica para el periodo 2018-2024."
+               tags$p("En esta sección se puede comparar la matrícula estudiantil total, de 1er año y la tasa de retención de 1er año por género y área del conocimiento genérica para el periodo 2018-2024."
+             ),
+             tags$p("Para ver datos y porcentajes en cada año del gráfico seleccionado, pase el cursor sobre el punto de interés."),
+             tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada.")
              ),
              fluidRow(
                column(6, plotlyOutput("p20")),
                column(6, plotlyOutput("p21"))
+             ),
+             fluidRow(
+               column(12, 
+                      tags$hr(style = "border-top: 2px solid #00A499; margin: 30px 0;"),
+                      h4(style = "text-align: center; color: #00A499; font-weight: bold;")
+               )
              ),
              br(),
              fluidRow(
@@ -321,7 +355,10 @@ ui <- navbarPage(
                       font-size: 16px;
                       color: #333;
                       box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
-               "En esta sección se puede ver la distribución de la titulación por género y área del conocimiento genérica en el periodo 2018-2023."
+               tags$p("En esta sección se puede ver la distribución de la titulación por género y área del conocimiento genérica en el periodo 2018-2024."
+             ),
+             tags$p("Para ver datos y porcentajes en cada año del gráfico seleccionado, pase el cursor sobre el punto de interés."),
+             tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada.")
              ),
              fluidRow(
                column(6, plotlyOutput("p23")),
@@ -343,7 +380,10 @@ ui <- navbarPage(
                       font-size: 16px;
                       color: #333;
                       box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
-        "En esta sección se muestra el desglose de la titulación por género y área de conocimiento genérica en el periodo 2018-2023."
+        tags$p("En esta sección se muestra el desglose de la titulación por género y área del conocimiento genérica en el periodo 2018-2024."
+      ),
+      tags$p("Para ver datos y porcentajes en cada año del gráfico seleccionado, pase el cursor sobre el punto de interés."),
+      tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada.")
       ),
     fluidRow(
       column(6, plotlyOutput("p25")),
@@ -362,7 +402,9 @@ ui <- navbarPage(
       column(6, plotlyOutput("p32"))
     ),
     fluidRow(
-      column(12, plotlyOutput("p33"))
+      fluidRow(
+        column(12, align = "center",
+               div(style = "width: 50%;", plotlyOutput("p33"))))
     )
   )
   ),
@@ -379,12 +421,14 @@ ui <- navbarPage(
                       font-size: 16px;
                       color: #333;
                       box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
-               "En esta sección se puede ver la distribución de cuidados de niñas, niños y adolescentes (NNA) y personas adultas con dependencia funcional en la comunidad universitaria."
+               tags$p("En esta sección se puede ver la distribución de cuidados de niñas, niños y adolescentes (NNA) y personas adultas con dependencia funcional en la comunidad universitaria."
              ),
+           tags$p("Para ver datos y porcentajes en cada año del gráfico seleccionado, pase el cursor sobre el punto de interés."),
+           tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada.")
+  ),
              fluidRow(
-               column(12, align = "center",
-                      div(style = "width: 50%;", plotlyOutput("p34"))),
-               # Línea separadora con título
+               column(6, plotlyOutput("p34")),
+               column(6, plotlyOutput("p35")),
                fluidRow(
                  column(12, 
                         tags$hr(style = "border-top: 2px solid #00A499; margin: 30px 0;"),
@@ -393,11 +437,8 @@ ui <- navbarPage(
                ),
                
                fluidRow(
-                 column(6, plotlyOutput("p35")),
                  column(6, plotlyOutput("p36")),
-                 fluidRow(
-                   column(12, align = "center",
-                          div(style = "width: 50%;", plotlyOutput("p37"))),
+                 column(6, plotlyOutput("p37")),
                  fluidRow(
                    column(12, 
                           tags$hr(style = "border-top: 2px solid #00A499; margin: 30px 0;"),
@@ -412,9 +453,9 @@ ui <- navbarPage(
                           div(style = "width: 50%;", plotlyOutput("p40")))
              )
            ))
-))))),
+)))),
 # Cuidados y corresponsabilidad----
-tabPanel("LGBTQIA+",
+tabPanel("LGBTIQA+",
          fluidPage(
            div(
              style = "background-color: #f0f0f0;
@@ -426,36 +467,51 @@ tabPanel("LGBTQIA+",
                       font-size: 16px;
                       color: #333;
                       box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
-             "En esta sección se pueden ver distintos indicadores relativos a la experiencia de vida de la comunidad LGBTQIA+ en la universidad."
+             tags$p("En esta sección se pueden ver distintos indicadores relativos a la experiencia de vida de la comunidad LGBTQIA+ en la universidad."
+           ),tags$p("Para ver datos y porcentajes en cada año del gráfico seleccionado, pase el cursor sobre el punto de interés."),
+           tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada.")
            ),
            fluidRow(
+             column(6, plotlyOutput("p41")),
              column(6, plotlyOutput("p42")),
-             column(6, plotlyOutput("p43"))
-           ),
-           fluidRow(
+             column(6, plotlyOutput("p43")),
              column(6, plotlyOutput("p44")),
-             column(6, plotlyOutput("p45"))
+             fluidRow(
+               column(12, 
+                      tags$hr(style = "border-top: 2px solid #00A499; margin: 30px 0;"),
+                      h4("Tipos de violencias experimentadas por la población LGBTIQA+, por identidad de género", style = "text-align: center; color: #00A499; font-weight: bold;")
+               )
+             ),
            ),
            fluidRow(
-             column(6, plotlyOutput("p46")),
-             column(6, plotlyOutput("p47"))
+             column(6, plotlyOutput("p45")),
+             column(6, plotlyOutput("p46"))
            ),
            fluidRow(
-             column(6, plotlyOutput("p48")),
-             column(6, plotlyOutput("p49"))
+             column(6, plotlyOutput("p47")),
+             column(6, plotlyOutput("p48"))
            ),
            fluidRow(
-             column(6, plotlyOutput("p50")),
-             column(6, plotlyOutput("p51"))
+             column(12, 
+                    tags$hr(style = "border-top: 2px solid #00A499; margin: 30px 0;"),
+                    h4("Tipos de violencias experimentadas por la población LGBTIQA+, por orientación sexual", style = "text-align: center; color: #00A499; font-weight: bold;"),
+           fluidRow(
+             column(6, plotlyOutput("p49")),
+             column(6, plotlyOutput("p50"))
            ),
            fluidRow(
-             column(6, plotlyOutput("p52")),
-             column(6, plotlyOutput("p53")),
+             column(6, plotlyOutput("p51")),
+             column(6, plotlyOutput("p52"))
+           ),
            fluidRow(
-               column(12, align = "center",
-                      div(style = "width: 50%;", plotlyOutput("p54")))
+             column(12, 
+                    tags$hr(style = "border-top: 2px solid #00A499; margin: 30px 0;"),
+                    h4(style = "text-align: center; color: #00A499; font-weight: bold;"),
+                    fluidRow(
+                      column(12, align = "center",
+                             div(style = "width: 50%;", plotlyOutput("p53")))
            
-         )))))
+         ))))))))
 
 # Server----
 
@@ -495,7 +551,7 @@ server <- function(input, output, session) {
     updateTabsetPanel(session, "tabs", selected = "Cuidados y corresponsabilidad")
     })
   observeEvent(input$go_lgbt, {
-    updateTabsetPanel(session, "tabs", selected = "LGBTQIA+")
+    updateTabsetPanel(session, "tabs", selected = "LGBTIQA+")
   })
   
   # Plots----
@@ -505,7 +561,7 @@ server <- function(input, output, session) {
   output$p4 <- renderPlotly({ p4 })
   output$p5 <- renderPlotly({ p5 })
   output$p6 <- renderPlotly({ p6 })
-  output$p7<- renderPlotly({ p7 })
+  output$p7 <- renderPlotly({ p7 })
   output$p8 <- renderPlotly({ p8 })
   output$p9 <- renderPlotly({ p9 })
   output$p10 <- renderPlotly({ p10 })
@@ -552,7 +608,6 @@ server <- function(input, output, session) {
   output$p51 <- renderPlotly({ p51 })
   output$p52 <- renderPlotly({ p52 })
   output$p53 <- renderPlotly({ p53 })
-  output$p53 <- renderPlotly({ p54 })
 }
 
 shinyApp(ui, server)
