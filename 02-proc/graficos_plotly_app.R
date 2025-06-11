@@ -51,8 +51,7 @@ academicos_usach <- ema %>%
   ) %>%
   mutate(
     genero = recode(genero, "n_acad_f" = "Femenino", "n_acad_m" = "Masculino"),
-    texto_tooltip = paste0(
-      "<b>USACH</b><br>Año: ", año,
+    texto_tooltip = paste0("Año: ", año,
       "<br>Género: ", genero,
       "<br>Cantidad: ", format(cantidad, big.mark = ".", decimal.mark = ","),
       "<br>Proporción: ", ifelse(genero == "Femenino", prop_f, prop_m), "%"
@@ -61,28 +60,26 @@ academicos_usach <- ema %>%
 
 # Graficar
 p1 <- plot_ly() %>%
-  # Trazo USACH (Mujeres)
   add_trace(
     data = filter(academicos_usach, genero == "Femenino"),
     x = ~año,
     y = ~cantidad,
     type = 'scatter',
     mode = 'lines+markers',
-    line = list(color = "#8D69F3", width = 3),
-    marker = list(color = "#8D69F3", size = 8),
+    line = list(color = "#8D69F3"),
+    marker = list(color = "#8D69F3"),
     name = "Femenino",
     text = ~texto_tooltip,
     hoverinfo = 'text'
   ) %>%
-  # Trazo USACH (Hombres)
   add_trace(
     data = filter(academicos_usach, genero == "Masculino"),
     x = ~año,
     y = ~cantidad,
     type = 'scatter',
     mode = 'lines+markers',
-    line = list(color = "#41776E", width = 3),
-    marker = list(color = "#41776E", size = 8),
+    line = list(color = "#41776E"),
+    marker = list(color = "#41776E"),
     name = "Masculino",
     text = ~texto_tooltip,
     hoverinfo = 'text'
@@ -90,7 +87,7 @@ p1 <- plot_ly() %>%
   layout(
     title = list(
       text = "<b>Gráfico 1. Estamento académico por género (2018-2024)</b>",
-      font = list(size = 12.5),
+      font = list(size = 13),
       x = 0.5
     ),
     xaxis = list(title = "", tickvals = 2018:2024),
@@ -102,8 +99,20 @@ p1 <- plot_ly() %>%
       y = 0.5,
       xanchor = "left"
     ),
-    margin = list(t = 80),
-    hovermode = "closest"
+    margin = list(t = 80, b = 100),
+    hovermode = "closest",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
   )
 
 p1
@@ -134,7 +143,7 @@ p2 <- plot_ly(
   colors = c("Femenino" = "#8D69F3", "Masculino" = "#41776E"),
   type = 'scatter',
   mode = 'lines+markers',
-  text = ~paste("<b>USACH</b><br>",
+  text = ~paste(
   "<b>Año:</b> ", año, "<br>",
   "<b>Género:</b> ", genero, "<br>",
   "<b>Cantidad:</b> ", cantidad, "<br>",
@@ -145,7 +154,7 @@ p2 <- plot_ly(
   layout(
     title = list(
       text = "<b>Gráfico 2. Estamento académico con doctorado (2018-2024)</b>",
-      font = list(size = 12.5),
+      font = list(size = 13),
       x = 0.5
     ),
     xaxis = list(title = "", tickvals = 2018:2024),
@@ -157,8 +166,20 @@ p2 <- plot_ly(
       y = 0.5,
       xanchor = "left"
     ),
-    margin = list(t = 80),
-    hovermode = "closest"
+    margin = list(t = 80, b = 100),
+    hovermode = "closest",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
   )
 
 p2
@@ -188,7 +209,7 @@ p3 <- plot_ly(
   colors = c("Femenino" = "#8D69F3", "Masculino" = "#41776E"),
   type = 'scatter',
   mode = 'lines+markers',
-  text = ~paste("<b>USACH</b><br>",
+  text = ~paste(
                 "<b>Año:</b> ", año, "<br>",
                 "<b>Género:</b> ", genero, "<br>",
                 "<b>Cantidad:</b> ", cantidad, "<br>",
@@ -200,7 +221,7 @@ p3 <- plot_ly(
   layout(
     title = list(
       text = "<b>Gráfico 3. Estamento académico con magíster (2018-2024)</b>",
-      font = list(size = 12.5),
+      font = list(size = 13),
       x = 0.5
     ),
     xaxis = list(title = "", tickvals = 2018:2024),
@@ -212,8 +233,20 @@ p3 <- plot_ly(
       y = 0.5,
       xanchor = "left"
     ),
-    margin = list(t = 80),
-    hovermode = "closest"
+    margin = list(t = 80, b = 100),
+    hovermode = "closest",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
   )
 
 p3
@@ -243,7 +276,7 @@ p4 <- plot_ly(
   colors = c("Femenino" = "#8D69F3", "Masculino" = "#41776E"),
   type = 'scatter',
   mode = 'lines+markers',
-  text = ~paste("<b>USACH</b><br>",
+  text = ~paste(
                 "<b>Año:</b> ", año, "<br>",
                 "<b>Género:</b> ", genero, "<br>",
                 "<b>Cantidad:</b> ", cantidad, "<br>",
@@ -254,7 +287,7 @@ p4 <- plot_ly(
   layout(
     title = list(
       text = "<b>Gráfico 4. Estamento académico con título profesional y/o licenciatura (2018-2024)</b>",
-      font = list(size = 12.5),
+      font = list(size = 13),
       x = 0.5
     ),
     xaxis = list(title = "", tickvals = 2018:2024),
@@ -266,8 +299,20 @@ p4 <- plot_ly(
       y = 0.5,
       xanchor = "left"
     ),
-    margin = list(t = 80),
-    hovermode = "closest"
+    margin = list(t = 80, b = 100),
+    hovermode = "closest",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
   )
 
 p4
@@ -328,10 +373,10 @@ p5 <- academicos_jerarquia %>%
     colors = c(
       "Titular Mujeres" = "#6A5ACD",
       "Titular Hombres" = "#41776E",
-      "Asociado/a Mujeres" = "#A07DF5",
-      "Asociado/a Hombres" = "#5C918A",
-      "Asistente Mujeres" = "#B598F7",
-      "Asistente Hombres" = "#76ACA4"),
+      "Asociado/a Mujeres" = "#6600FF",
+      "Asociado/a Hombres" = "#009900",
+      "Asistente Mujeres" = "#9933FF",
+      "Asistente Hombres" = "#33CC33"),
     text = ~paste0(
       "<b>Año:</b> ", año, "<br>",
       "<b>Jerarquía:</b> ", jerarquia, "<br>",
@@ -347,8 +392,20 @@ p5 <- academicos_jerarquia %>%
     xaxis = list(title = "", tickvals = 2018:2024),
     yaxis = list(title = ""),
     legend = list(title = list(text = "<b>Jerarquía y género</b>")),
-    margin = list(t = 80),
-    hovermode = "closest")
+    margin = list(t = 80, b = 100),
+    hovermode = "closest",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    ))
 
 p5
 
@@ -415,10 +472,10 @@ p6 <- academicos_jerarquia_2 %>%
     colors = c(
       "Instructor/a Mujeres" = "#6A5ACD",
       "Instructor/a Hombres" = "#41776E",
-      "Adjunto/a Mujeres" = "#A07DF5",
-      "Adjunto/a Hombres" = "#5C918A",
-      "Sin jerarquía Mujeres" = "#B598F7",
-      "Sin jerarquía Hombres" = "#76ACA4"),
+      "Adjunto/a Mujeres" = "#6600FF",
+      "Adjunto/a Hombres" = "#009900",
+      "Sin jerarquía Mujeres" = "#9933FF",
+      "Sin jerarquía Hombres" = "#33CC33"),
     text = ~paste0(
       "<b>Año:</b> ", año, "<br>",
       "<b>Jerarquía:</b> ", jerarquia, "<br>",
@@ -431,11 +488,23 @@ p6 <- academicos_jerarquia_2 %>%
       text = "<b>Gráfico 6. Estamento académico por género y jerarquía (2018-2023)</b>",
       font = list(size = 13),
       x = 0.5),
-    xaxis = list(title = "", tickvals = 2018:2024),
+    xaxis = list(title = "", tickvals = 2018:2023),
     yaxis = list(title = ""),
     legend = list(title = list(text = "<b>Jerarquía y género</b>")),
-    margin = list(t = 80),
-    hovermode = "closest")
+    margin = list(t = 80, b = 100),
+    hovermode = "closest",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    ))
 
 p6
 
@@ -475,14 +544,26 @@ p7 <- acad_pub %>%
     hoverinfo = 'text') %>%
   layout(
     title = list(
-      text = "<b> Gráfico 7. Publicaciones en revistas indexadas por género (WOS, Scopus, Scielo y Otras) (2018-2024)</b>",
+      text = "<b> Gráfico 7. Publicaciones en revistas indexadas* por género (2018-2024)</b>",
       font = list(size = 12),
       x = 0.5),
     xaxis = list(title = "", tickvals = 2018:2024),
     yaxis = list(title = ""),
     legend = list(title = list(text = "<b>Género</b>")),
-    margin = list(t = 80),
-    hovermode = "closest")
+    margin = list(t = 80, b = 100),
+    hovermode = "closest",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i><br><i>*WOS, Scopus, Scielo y otras</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    ))
 
 p7
 
@@ -518,14 +599,26 @@ p8 <- wos_pub %>%
     hoverinfo = 'text') %>%
   layout(
     title = list(
-      text = "<b>Gráfico 9. Publicaciones en revistas indexadas por género en WOS (2019-2024)</b>",
+      text = "<b>Gráfico 8. Publicaciones en revistas indexadas por género en WOS</b><br><span style='font-size:13px'>WOS (2019-2024)</span>",
       font = list(size = 13),
       x = 0.5),
     xaxis = list(title = "", tickvals = 2019:2024),
     yaxis = list(title = ""),
     legend = list(title = list(text = "<b>Género</b>")),
-    margin = list(t = 80),
-    hovermode = "closest")
+    margin = list(t = 80, b = 100),
+    hovermode = "closest",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    ))
 
 p8
 
@@ -564,14 +657,26 @@ p9 <- scopus_pub %>%
     hoverinfo = 'text') %>%
   layout(
     title = list(
-      text = "<b>Gráfico 9. Publicaciones en revistas indexadas por género en Scopus (2019-2024)</b>",
+      text = "<b>Gráfico 9. Publicaciones en revistas indexadas por género</b><br><span style='font-size:13px'>Scopus (2019-2024)</span>",
       font = list(size = 13),
       x = 0.5),
     xaxis = list(title = "", tickvals = 2019:2024),
     yaxis = list(title = ""),
     legend = list(title = list(text = "<b>Género</b>")),
-    margin = list(t = 80),
-    hovermode = "closest")
+    margin = list(t = 80, b = 100),
+    hovermode = "closest",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    ))
 
 p9
 
@@ -610,14 +715,26 @@ p10 <- scielo_pub %>%
     hoverinfo = 'text') %>%
   layout(
     title = list(
-      text = "<b>Gráfico 10. Publicaciones en revistas indexadas por género en Scielo (2019-2023)</b>",
+      text = "<b>Gráfico 10. Publicaciones en revistas indexadas por género </b><br><span style='font-size:13px'>Scielo (2019-2023)</span>",
       font = list(size = 13),
       x = 0.5),
-    xaxis = list(title = "", tickvals = 2019:2024),
+    xaxis = list(title = "", tickvals = 2019:2023),
     yaxis = list(title = ""),
     legend = list(title = list(text = "<b>Género</b>")),
-    margin = list(t = 80),
-    hovermode = "closest")
+    margin = list(t = 80, b = 100),
+    hovermode = "closest",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    ))
 
 p10
 
@@ -656,14 +773,26 @@ p11 <- otras_pub %>%
     hoverinfo = 'text') %>%
   layout(
     title = list(
-      text = "<b>Gráfico 11. Publicaciones en revistas indexadas por género en otras bases de datos (2019-2024)</b>",
+      text = "<b>Gráfico 11. Publicaciones en revistas indexadas por género </b><br><span style='font-size:13px'>Otras bases de datos (2019-2024)</span>",
       font = list(size = 13),
       x = 0.5),
     xaxis = list(title = "", tickvals = 2019:2024),
     yaxis = list(title = ""),
     legend = list(title = list(text = "<b>Género</b>")),
-    margin = list(t = 80),
-    hovermode = "closest")
+    margin = list(t = 80, b = 100),
+    hovermode = "closest",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    ))
 
 p11
 
@@ -687,19 +816,6 @@ ema_pub_long <- ema_pub_ac %>%
   ) %>%
   ungroup()
 
-# Diccionario para nombres completos de áreas
-nombres_areas <- c(
-  "ayc" = "Administración y Comercio",
-  "agro" = "Agropecuaria",
-  "aya" = "Arte y Arquitectura",
-  "csh" = "Ciencias Sociales y Humanidades",
-  "der" = "Derecho",
-  "edu" = "Educación",
-  "salud" = "Salud",
-  "tec" = "Tecnología"
-)
-
-# Aplicar nombres completos
 ema_pub_long <- ema_pub_long %>%
   mutate(area_nombre = nombres_areas[area])
 
@@ -723,14 +839,26 @@ p12 <- plot_ly(
   )) %>%
   layout(
     title = list(
-      text = "<b>Gráfico 12. Publicaciones en revistas indexadas (WOS, Scopus, Scielo y otras) por área de conocimiento (2022-2024)</b>",
-      font = list(size = 12),
+      text = "<b>Gráfico 12. Publicaciones en revistas indexadas por área de conocimiento (2022-2024)</b>",
+      font = list(size = 13),
       x = 0.5),
     xaxis = list(title = "", tickvals = 2022:2024),
     yaxis = list(title = ""),
     legend = list(title = list(text = "<b>Área del conocimiento</b>")),
-    margin = list(t = 80),
-    hovermode = "closest")
+    margin = list(t = 80, b = 100),
+    hovermode = "closest",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    ))
 
 p12
 
@@ -796,19 +924,31 @@ subplots_1 <- list(
 p13 <- subplot(subplots_1, nrows = 2, shareX = T, shareY = T, titleY = T) %>%
   layout(
     title = list(
-      text = "<b>Gráfico 13. Puestos directivos por género - Junta Directiva y Consejo Académico</b>",
+      text = "<b>Gráfico 13. Puestos directivos por género</b><br><span style='font-size:12px'>Junta Directiva y Consejo Académico</span>",
       font = list(size = 13),
       x = 0.5),
     legend = list(title = list(text = "Género")),
     xaxis = list(title = "", tickvals = 2018:2024),
     yaxis = list(title = ""),
     yaxis2 = list(title = ""),
-    margin = list(t = 80),
+    margin = list(t = 80, b = 100),  
     annotations = list(
       list(x = 0, y = 1.02, text = "<b>Junta Directiva</b>", showarrow = F, xref = "paper", yref = "paper", 
            xanchor = "left", yanchor = "bottom", font = list(size = 11)),
       list(x = 0, y = 0.47, text = "<b>Consejo Académico</b>", showarrow = F, xref = "paper", yref = "paper", 
-           xanchor = "left", yanchor = "bottom", font = list(size = 11))))
+           xanchor = "left", yanchor = "bottom", font = list(size = 11)),
+      list(
+        x = 0.5,   
+        y = -0.15, 
+        xref = "paper",
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
+  )
 
 p13
 
@@ -842,15 +982,27 @@ p14 <- ema_puestos_x %>%
       "<b>Proporción:</b> ", prop, "%"),
     hoverinfo = 'text') %>%
   layout(title = list(
-    text = "<b> Gráfico 14. Puestos directivos por género - Vicerrectorías</b>",
+    text = "<b> Gráfico 14. Puestos directivos por género</b><br><span style='font-size:12px'>Vicerrectorías</span>",
     font = list(size = 13),
     x = 0.5),
     title = "",
     xaxis = list(title = "", tickvals = 2018:2024),
     yaxis = list(title = "", tickvals = 1:6, range = c(1,5)),
     legend = list(title = list(text = "<b>Género</b>")),
-    margin = list(t = 20),
-    hovermode = "closest")
+    margin = list(t = 50, b = 100),
+    hovermode = "closest",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    ))
 
 p14
 
@@ -910,20 +1062,33 @@ subplots_2 <- lapply(puestos_split_2, function(df) {
 
 # Combinar subplots
 p15 <- subplot(subplots_2, nrows = 2, shareX = T, shareY = T, titleY = T) %>%
-  layout(title = list(
-    text = "<b>Gráfico 15. Puestos directivos por género - Decanato y Vicedecanato</b>",
-    font = list(size = 13),
-    x = 0.75),
+  layout(
+    title = list(
+      text = "<b>Gráfico 15. Puestos directivos por género</b><br><span style='font-size:12px'>Decanato y Vicedecanato</span>",
+      font = list(size = 13),
+      x = 0.5),
     legend = list(title = list(text = "Género")),
     xaxis = list(title = "", tickvals = 2018:2024),
     yaxis = list(title = ""),
     yaxis2 = list(title = ""),
-    margin = list(t = 80),
+    margin = list(t = 80, b = 100),  
     annotations = list(
       list(x = 0, y = 1.02, text = "<b>Decanato</b>", showarrow = F, xref = "paper", yref = "paper", 
            xanchor = "left", yanchor = "bottom", font = list(size = 11)),
       list(x = 0, y = 0.47, text = "<b>Vicedecanato</b>", showarrow = F, xref = "paper", yref = "paper", 
-           xanchor = "left", yanchor = "bottom", font = list(size = 11))))
+           xanchor = "left", yanchor = "bottom", font = list(size = 11)),
+      list(
+        x = 0.5,   
+        y = -0.15, 
+        xref = "paper",
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
+  )
 
 p15
 
@@ -958,15 +1123,27 @@ p16 <- ema_puestos_3 %>%
       "<b>Proporción:</b> ", prop, "%"),
     hoverinfo = 'text') %>%
   layout(title = list(
-    text = "<b> Gráfico 16. Puestos directivos por género - Dirección o jefatura</b>",
+    text = "<b> Gráfico 16. Puestos directivos por género</b><br><span style='font-size:12px'>Dirección o Jefatura</span>",
     font = list(size = 13),
     x = 0.5),
     title = "",
     xaxis = list(title = "", tickvals = 2018:2024),
     yaxis = list(title = ""),
     legend = list(title = list(text = "<b>Género</b>")),
-    margin = list(t = 20),
-    hovermode = "closest")
+    margin = list(t = 50, b = 100),
+    hovermode = "closest",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    ))
 
 p16
 
@@ -1014,12 +1191,24 @@ p17 <- ema_mat_total %>%
     xaxis = list(title = "", tickvals = 2018:2024),
     yaxis = list(
       title = "",
-      tickformat = "digits",  # Desactiva abreviaciones como "5k"
-      separatethousands = T  # Opcional: añade separadores de miles (1.000)
+      tickformat = "digits",  
+      separatethousands = T  
     ),
     legend = list(title = list(text = "<b>Género<br>")),
-    margin = list(t = 50),
-    hovermode = "closest"
+    margin = list(t = 50, b = 100),
+    hovermode = "closest",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
   )
 
 p17
@@ -1067,8 +1256,20 @@ p18 <- ema_mat_1 %>%
       title = ""),
     separators = ".", 
     legend = list(title = list(text = "<b>Género<br>")),
-    margin = list(t = 50),
-    hovermode = "closest")
+    margin = list(t = 50, b = 100),
+    hovermode = "closest",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    ))
 
 p18
 
@@ -1107,16 +1308,29 @@ p19 <- ema_tr %>%
     xaxis = list(title = "", tickvals = 2018:2024),
     yaxis = list(
       title = "",
-      tickformat = ".0%"),
+      tickformat = ".0%",
+      range = c(0.7,0.9)),
     separators = ".", 
     legend = list(title = list(text = "<b>Género<br>")),
-    margin = list(t = 50),
-    hovermode = "closest")
+    margin = list(t = 50, b = 100),
+    hovermode = "closest",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    ))
 
 p19
 
 #///////////////////////////////////////////////////////////////////////////////
-# Gráfico. Matrícula total por área de conocimiento genérica 2018-2024----
+# Gráfico. Matrícula total por área del conocimiento genérica 2018-2024----
 # Preparar datos
 ema_mat_area <- ema_mat_area %>%
   mutate(
@@ -1141,7 +1355,7 @@ p20 <- ema_mat_area %>%
       "<b>Proporción mujeres:</b> ", percent(prop_f_mt, accuracy = 1, decimal.mark = ",")),
     hoverinfo = 'text') %>%
   layout(title = list(
-    text = "<b>Gráfico 20. Matrícula total de pregrado por área de conocimiento (2018-2024)</b>",
+    text = "<b>Gráfico 20. Matrícula total de pregrado por área del conocimiento (2018-2024)</b>",
     font = list(size = 13),
     x = 0.5),
     xaxis = list(title = "", tickvals = 2018:2024, tickangle = 0),
@@ -1151,7 +1365,19 @@ p20 <- ema_mat_area %>%
       separatethousands = T),
     legend = list(title = list(text = "<b>Área del conocimiento</b>")),
     hovermode = "closest",
-    margin = list(t = 50))
+    margin = list(t = 50, b = 100),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    ))
 
 p20
 
@@ -1173,7 +1399,7 @@ p21 <- ema_mat_area %>%
       "<b>Proporción mujeres:</b> ", percent(prop_f_m1, accuracy = 1, decimal.mark = ",")),
     hoverinfo = 'text') %>%
   layout(title = list(
-    text = "<b>Gráfico 21. Matrícula de 1er año de pregrado por área de conocimiento (2018-2024)</b>",
+    text = "<b>Gráfico 21. Matrícula de 1er año de pregrado por área del conocimiento (2018-2024)</b>",
     font = list(size = 13),
     x = 0.5),
     xaxis = list(title = "", tickvals = 2018:2024, tickangle = 0),
@@ -1183,7 +1409,19 @@ p21 <- ema_mat_area %>%
       separatethousands = T),
     legend = list(title = list(text = "<b>Área del conocimiento</b>")),
     hovermode = "closest",
-    margin = list(t = 50))
+    margin = list(t = 50, b = 100),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    ))
 
 p21
 
@@ -1238,7 +1476,7 @@ n_rows <- ceiling(length(plots_area)/n_cols)
 
 p22 <- subplot(plots_area, nrows = n_rows, shareX = T, shareY = T, margin = 0.04) %>%
   layout(title = list(
-    text = "<b>Gráfico 22. Tasa de retención de 1er año por área de conocimiento y género (2018-2023)</b>",
+    text = "<b>Gráfico 22. Tasa de retención de 1er año por área del conocimiento y género (2018-2023)</b>",
     font = list(size = 13),
     x = 0.5),
     legend = list(title = list(text = "<b>Género</b>")),
@@ -1312,8 +1550,20 @@ p23 <- titulados_g %>%
       title = "",
     separators = "."), 
     legend = list(title = list(text = "<b>Género<br>")),
-    margin = list(t = 50),
-    hovermode = "closest")
+    margin = list(t = 50, b = 100),
+    hovermode = "closest",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    ))
 
 p23
 
@@ -1337,7 +1587,7 @@ p24<- titulados_ac_pre %>%
     hoverinfo = 'text'
   ) %>%
   layout(title = list(
-    text = "<b>Gráfico 24. Titulación de pregrado por área de conocimiento (2018-2024)</b>",
+    text = "<b>Gráfico 24. Titulación de pregrado por área del conocimiento (2018-2024)</b>",
     font = list(size = 13),
     x = 0.5),
     xaxis = list(title = "", tickvals = 2018:2023, tickangle = 0),
@@ -1345,7 +1595,20 @@ p24<- titulados_ac_pre %>%
       title = ""),
     legend = list(title = list(text = "<b>Área del conocimiento</b>")),
     hovermode = "closest",
-    margin = list(t = 50))
+    margin = list(t = 50, b = 100),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
+    )
 
 p24
 
@@ -1356,7 +1619,8 @@ titulados_ac_1 <- titulados_ac_pre %>%
   filter(area_del_conocimiento=="Administración y Comercio",
          año >= 2018)
 
-p25 <- plot_ly(titulados_ac_1, x = ~año) %>%
+p25 <- plot_ly(
+  titulados_ac_1, x = ~año) %>%
   add_bars(
     y = ~titulados_mujeres,
     name = "Femenino",
@@ -1385,18 +1649,31 @@ p25 <- plot_ly(titulados_ac_1, x = ~año) %>%
   ) %>%
   layout(
     title = list(
-      text = "<b>Gráfico 25. Titulación de pregrado por género - Administración y Comercio (2018-2024)</b>",
+      text = "<b>Gráfico 25. Titulación de pregrado por género</b><br><span style='font-size:13px'>Administración y Comercio (2018-2024)</span>",
       font = list(size = 13),
-      x = 0.5
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
     ),
     barmode = 'group',
     xaxis = list(title = "", tickvals = 2018:2024),
-    yaxis = list(
-      title = ""),
+    yaxis = list(title = ""),
     separators = ".", 
     legend = list(title = list(text = "<b>Género<br>")),
-    margin = list(t = 50),
-    hovermode = "closest"
+    margin = list(t = 70, b = 100),
+    hovermode = "closest",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
   )
 
 p25
@@ -1436,18 +1713,31 @@ p26 <- plot_ly(titulados_ac_2, x = ~año) %>%
   ) %>%
   layout(
     title = list(
-      text = "<b>Gráfico 26. Titulación de pregrado por género - Arte y Arquitectura (2018-2024)</b>",
+      text = "<b>Gráfico 26. Titulación de pregrado por género</b><br><span style='font-size:13px'>Arte y Arquitectura (2018-2024)</span>",
       font = list(size = 13),
-      x = 0.5
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
     ),
     barmode = 'group',
     xaxis = list(title = "", tickvals = 2018:2024),
-    yaxis = list(
-      title = ""),
+    yaxis = list(title = ""),
     separators = ".", 
     legend = list(title = list(text = "<b>Género<br>")),
-    margin = list(t = 50),
-    hovermode = "closest"
+    margin = list(t = 70, b = 100),
+    hovermode = "closest",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
   )
 
 p26
@@ -1487,18 +1777,31 @@ p27 <- plot_ly(titulados_ac_3, x = ~año) %>%
   ) %>%
   layout(
     title = list(
-      text = "<b>Gráfico 27. Titulación de pregrado por género - Ciencias Básicas (2018-2024)</b>",
+      text = "<b>Gráfico 27. Titulación de pregrado por género</b><br><span style='font-size:13px'>Ciencias Básicas (2018-2024)</span>",
       font = list(size = 13),
-      x = 0.5
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
     ),
     barmode = 'group',
     xaxis = list(title = "", tickvals = 2018:2024),
-    yaxis = list(
-      title = ""),
+    yaxis = list(title = ""),
     separators = ".", 
     legend = list(title = list(text = "<b>Género<br>")),
-    margin = list(t = 50),
-    hovermode = "closest"
+    margin = list(t = 70, b = 100),
+    hovermode = "closest",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
   )
 
 p27
@@ -1538,18 +1841,31 @@ p28 <- plot_ly(titulados_ac_4, x = ~año) %>%
   ) %>%
   layout(
     title = list(
-      text = "<b>Gráfico 28. Titulación de pregrado por género - Ciencias Sociales (2018-2024)</b>",
+      text = "<b>Gráfico 28. Titulación de pregrado por género</b><br><span style='font-size:13px'>Ciencias Sociales (2018-2024)</span>",
       font = list(size = 13),
-      x = 0.5
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
     ),
     barmode = 'group',
     xaxis = list(title = "", tickvals = 2018:2024),
-    yaxis = list(
-      title = ""),
+    yaxis = list(title = ""),
     separators = ".", 
     legend = list(title = list(text = "<b>Género<br>")),
-    margin = list(t = 50),
-    hovermode = "closest"
+    margin = list(t = 70, b = 100),
+    hovermode = "closest",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
   )
 
 p28
@@ -1589,18 +1905,31 @@ p29 <- plot_ly(titulados_ac_5, x = ~año) %>%
   ) %>%
   layout(
     title = list(
-      text = "<b>Gráfico 29. Titulación de pregrado por género - Derecho (2023-2024)</b>",
+      text = "<b>Gráfico 29. Titulación de pregrado por género</b><br><span style='font-size:13px'>Derecho (2023-2024)</span>",
       font = list(size = 13),
-      x = 0.5
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
     ),
     barmode = 'group',
-    xaxis = list(title = "", tickvals = 2023:2024),
-    yaxis = list(
-      title = ""),
+    xaxis = list(title = "", tickvals = 2018:2024),
+    yaxis = list(title = ""),
     separators = ".", 
     legend = list(title = list(text = "<b>Género<br>")),
-    margin = list(t = 50),
-    hovermode = "closest"
+    margin = list(t = 70, b = 100),
+    hovermode = "closest",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
   )
 
 p29
@@ -1640,18 +1969,31 @@ p30 <- plot_ly(titulados_ac_6, x = ~año) %>%
   ) %>%
   layout(
     title = list(
-      text = "<b>Gráfico 30. Titulación de pregrado por género - Educación (2018-2024)</b>",
+      text = "<b>Gráfico 30. Titulación de pregrado por género</b><br><span style='font-size:13px'>Educación (2018-2024)</span>",
       font = list(size = 13),
-      x = 0.5
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
     ),
     barmode = 'group',
     xaxis = list(title = "", tickvals = 2018:2024),
-    yaxis = list(
-      title = ""),
+    yaxis = list(title = ""),
     separators = ".", 
     legend = list(title = list(text = "<b>Género<br>")),
-    margin = list(t = 50),
-    hovermode = "closest"
+    margin = list(t = 70, b = 100),
+    hovermode = "closest",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
   )
 
 p30
@@ -1691,18 +2033,31 @@ p31 <- plot_ly(titulados_ac_7, x = ~año) %>%
   ) %>%
   layout(
     title = list(
-      text = "<b>Gráfico 31. Titulación de pregrado por género - Humanidades (2018-2024)</b>",
+      text = "<b>Gráfico 31. Titulación de pregrado por género</b><br><span style='font-size:13px'>Humanidades (2018-2024)</span>",
       font = list(size = 13),
-      x = 0.5
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
     ),
     barmode = 'group',
     xaxis = list(title = "", tickvals = 2018:2024),
-    yaxis = list(
-      title = ""),
+    yaxis = list(title = ""),
     separators = ".", 
     legend = list(title = list(text = "<b>Género<br>")),
-    margin = list(t = 50),
-    hovermode = "closest"
+    margin = list(t = 70, b = 100),
+    hovermode = "closest",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
   )
 
 p31
@@ -1742,18 +2097,31 @@ p32 <- plot_ly(titulados_ac_8, x = ~año) %>%
   ) %>%
   layout(
     title = list(
-      text = "<b>Gráfico 32. Titulación de pregrado por género - Salud (2018-2024)</b>",
+      text = "<b>Gráfico 32. Titulación de pregrado por género</b><br><span style='font-size:13px'>Salud (2018-2024)</span>",
       font = list(size = 13),
-      x = 0.5
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
     ),
     barmode = 'group',
     xaxis = list(title = "", tickvals = 2018:2024),
-    yaxis = list(
-      title = ""),
+    yaxis = list(title = ""),
     separators = ".", 
     legend = list(title = list(text = "<b>Género<br>")),
-    margin = list(t = 50),
-    hovermode = "closest"
+    margin = list(t = 70, b = 100),
+    hovermode = "closest",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
   )
 
 p32
@@ -1793,18 +2161,31 @@ p33 <- plot_ly(titulados_ac_9, x = ~año) %>%
   ) %>%
   layout(
     title = list(
-      text = "<b>Gráfico 33. Titulación de pregrado por género - Tecnología (2018-2024)</b>",
+      text = "<b>Gráfico 33. Titulación de pregrado por género</b><br><span style='font-size:13px'>Tecnología (2018-2024)</span>",
       font = list(size = 13),
-      x = 0.5
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
     ),
     barmode = 'group',
     xaxis = list(title = "", tickvals = 2018:2024),
-    yaxis = list(
-      title = ""),
+    yaxis = list(title = ""),
     separators = ".", 
     legend = list(title = list(text = "<b>Género<br>")),
-    margin = list(t = 50),
-    hovermode = "closest"
+    margin = list(t = 70, b = 100),
+    hovermode = "closest",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
   )
 
 p33
@@ -1822,11 +2203,11 @@ tipo_cuidado <- cuidados %>%
   ) %>%
   mutate(menores_mayores = recode(menores_mayores,
                                   "Solo menores" = "Sólo NNA",
-                                  "Solo mayores" = "Sólo personas adultas con dependencia funcional",
+                                  "Solo mayores" = "Sólo personas adultas",
                                   "Menores y mayores" = "Ambos")) %>%
   mutate(menores_mayores = factor(menores_mayores,
                                   levels = c("Sólo NNA", 
-                                             "Sólo personas adultas con dependencia funcional", 
+                                             "Sólo personas adultas", 
                                              "Ambos"),
                                   ordered = T)) %>%
   mutate(hovertext = paste0(
@@ -1841,8 +2222,8 @@ p34 <- plot_ly(
   x = ~menores_mayores,
   y = ~porcentaje,
   color = ~menores_mayores,  
-  colors = c("Sólo NNA" = "red4", 
-             "Sólo personas adultas con dependencia funcional" = "steelblue3", 
+  colors = c("Sólo NNA" = "red3", 
+             "Sólo personas adultas" = "steelblue3", 
              "Ambos" = "grey80"),
   type = "bar",
   text = ~hovertext,
@@ -1857,10 +2238,10 @@ p34 <- plot_ly(
                  font = list(size = 13)),
     xaxis = list(title = "",
                  categoryorder = "array",  
-                 categoryarray = c("Sólo NNA", "Sólo personas adultas con dependencia funcional", "Ambos")),
+                 categoryarray = c("Sólo NNA", "Sólo personas adultas", "Ambos"),
+                 tickangle = 0),
     yaxis = list(title = "",
-                 ticksuffix = "%",
-                 range = c(0,100)),  
+                 ticksuffix = "%"),  
     legend = list(
       orientation = "v",
       x = 1.05,  
@@ -1868,11 +2249,22 @@ p34 <- plot_ly(
       xanchor = "left",
       title = list(text = "<b>Persona(s) cuidada(s)</b>")
     ),
-    margin = list(r = 150,  
-                  b = 50, t = 50),
+    margin = list(r = 150, b = 100, t = 50),
     hoverlabel = list(
       bgcolor = "white",
       font = list(color = "black")
+    ),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
     )
   )
 
@@ -1883,7 +2275,7 @@ p34
 # Preparar datos
 # Calcular porcentajes por tipo de cuidado y género
 porcentajes <- cuidados %>%
-  filter(genero != "Transmasculino" & genero != "Prefiero no decir" & genero != "Transfemenino") %>%
+  filter(genero %in% c("Masculino", "Femenino", "Género diverso")) %>%
   pivot_longer(cols = c(cuidado_menor, cuidado_mayores), 
                names_to = "tipo_cuidado", 
                values_to = "cuida") %>%
@@ -1894,13 +2286,13 @@ porcentajes <- cuidados %>%
     .groups = "drop") %>%
   mutate(porcentaje = round((cuidan/total)*100, 0)) %>%
   mutate(tipo_cuidado = recode(tipo_cuidado,
-    "cuidado_menor" = "Cuida NNA",
-    "cuidado_mayores" = "Cuida personas adultas"
+    "cuidado_menor" = "NNA",
+    "cuidado_mayores" = "Persona adulta"
   )) %>%
   mutate(
     hovertext_barras = paste0(
       "Género: ", genero, "<br>",
-      "Tipo de cuidado: ", ifelse(tipo_cuidado == "Cuida NNA", "Cuidado de menores", "Cuidado de mayores"), "<br>",
+      "Tipo de cuidado: ", ifelse(tipo_cuidado == "NNA", "Cuidado de menores", "Cuidado de mayores"), "<br>",
       "Personas que cuidan:", cuidan, "/", total ,"<br>",
       "Porcentaje: ", round(porcentaje, 0), "%"
     )
@@ -1911,7 +2303,7 @@ p35 <- plot_ly(
   x = ~genero,
   y = ~porcentaje,
   color = ~tipo_cuidado,
-  colors = c("Cuida NNA" = "steelblue2", "Cuida personas adultas" = "grey80"),
+  colors = c("NNA" = "steelblue2", "Persona adulta" = "grey80"),
   type = "bar",
   text = ~hovertext_barras,
   hoverinfo = "text",
@@ -1923,17 +2315,28 @@ p35 <- plot_ly(
                  x = 0.5, font = list(size = 13)),
     xaxis = list(title = ""),
     yaxis = list(
-      title = "Porcentaje (%)"  
+      title = "", ticksuffix = "%"  
     ),
-    # Leyenda a la derecha
     legend = list(
       orientation = "v",  
       x = 1,             
       y = 0.5,           
       xanchor = "left",   
-      title = list(text = "<b>Tipo de cuidado</b>")  
+      title = list(text = "<b>Persona cuidada</b>")  
     ),
-    margin = list(r = 120)  
+    margin = list(r = 120, b = 100),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
   )
 
 p35
@@ -1971,10 +2374,11 @@ horas_cuidado <- cuidados %>%
 # Graficar
 p36 <- plot_ly(
   data = horas_cuidado,
-  x = ~horas_cuidado,
-  y = ~porcentaje,
+  x = ~porcentaje,
+  y = ~horas_cuidado,
   color = ~genero,
   colors = c("Femenino" = "#8D69F3", "Masculino" = "#41776E"),
+  orientation = 'h',
   type = "bar",
   text = ~hovertext,
   hoverinfo = "text",
@@ -1987,9 +2391,10 @@ p36 <- plot_ly(
       x = 0.5,
       font = list(size = 13)
     ),
-    xaxis = list(title = ""),
+    xaxis = list(title = "", ticksuffix = "%", range = c(0,40)),
     yaxis = list(
-      title = "Porcentaje (%)"
+      title = "", categoryorder = "array",
+      autorange = "reversed"
     ),
     legend = list(
       title = list(text = "<b>Género</b>"),
@@ -2000,9 +2405,19 @@ p36 <- plot_ly(
       yanchor = "middle",     
       font = list(size = 12)  
     ),
-    margin = list(r = 150), 
-    xaxis = list(title = "Género"),
-    yaxis = list(title = "Porcentaje (%)", range = c(0, 100))
+    margin = list(r = 150, b = 100), 
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
   )
 
 p36
@@ -2056,9 +2471,8 @@ p37 <- plot_ly(
     ),
     xaxis = list(title = ""),
     yaxis = list(
-      title = "Porcentaje (%)"
+      title = "", ticksuffix = "%", range = c(0,70)
     ),
-    # Ajustes de leyenda (posición derecha)
     legend = list(
       title = list(text = "<b>Género</b>"),
       orientation = "v",       
@@ -2068,9 +2482,19 @@ p37 <- plot_ly(
       yanchor = "middle",     
       font = list(size = 13)  
     ),
-    margin = list(r = 150),   
-    xaxis = list(title = "Género"),
-    yaxis = list(title = "Porcentaje (%)")
+    margin = list(r = 150, b = 100),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
   )
 
 p37
@@ -2129,7 +2553,6 @@ p38 <- plot_ly(
   textposition = 'none',
   marker = list(
     color = "#8D69F3",
-    line = list(color = "#2d3e50", width = 1.5),
     opacity = 0.8
   )
 ) %>%
@@ -2143,7 +2566,7 @@ p38 <- plot_ly(
     ),
     xaxis = list(
       title = "",
-      range = c(0, 100),
+      range = c(0, 60),
       ticksuffix = "%",
       showgrid = T,
       zerolinecolor = "#E5E5E5"
@@ -2161,8 +2584,19 @@ p38 <- plot_ly(
       align = "left"
     ),
     plot_bgcolor = "rgba(0,0,0,0)",
-    paper_bgcolor = "rgba(0,0,0,0)"
-  )
+    paper_bgcolor = "rgba(0,0,0,0)",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+  ))
 
 p38
 
@@ -2254,7 +2688,7 @@ p39 <- plot_ly(
     ),
     xaxis = list(
       title = "",
-      range = c(0, 100),
+      range = c(0, 80),
       ticksuffix = "%",
       showgrid = T,
       gridcolor = "#f0f0f0",  
@@ -2281,11 +2715,22 @@ p39 <- plot_ly(
       y = 0.5,   
       xanchor = "left", 
       title = list(text = "<b>Género</b>", font = list(size = 12)),
-      font = list(size = 11),
+      font = list(size = 12),
       bgcolor = "rgba(255,255,255,0.7)"  
     ),
     plot_bgcolor = "rgba(0,0,0,0)",  
-    paper_bgcolor = "rgba(0,0,0,0)")
+    paper_bgcolor = "rgba(0,0,0,0)",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )))
 
 p39
 
@@ -2342,13 +2787,12 @@ p40 <- plot_ly(
   textposition = 'none',
   marker = list(
     color = "#8D69F3",
-    line = list(color = "#2d3e50", width = 1.5),
     opacity = 0.8
   )
 ) %>%
   layout(
     title = list(
-      text = "<b>Gráfico 41. Apoyos desde la comunidad universitaria</b>",
+      text = "<b>Gráfico 40. Apoyos desde la comunidad universitaria</b>",
       x = 0.25,
       font = list(size = 13),
       xanchor = "left",
@@ -2356,7 +2800,7 @@ p40 <- plot_ly(
     ),
     xaxis = list(
       title = "",
-      range = c(0, 100),
+      range = c(0, 40),
       ticksuffix = "%",
       showgrid = T,
       zerolinecolor = "#E5E5E5"
@@ -2373,14 +2817,27 @@ p40 <- plot_ly(
       align = "left"
     ),
     plot_bgcolor = "rgba(0,0,0,0)",
-    paper_bgcolor = "rgba(0,0,0,0)"
+    paper_bgcolor = "rgba(0,0,0,0)",
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
   )
+
+)
 
 p40
 
 #///////////////////////////////////////////////////////////////////////////////
 # Gráficos Encuesta LGBTQIA+
-# Gráfico. Respeto de derechos de personas LGBTQIA+ según identidad de género----
+# Gráfico. Respeto de derechos de personas LGBTIQA+ según identidad de género----
 # Preparar datos
 respeto_1 <- bd_lgbt_2 %>%
   filter(ident_gen != "Otro (especifique)") %>%
@@ -2398,7 +2855,7 @@ respeto_1 <- bd_lgbt_2 %>%
     )
   )
 # Gráficar
-p42 <- plot_ly(
+p41 <- plot_ly(
   data = respeto_1,
   x = ~ident_gen,
   y = ~porcentaje,
@@ -2409,22 +2866,42 @@ p42 <- plot_ly(
   hovertext = ~texto_tooltip,
   textposition = 'none'
 ) %>%
-  layout(
-    title = "Gráfico 42. Respeto de derechos de personas LGBT según identidad de género",
-    font = list(size = 12),
-    xaxis = list(title = ""),
-    yaxis = list(title = "", 
-                 range = c(0, 100),
-                 ticksuffix = "%")
+  layout(title = list(
+    text = "<b>Gráfico 41. ¿Se respetan los derechos de las personas LGBTIQA+ en la USACH?, según identidad de género</b><br><span style='font-size:13px'>Personas que responden 'Sí'</span>",
+    font = list(size = 13),
+    x = 0.5,
+    xanchor = 'center',
+    yanchor = 'top'
+  ),
+  xaxis = list(title = "", tickangle = 0),
+  yaxis = list(title = "", ticksuffix = "%"),
+  barmode = "group",          
+  showlegend = F,
+  margin = list(b = 120, t = 80),
+  annotations = list(
+    list(
+      x = 0.5,   
+      y = -0.225,  
+      xref = "paper",  
+      yref = "paper",
+      text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+      showarrow = F,
+      font = list(size = 10.5, color = "grey"),
+      align = "center"
+    )
+  )
   )
 
-p42
+p41
 
 #///////////////////////////////////////////////////////////////////////////////
-# Gráfico. Respeto de derechos LGBTQIA+ según orientación sexual----
+# Gráfico. Respeto de derechos LGBTIQA+ según orientación sexual----
 # Preparar datos
 respeto_2 <- bd_lgbt_2 %>%
   filter(orient_sex != "Otro (especifique)" & orient_sex != "demisexual") %>%
+  mutate(orient_sex = recode(orient_sex,
+                             "No sabe/no contesta" = "NS/NC*"
+  )) %>%
   group_by(orient_sex) %>%
   summarise(
     total_respuestas = n(),
@@ -2439,7 +2916,7 @@ respeto_2 <- bd_lgbt_2 %>%
     )
   )
 # Gráficar
-p43 <- plot_ly(
+p42 <- plot_ly(
   data = respeto_2,
   x = ~orient_sex,
   y = ~porcentaje,
@@ -2450,16 +2927,33 @@ p43 <- plot_ly(
   hovertext = ~texto_tooltip,
   textposition = 'none'
 ) %>%
-  layout(
-    title = "Gráfico 43. Respeto de derechos de personas LGBT según orientación sexual",
-    font = list(size = 12),
-    xaxis = list(title = ""),
-    yaxis = list(title = "", 
-                 range = c(0, 100),
-                 ticksuffix = "%")
+  layout(title = list(
+    text = "<b>Gráfico 42. ¿Se respetan los derechos de las personas LGBTIQA+ en la USACH?, según orientación sexual</b><br><span style='font-size:13px'>Personas que responden 'Sí'</span>",
+    font = list(size = 13),
+    x = 0.5,
+    xanchor = 'center',
+    yanchor = 'top'
+  ),
+  xaxis = list(title = "", tickangle = 0),
+  yaxis = list(title = "", ticksuffix = "%"),
+  barmode = "group",          
+  showlegend = F,
+  margin = list(b = 120, t = 80),
+  annotations = list(
+    list(
+      x = 0.5,   
+      y = -0.225,  
+      xref = "paper",  
+      yref = "paper",
+      text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i><br><i>NS/NC* = No sabe/No contesta</i>",
+      showarrow = F,
+      font = list(size = 10.5, color = "grey"),
+      align = "center"
+    )
+  )
   )
 
-p43
+p42
 
 #///////////////////////////////////////////////////////////////////////////////
 # Gráfico. Sufrió discriminación en la Usach por identidad de género----
@@ -2484,7 +2978,7 @@ discr_1 <- bd_lgbt_2 %>%
       "Porcentaje: ", round(porcentaje, 0), "%</b>"))
   
 # Gráficar
-p44 <- plot_ly(
+p43 <- plot_ly(
   data = discr_1,
   x = ~ident_gen,
   y = ~porcentaje,
@@ -2496,14 +2990,33 @@ p44 <- plot_ly(
   textposition = 'none'
 ) %>%
   layout(
-    title = "Gráfico 44. ¿Sufrió discriminación alguna vez en la Usach?",
-    font = list(size = 12),
-    xaxis = list(title = ""),
-    yaxis = list(title = "", 
-                 ticksuffix = "%")
-  )
+    title = list(
+      text = "<b>Gráfico 43. ¿Sufrió discriminación alguna vez en la USACH?</b><br><span style='font-size:13px'>Personas que responden 'Sí'</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(title = "", tickangle = 0),
+    yaxis = list(title = "", ticksuffix = "%"),
+    barmode = "group",          
+    showlegend = F,
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
+    )
 
-p44
+p43
 
 #///////////////////////////////////////////////////////////////////////////////
 # Gráfico. Sufrió discriminación en la Usach por orientación sexual---
@@ -2523,7 +3036,7 @@ discr_2 <- bd_lgbt_2 %>%
       "Porcentaje: ", round(porcentaje, 0), "%</b>"))
 
 # Gráficar
-p45 <- plot_ly(
+p44 <- plot_ly(
   data = discr_2,
   x = ~orient_sex,
   y = ~porcentaje,
@@ -2535,499 +3048,456 @@ p45 <- plot_ly(
   textposition = 'none'
 ) %>%
   layout(
-    title = "Gráfico 45. ¿Sufrió discriminación alguna vez en la Usach durante 2023?",
-    font = list(size = 12),
-    xaxis = list(title = ""),
-    yaxis = list(title = "", 
-                 ticksuffix = "%")
+    title = list(
+      text = "<b>Gráfico 44. ¿Sufrió discriminación alguna vez en la USACH durante 2023?</b><br><span style='font-size:13px'>Personas que responden 'Sí'</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(title = "", tickangle = 0),
+    yaxis = list(title = "", ticksuffix = "%", range = c(0,20)),
+    barmode = "group",          
+    showlegend = F,
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
+  )
+
+p44
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. Situaciones de violencia por identidad de género----
+# Preparar datos - Femenino
+violencias_fem <- data.frame(
+  tipo_violencia = c("Hostigamiento", "Le ridiculizaron", "Le acosaron sexualmente"),
+  porcentaje = c(31, 44, 37)
+)
+
+# Graficar
+p45 <- plot_ly(
+  data = violencias_fem,
+  x = ~tipo_violencia,          
+  y = ~porcentaje,              
+  type = "bar",
+  color = ~tipo_violencia,      
+  colors = colorRampPalette(brewer.pal(3, "Set1"))(3), 
+  text = ~paste0(porcentaje, "%"), 
+  textposition = 'none',
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Porcentaje:", porcentaje, "%"
+  )
+) %>%
+  layout(
+    title = list(
+      text = "<b>Gráfico 45. Tipos de violencia por identidad de género</b><br><span style='font-size:12px'>Femenino</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(title = "", tickangle = 0, categoryorder = "total ascending"),
+    yaxis = list(title = "", ticksuffix = "%", range = c(0,50)),
+    barmode = "group",          
+    showlegend = F,
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
   )
 
 p45
 
 #///////////////////////////////////////////////////////////////////////////////
-# Gráfico. Situaciones de violencia por identidad de género----
-# Preparar datos - Femenino
-violencias_fem <- bd_lgbt_2 %>%
-  filter(ident_gen == "Femenino") %>%
-  select(ident_gen, x7_3, x7_4, x7_9) %>%
-  group_by(ident_gen) %>%
-  summarise(
-    total_respuestas = n(),
-    positivas_1 = sum(x7_3 == "Sí", na.rm = T),
-    positivas_2 = sum(x7_4 == "Sí", na.rm = T),
-    positivas_3 = sum(x7_9 == "Sí", na.rm = T),
-    porcentaje_1 = positivas_1/total_respuestas*100,
-    porcentaje_2 = positivas_2/total_respuestas*100,
-    porcentaje_3 = positivas_3/total_respuestas*100,
-    .groups = 'drop'
-  )
-# Pivotar datos
-violencias_fem_1 <- violencias_fem %>%
-  pivot_longer(
-    cols = starts_with("porcentaje_"),
-    names_to = "tipo_violencia",
-    values_to = "porcentaje"
-  ) %>%
-  mutate(
-    tipo_violencia = case_when(
-      tipo_violencia == "porcentaje_1" ~ "Hostigamiento por ser LGBTQIA+",
-      tipo_violencia == "porcentaje_2" ~ "Le ridiculizaron por ser LGBTQIA+",
-      tipo_violencia == "porcentaje_3" ~ "Le acosaron sexualmente",
-      T ~ tipo_violencia
-    )
-  )
+# Preparar datos - Masculino
+violencias_masc <- data.frame(
+  tipo_violencia = c("Le ridiculizaron", "Le insultaron", "Recibió hostigamiento"),
+  porcentaje = c(50, 38, 31)
+)
 
 # Graficar
 p46 <- plot_ly(
-  data = violencias_fem_1,
+  data = violencias_masc,
   x = ~tipo_violencia,          
   y = ~porcentaje,              
   type = "bar",
-  color = ~tipo_violencia,      
-  marker = list(color = "steelblue2"), 
-  text = ~paste0(round(porcentaje, 1), "%"), 
+  color = ~tipo_violencia,
+  colors = colorRampPalette(brewer.pal(3, "Set1"))(3), 
   textposition = 'none',
+  text = ~paste0(porcentaje, "%"),    
   hoverinfo = "text",
   hovertext = ~paste(
-    "<br>Porcentaje:", round(porcentaje, 1), "%"
+    "<br>Porcentaje:", porcentaje, "%"
   )
 ) %>%
   layout(
-    title = "Gráfico 46. Tipos de violencia experimentadas por identidad de género - Femenino",
-    font = list(size = 12),
-    xaxis = list(title = ""),
+    title = list(
+      text = "<b>Gráfico 46. Tipos de violencia por identidad de género</b><br><span style='font-size:12px'>Masculino</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(title = "", tickangle = 0, categoryorder = "total ascending"),
     yaxis = list(title = "", ticksuffix = "%"),
     barmode = "group",          
-    showlegend = FALSE      
+    showlegend = F,
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i><br>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
   )
 
 p46
 
 #///////////////////////////////////////////////////////////////////////////////
-# Preparar datos - Masculino
-violencias_masc <- bd_lgbt_2 %>%
-  filter(ident_gen == "Masculino") %>%
-  select(ident_gen, x7_1, x7_3, x7_4,) %>%
-  group_by(ident_gen) %>%
-  summarise(
-    total_respuestas = n(),
-    positivas_1 = sum(x7_1 == "Sí", na.rm = T),
-    positivas_2 = sum(x7_3 == "Sí", na.rm = T),
-    positivas_3 = sum(x7_4 == "Sí", na.rm = T),
-    porcentaje_1 = positivas_1/total_respuestas*100,
-    porcentaje_2 = positivas_2/total_respuestas*100,
-    porcentaje_3 = positivas_3/total_respuestas*100,
-    .groups = 'drop'
-  )
-# Pivotar datos
-violencias_masc_1 <- violencias_masc %>%
-  pivot_longer(
-    cols = starts_with("porcentaje_"),
-    names_to = "tipo_violencia",
-    values_to = "porcentaje"
-  ) %>%
-  mutate(
-    tipo_violencia = case_when(
-      tipo_violencia == "porcentaje_1" ~ "Le insultaron por ser LGBTQIA+",
-      tipo_violencia == "porcentaje_2" ~ "Le hostigaron por ser LGBTQIA+",
-      tipo_violencia == "porcentaje_3" ~ "Le ridiculizaron por ser LGBTQIA+",
-      T ~ tipo_violencia
-    )
-  )
+# Preparar datos - Trans
+violencias_trans <- data.frame(
+  tipo_violencia = c("No respetaron su IG*", "Dificultaron el derecho a registrar su IG*",
+                    "Le ridiculizaron"),
+  porcentaje = c(91, 26, 22)
+)
 
 # Graficar
 p47 <- plot_ly(
-  data = violencias_masc_1,
+  data = violencias_trans,
   x = ~tipo_violencia,          
   y = ~porcentaje,              
   type = "bar",
-  color = ~tipo_violencia,      
-  marker = list(color = "green4"),  
+  color = ~tipo_violencia,
+  colors = colorRampPalette(brewer.pal(3, "Set1"))(3), 
   textposition = 'none',
-  text = ~paste0(round(porcentaje, 1), "%"),    
+  text = ~paste0(porcentaje, "%"),    
   hoverinfo = "text",
   hovertext = ~paste(
-    "<br>Porcentaje:", round(porcentaje, 1), "%"
+    "<br>Porcentaje:", porcentaje, "%"
   )
 ) %>%
   layout(
-    title = "Gráfico 47. Tipos de violencia experimentadas por identidad de género - Masculino",
-    font = list(size = 12),
-    xaxis = list(title = ""),
-    yaxis = list(title = "", ticksuffix = "%"),
+    title = list(
+      text = "<b>Gráfico 47. Tipos de violencia por identidad de género</b><br><span style='font-size:12px'>Trans</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(title = "", tickangle = 0, categoryorder = "total ascending"),
+    yaxis = list(title = "", ticksuffix = "%", range = c(0,100)),
     barmode = "group",          
-    showlegend = FALSE      
+    showlegend = F,
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i><br><i>IG* = Identidad de Género</i>",
+        showarrow = F,
+        font = list(size = 10, color = "grey"),
+        align = "center"
+      )
+    )
   )
 
 p47
 
 #///////////////////////////////////////////////////////////////////////////////
-# Preparar datos - Trans
-violencias_trans <- bd_lgbt_2 %>%
-  mutate(ident_gen = case_when(
-    ident_gen == "Transmasculino" ~ "Trans",
-    ident_gen == "Transfemenino" ~ "Trans",
-    T ~ ident_gen
-  )) %>%
-  filter(ident_gen == "Trans") %>%
-  select(ident_gen, x7_4, x7_8,) %>%
-  group_by(ident_gen) %>%
-  summarise(
-    total_respuestas = n(),
-    positivas_1 = sum(x7_4 == "Sí", na.rm = T),
-    positivas_2 = sum(x7_8 == "Sí", na.rm = T),
-    porcentaje_1 = positivas_1/total_respuestas*100,
-    porcentaje_2 = positivas_2/total_respuestas*100,
-    .groups = 'drop')
-
-# Pivotar datos
-violencias_trans_1 <- violencias_trans %>%
-  pivot_longer(
-    cols = starts_with("porcentaje_"),
-    names_to = "tipo_violencia",
-    values_to = "porcentaje"
-  ) %>%
-  mutate(
-    tipo_violencia = case_when(
-      tipo_violencia == "porcentaje_1" ~ "Le ridiculizaron por ser LGBTQIA+",
-      tipo_violencia == "porcentaje_2" ~ "Le negaron o dificultaron el derecho a registrar su identidad",
-      T ~ tipo_violencia
-    )
-  )
+# Preparar datos - Género diverso
+violencias_gd <- data.frame(
+  tipo_violencia = c("No respetaron su IG*", "Le ridiculizaron", 
+                     "Dificultaron el derecho a registrar su IG*"),
+  porcentaje = c(88, 29, 21)
+  
+)
 
 # Graficar
 p48 <- plot_ly(
-  data = violencias_trans_1,
+  data = violencias_gd,
   x = ~tipo_violencia,          
   y = ~porcentaje,              
   type = "bar",
   color = ~tipo_violencia,      
-  marker = list(color = "purple3"), 
+  colors = colorRampPalette(brewer.pal(3, "Set1"))(3), 
   textposition = 'none',
-  text = ~paste0(round(porcentaje, 1), "%"),    
+  text = ~paste0(porcentaje, "%"),    
   hoverinfo = "text",
   hovertext = ~paste(
-    "<br>Porcentaje:", round(porcentaje, 1), "%"
+    "<br>Porcentaje:", porcentaje, "%"
   )
 ) %>%
   layout(
-    title = "Gráfico 48. Tipos de violencia experimentadas por identidad de género - Trans",
-    font = list(size = 12),
-    xaxis = list(title = ""),
-    yaxis = list(title = "", ticksuffix = "%"),
+    title = list(
+      text = "<b>Gráfico 48. Tipos de violencia por identidad de género</b><br><span style='font-size:12px'>Género diverso</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(title = "", tickangle = 0, categoryorder = "total ascending"),
+    yaxis = list(title = "", ticksuffix = "%", range = c(0,90)),
     barmode = "group",          
-    showlegend = FALSE      
+    showlegend = F,
+    margin = list(b = 100, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i><br><i>IG* = Identidad de Género</i>",
+        showarrow = F,
+        font = list(size = 10, color = "grey"),
+        align = "center"
+      )
+    )
   )
 
 p48
 
 #///////////////////////////////////////////////////////////////////////////////
-# Preparar datos - Género diverso
-violencias_gd <- bd_lgbt_2 %>%
-  filter(ident_gen == "Género diverso") %>%
-select(ident_gen, x7_4, x7_6, x7_8,) %>%
-  group_by(ident_gen) %>%
-  summarise(
-    total_respuestas = n(),
-    positivas_1 = sum(x7_4 == "Sí", na.rm = T),
-    positivas_2 = sum(x7_6 == "Sí", na.rm = T),
-    positivas_3 = sum(x7_8 == "Sí", na.rm = T),
-    porcentaje_1 = positivas_1/total_respuestas*100,
-    porcentaje_2 = positivas_2/total_respuestas*100,
-    porcentaje_3 = positivas_3/total_respuestas*100,
-    .groups = 'drop')
-
-# Pivotar datos
-violencias_gd_1 <- violencias_gd %>%
-  pivot_longer(
-    cols = starts_with("porcentaje_"),
-    names_to = "tipo_violencia",
-    values_to = "porcentaje"
-  ) %>%
-  mutate(
-    tipo_violencia = case_when(
-      tipo_violencia == "porcentaje_1" ~ "Le ridiculizaron por ser LGBTQIA+",
-      tipo_violencia == "porcentaje_2" ~ "Le trataron sin respetar el género",
-      tipo_violencia == "porcentaje_3" ~ "Le negaron o dificultaron el derecho a registrar su identidad",
-      T ~ tipo_violencia
-    )
-  )
+# Gráfico. Situaciones de violencia por orientación sexual----
+# Preparar datos - Lesbiana
+violencias_lesb <- data.frame(
+  tipo_violencia = c("No respetaron su IG*", "Le ridiculizaron", "Le acosaron sexualmente",
+                     "Le insultaron", "Le gritaron"),
+  porcentaje = c(41, 36, 36, 32, 32)
+)
 
 # Graficar
 p49 <- plot_ly(
-  data = violencias_gd_1,
+  data = violencias_lesb,
   x = ~tipo_violencia,          
   y = ~porcentaje,              
   type = "bar",
   color = ~tipo_violencia,      
-  marker = list(color = "#FF69B4"),
+  colors = colorRampPalette(brewer.pal(5, "BuPu"))(5),
   textposition = 'none',
-  text = ~paste0(round(porcentaje, 1), "%"),    
+  text = ~paste0(porcentaje, "%"),    
   hoverinfo = "text",
   hovertext = ~paste(
-    "<br>Porcentaje:", round(porcentaje, 1), "%"
+    "<br>Porcentaje:", porcentaje, "%"
   )
 ) %>%
   layout(
-    title = "Gráfico 49. Tipos de violencia experimentadas por identidad de género - Género diverso",
-    font = list(size = 12),
-    xaxis = list(title = ""),
-    yaxis = list(title = "", ticksuffix = "%"),
+    title = list(
+      text = "<b>Gráfico 49. Tipos de violencia por orientación sexual</b><br><span style='font-size:12px'>Lesbiana</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(
+      title = "",
+      tickangle = 0,          
+      automargin = T,
+      categoryorder = "total ascending"
+    ),
+    yaxis = list(title = "", ticksuffix = "%", range = c(0,50)),
     barmode = "group",          
-    showlegend = FALSE      
+    showlegend = F,
+    margin = list(b = 120, t = 80), 
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i><br><i>IG* = Identidad de Género</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
   )
 
 p49
 
 #///////////////////////////////////////////////////////////////////////////////
-# Gráfico. Situaciones de violencia por orientación sexual----
-# Preparar datos - Lesbiana
-violencias_lesb <- bd_lgbt_2 %>%
-  filter(orient_sex == "Lesbiana") %>%
-  select(orient_sex, x7_1, x7_2, x7_4, x7_6, x7_9) %>%
-  group_by(orient_sex) %>%
-  summarise(
-    total_respuestas = n(),
-    positivas_1 = sum(x7_1 == "Sí", na.rm = T),
-    positivas_2 = sum(x7_2 == "Sí", na.rm = T),
-    positivas_3 = sum(x7_4 == "Sí", na.rm = T),
-    positivas_4 = sum(x7_6 == "Sí", na.rm = T),
-    positivas_5 = sum(x7_9 == "Sí", na.rm = T),
-    porcentaje_1 = positivas_1/total_respuestas*100,
-    porcentaje_2 = positivas_2/total_respuestas*100,
-    porcentaje_3 = positivas_3/total_respuestas*100,
-    porcentaje_4 = positivas_4/total_respuestas*100,
-    porcentaje_5 = positivas_5/total_respuestas*100,
-    .groups = 'drop')
-# Pivotar datos
-violencias_lesb_1 <- violencias_lesb %>%
-  pivot_longer(
-    cols = starts_with("porcentaje_"),
-    names_to = "tipo_violencia",
-    values_to = "porcentaje"
-  ) %>%
-  mutate(
-    tipo_violencia = case_when(
-      tipo_violencia == "porcentaje_1" ~ "Le insultaron por ser LGBTQIA+",
-      tipo_violencia == "porcentaje_2" ~ "Le gritaron por ser LGBTQIA+",
-      tipo_violencia == "porcentaje_3" ~ "Le ridiculizaron por ser LGBTQIA+",
-      tipo_violencia == "porcentaje_4" ~ "Le trataron sin respetar el género",
-      tipo_violencia == "porcentaje_5" ~ "Le acosaron sexualmente",
-      T ~ tipo_violencia
-    )
-  )
+# Preparar datos - Gay
+violencias_gay <- data.frame(
+  tipo_violencia = c("Le ridiculizaron", "Le insultaron", "No respetaron su IG*",
+                     "Le gritaron", "Hostigamiento"),
+  porcentaje = c(46, 46, 29, 25, 25)
+  
+)
 
 # Graficar
 p50 <- plot_ly(
-  data = violencias_lesb_1,
+  data = violencias_gay,
   x = ~tipo_violencia,          
   y = ~porcentaje,              
   type = "bar",
   color = ~tipo_violencia,      
-  marker = list(color = "skyblue2"),
+  colors = colorRampPalette(brewer.pal(5, "BuPu"))(5),
   textposition = 'none',
-  text = ~paste0(round(porcentaje, 1), "%"),    
+  text = ~paste0(porcentaje, "%"),    
   hoverinfo = "text",
   hovertext = ~paste(
-    "<br>Porcentaje:", round(porcentaje, 1), "%"
+    "<br>Porcentaje:", porcentaje, "%"
   )
 ) %>%
   layout(
-    title = "Gráfico 50. Tipos de violencia experimentadas por orientación sexual - Lesbiana",
-    font = list(size = 12),
-    xaxis = list(title = ""),
-    yaxis = list(title = "", ticksuffix = "%"),
+    title = list(
+      text = "<b>Gráfico 50. Tipos de violencia por orientación sexual</b><br><span style='font-size:13px'>Gay</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(title = "", tickangle = 0, categoryorder = "total ascending"),
+    yaxis = list(title = "", ticksuffix = "%", range = c(0,50)),
     barmode = "group",          
-    showlegend = FALSE      
+    showlegend = F,
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i><br><i>IG* = Identidad de Género</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
   )
 
 p50
 
 #///////////////////////////////////////////////////////////////////////////////
-# Preparar datos - Gay
-violencias_gay <- bd_lgbt_2 %>%
-  filter(orient_sex == "Gay") %>%
-  select(orient_sex, x7_1, x7_2, x7_3, x7_4, x7_6) %>%
-  group_by(orient_sex) %>%
-  summarise(
-    total_respuestas = n(),
-    positivas_1 = sum(x7_1 == "Sí", na.rm = T),
-    positivas_2 = sum(x7_2 == "Sí", na.rm = T),
-    positivas_3 = sum(x7_3 == "Sí", na.rm = T),
-    positivas_4 = sum(x7_4 == "Sí", na.rm = T),
-    positivas_5 = sum(x7_6 == "Sí", na.rm = T),
-    porcentaje_1 = positivas_1/total_respuestas*100,
-    porcentaje_2 = positivas_2/total_respuestas*100,
-    porcentaje_3 = positivas_3/total_respuestas*100,
-    porcentaje_4 = positivas_4/total_respuestas*100,
-    porcentaje_5 = positivas_5/total_respuestas*100,
-    .groups = 'drop')
-
-# Pivotar datos
-violencias_gay_1 <- violencias_gay %>%
-  pivot_longer(
-    cols = starts_with("porcentaje_"),
-    names_to = "tipo_violencia",
-    values_to = "porcentaje"
-  ) %>%
-  mutate(
-    tipo_violencia = case_when(
-      tipo_violencia == "porcentaje_1" ~ "Le insultaron por ser LGBTQIA+",
-      tipo_violencia == "porcentaje_2" ~ "Le gritaron por ser LGBTQIA+",
-      tipo_violencia == "porcentaje_3" ~ "Le hostigaron por ser LGBTQIA+",
-      tipo_violencia == "porcentaje_4" ~ "Le ridiculizaron por ser LGBTQIA+",
-      tipo_violencia == "porcentaje_5" ~ "Le trataron sin respetar el género",
-      T ~ tipo_violencia
-    )
-  )
+# # Preparar datos - Bisexual
+violencias_bi <- data.frame(
+  tipo_violencia = c("Le insultaron", "Le acosaron sexualmente", "Le ridiculizaron", 
+                     "No respetaron su IG*"),
+  porcentaje = c(24, 29, 35, 37)
+)
 
 # Graficar
 p51 <- plot_ly(
-  data = violencias_gay_1,
+  data = violencias_bi,
   x = ~tipo_violencia,          
   y = ~porcentaje,              
   type = "bar",
   color = ~tipo_violencia,      
-  marker = list(color = "brown"),
+  colors = colorRampPalette(brewer.pal(4, "BuPu"))(4),
   textposition = 'none',
-  text = ~paste0(round(porcentaje, 1), "%"),    
+  text = ~paste0(porcentaje, "%"),    
   hoverinfo = "text",
   hovertext = ~paste(
-    "<br>Porcentaje:", round(porcentaje, 1), "%"
+    "<br>Porcentaje:", porcentaje, "%"
   )
 ) %>%
   layout(
-    title = "Gráfico 51. Tipos de violencia experimentadas por orientación sexual - Gay",
-    font = list(size = 12),
-    xaxis = list(title = ""),
-    yaxis = list(title = "", ticksuffix = "%"),
+    title = list(
+      text = "<b>Gráfico 51. Tipo de violencia por orientación sexual</b><br><span style='font-size:13px'>Bisexual</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(title = "", tickangle = 0, categoryorder = "total ascending"),
+    yaxis = list(title = "", ticksuffix = "%", range = c(0,40)),
     barmode = "group",          
-    showlegend = FALSE      
+    showlegend = F,
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i><br><i>IG* = Identidad de Género</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
   )
 
 p51
 
 #///////////////////////////////////////////////////////////////////////////////
-# # Preparar datos - Bisexual
-violencias_bi <- bd_lgbt_2 %>%
-  filter(orient_sex == "Bisexual") %>%
-  select(orient_sex, x7_1, x7_4, x7_6, x7_9) %>%
-  group_by(orient_sex) %>%
-  summarise(
-    total_respuestas = n(),
-    positivas_1 = sum(x7_1 == "Sí", na.rm = T),
-    positivas_2 = sum(x7_4 == "Sí", na.rm = T),
-    positivas_3 = sum(x7_6 == "Sí", na.rm = T),
-    positivas_4 = sum(x7_9 == "Sí", na.rm = T),
-    porcentaje_1 = positivas_1/total_respuestas*100,
-    porcentaje_2 = positivas_2/total_respuestas*100,
-    porcentaje_3 = positivas_3/total_respuestas*100,
-    porcentaje_4 = positivas_4/total_respuestas*100,
-    .groups = 'drop')
-
-# Pivotar datos
-violencias_bi_1 <- violencias_bi %>%
-  pivot_longer(
-    cols = starts_with("porcentaje_"),
-    names_to = "tipo_violencia",
-    values_to = "porcentaje"
-  ) %>%
-  mutate(
-    tipo_violencia = case_when(
-      tipo_violencia == "porcentaje_1" ~ "Le insultaron por ser LGBTQIA+",
-      tipo_violencia == "porcentaje_2" ~ "Le ridiculizaron por ser LGBTQIA+",
-      tipo_violencia == "porcentaje_3" ~ "Le trataron sin respetar el género",
-      tipo_violencia == "porcentaje_4" ~ "Le acosaron sexualmente",
-      T ~ tipo_violencia
-    )
-  )
+# # Preparar datos - Pansexual
+violencias_pan <- data.frame(
+  tipo_violencia = c("Le acosaron sexualmente", "Hostigamiento", "Le ridiculizaron",
+                     "No respetaron su IG*"),
+  porcentaje = c(25, 25, 36, 59)
+)
 
 # Graficar
 p52 <- plot_ly(
-  data = violencias_bi_1,
+  data = violencias_pan,
   x = ~tipo_violencia,          
   y = ~porcentaje,              
   type = "bar",
   color = ~tipo_violencia,      
-  marker = list(color = "#FF69B4"),
+  colors = colorRampPalette(brewer.pal(4, "BuPu"))(4),
   textposition = 'none',
-  text = ~paste0(round(porcentaje, 1), "%"),    
+  text = ~paste0(porcentaje, "%"),    
   hoverinfo = "text",
   hovertext = ~paste(
-    "<br>Porcentaje:", round(porcentaje, 1), "%"
+    "<br>Porcentaje:", porcentaje, "%"
   )
 ) %>%
   layout(
-    title = "Gráfico 52. Tipos de violencia experimentadas por orientación sexual - Bisexual",
-    font = list(size = 12),
-    xaxis = list(title = ""),
+    title = list(
+      text = "<b>Gráfico 52. Tipos de violencia por orientación sexual</b><br><span style='font-size:13px'>Pansexual</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(title = "", tickangle = 0, categoryorder = "total ascending"),
     yaxis = list(title = "", ticksuffix = "%"),
     barmode = "group",          
-    showlegend = FALSE      
-  )
-
-p52
-
-#///////////////////////////////////////////////////////////////////////////////
-# # Preparar datos - Pansexual
-violencias_pan<- bd_lgbt_2 %>%
-  filter(orient_sex == "Pansexual") %>%
-  select(orient_sex, x7_3, x7_4, x7_6, x7_9) %>%
-  group_by(orient_sex) %>%
-  summarise(
-    total_respuestas = n(),
-    positivas_1 = sum(x7_3 == "Sí", na.rm = T),
-    positivas_2 = sum(x7_4 == "Sí", na.rm = T),
-    positivas_3 = sum(x7_6 == "Sí", na.rm = T),
-    positivas_4 = sum(x7_9 == "Sí", na.rm = T),
-    porcentaje_1 = positivas_1/total_respuestas*100,
-    porcentaje_2 = positivas_2/total_respuestas*100,
-    porcentaje_3 = positivas_3/total_respuestas*100,
-    porcentaje_4 = positivas_4/total_respuestas*100,
-    .groups = 'drop')
-
-# Pivotar datos
-violencias_pan_1 <- violencias_pan %>%
-  pivot_longer(
-    cols = starts_with("porcentaje_"),
-    names_to = "tipo_violencia",
-    values_to = "porcentaje"
-  ) %>%
-  mutate(
-    tipo_violencia = case_when(
-      tipo_violencia == "porcentaje_1" ~ "Le hostigaron por ser LGBTQIA+",
-      tipo_violencia == "porcentaje_2" ~ "Le ridiculizaron por ser LGBTQIA+",
-      tipo_violencia == "porcentaje_3" ~ "Le trataron sin respetar el género",
-      tipo_violencia == "porcentaje_4" ~ "Le acosaron sexualmente",
-      T ~ tipo_violencia
+    showlegend = F,
+    margin = list(b = 100, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i><br><i>IG* = Identidad de Género</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
     )
   )
 
-# Graficar
-p53 <- plot_ly(
-  data = violencias_pan_1,
-  x = ~tipo_violencia,          
-  y = ~porcentaje,              
-  type = "bar",
-  color = ~tipo_violencia,      
-  marker = list(color = "gray90"),
-  textposition = 'none',
-  text = ~paste0(round(porcentaje, 1), "%"),    
-  hoverinfo = "text",
-  hovertext = ~paste(
-    "<br>Porcentaje:", round(porcentaje, 1), "%"
-  )
-) %>%
-  layout(
-    title = "Gráfico 52. Tipos de violencia experimentadas por orientación sexual - Pansexual",
-    font = list(size = 12),
-    xaxis = list(title = ""),
-    yaxis = list(title = "", ticksuffix = "%"),
-    barmode = "group",          
-    showlegend = FALSE      
-  )
-
-p53
+p52
 
 # //////////////////////////////////////////////////////////////////////////////
 # Gráfico. Experiencia en la universidad como persona LGTBQIA+----
@@ -3044,20 +3514,20 @@ experiencias <- bd_lgbt_1 %>%
       variable == "x5_2" ~ "Salud sexual y reproductiva",
       variable == "x5_3" ~ "Infraestructura",
       variable == "x5_4" ~ "Temáticas de interés",
-      variable == "x5_5" ~ "Sensibilización y prevención en VG",
+      variable == "x5_5" ~ "Sensibilización y prevención en VG*",
       variable == "x5_6" ~ "Cursos de formación",
       variable == "x5_7" ~ "Espacio seguro",
-      TRUE ~ variable  # Mantener original si no coincide
+      T ~ variable  
     )
   ) %>%
   mutate(
     categoria = case_when(
       respuesta %in% c(1, 2) ~ "Negativo",
       respuesta %in% c(3, 4) ~ "Positivo",
-      TRUE ~ NA_character_
+      T ~ NA_character_
     )
   ) %>%
-  filter(!is.na(categoria)) %>%  # Excluir NA explícitamente
+  filter(!is.na(categoria)) %>%  
   group_by(variable) %>%
   summarise(
     total_respuestas = n(),
@@ -3074,18 +3544,17 @@ experiencias <- bd_lgbt_1 %>%
     names_prefix = "porcentaje_"
   ) %>%
   mutate(
-    categoria = ifelse(categoria == "neg", "Negativa", "Positiva")  # Corregir nombres
+    categoria = ifelse(categoria == "neg", "Negativa", "Positiva")
   )
 
-# Gráfico (versión corregida)
-p54 <- plot_ly(
+# Graficar
+p53 <- plot_ly(
   data = experiencias,
-  x = ~variable,
-  y = ~porcentaje,
+  y = ~variable,          
+  x = ~porcentaje,        
   color = ~categoria,
   colors = c("Negativa" = "#41776E", "Positiva" = "#8D69F3"),
   type = "bar",
-  text = ~paste0(round(porcentaje, 1), "%"),
   textposition = "none",
   hoverinfo = "text",
   hovertext = ~paste(
@@ -3094,11 +3563,46 @@ p54 <- plot_ly(
   )
 ) %>%
   layout(
-    title = "Experiencia en la universidad como persona LGBTQIA+",
-    xaxis = list(title = "", categoryorder = "array", categoryarray = unique(experiencias$variable)),
-    yaxis = list(title = "", range = c(0, 100), ticksuffix = "%"),
+    title = list(
+      text = "<b>Gráfico 53. Calidad de vida en la USACH como persona LGBTQIA+</b>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center'
+    ),
+    yaxis = list(
+      title = "",
+      categoryorder = "array",
+      categoryarray = unique(experiencias$variable),
+      automargin = T
+    ),
+    xaxis = list(
+      title = "",
+      range = c(0, 100),
+      ticksuffix = "%"
+    ),
     barmode = "stack",
-    legend = list(title = list(text = "Valoración"))
+    margin = list(l = 150, t = 80, b = 100),
+    legend = list(
+      orientation = "v", 
+      x = 1.02,  
+      y = 0.5,   
+      xanchor = "left", 
+      title = list(text = "<b>Valoración</b>", font = list(size = 12)),
+      font = list(size = 12),
+      bgcolor = "rgba(255,255,255,0.7)"  
+    ),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i><br><i>VG* = Violencia de Género</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
   )
 
-p54
+p53
