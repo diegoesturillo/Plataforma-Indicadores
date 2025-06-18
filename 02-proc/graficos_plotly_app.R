@@ -599,7 +599,7 @@ p8 <- wos_pub %>%
     hoverinfo = 'text') %>%
   layout(
     title = list(
-      text = "<b>Gráfico 8. Publicaciones en revistas indexadas por género en WOS</b><br><span style='font-size:13px'>WOS (2019-2024)</span>",
+      text = "<b>Gráfico 8. Publicaciones en revistas indexadas por género</b><br><span style='font-size:13px'>WOS (2019-2024)</span>",
       font = list(size = 13),
       x = 0.5),
     xaxis = list(title = "", tickvals = 2019:2024),
@@ -817,7 +817,16 @@ ema_pub_long <- ema_pub_ac %>%
   ungroup()
 
 ema_pub_long <- ema_pub_long %>%
-  mutate(area_nombre = nombres_areas[area])
+  mutate(area_nombre = recode(area,
+                              "ayc" = "Administración y Comercio",
+                              "agro" = "Agropecuaria",
+                              "aya" = "Artes y Arquitectura",
+                              "csh" = "Ciencias Sociales y Humanidades",
+                              "der" = "Derecho",
+                              "edu" = "Educación",
+                              "salud" = "Salud",
+                              "tec" = "Tecnología"
+                              ))
 
 # 2. Crear el gráfico interactivo con Plotly
 p12 <- plot_ly(
@@ -839,7 +848,7 @@ p12 <- plot_ly(
   )) %>%
   layout(
     title = list(
-      text = "<b>Gráfico 12. Publicaciones en revistas indexadas por área de conocimiento (2022-2024)</b>",
+      text = "<b>Gráfico 12. Publicaciones en revistas indexadas por área deL conocimiento (2022-2024)</b>",
       font = list(size = 13),
       x = 0.5),
     xaxis = list(title = "", tickvals = 2022:2024),
@@ -2357,7 +2366,6 @@ horas_cuidado <- cuidados %>%
       "Porcentaje: ", porcentaje, "%"
     )
   ) %>%
-  # Ordenar factores para mejor visualización
   mutate(
     horas_cuidado = factor(horas_cuidado,
                            levels = c("Menos de 1 hora al día",
@@ -2675,7 +2683,7 @@ p39 <- plot_ly(
   textposition = "none",
   marker = list(
     line = list(color = "white", width = 1),
-    opacity = 0.8  #
+    opacity = 0.8  
   )
 ) %>%
   layout(
@@ -2684,7 +2692,7 @@ p39 <- plot_ly(
       x = 0.3, 
       font = list(size = 13),
       xanchor = "left",
-      pad = list(t = 20)  
+      pad = list(t = 20)
     ),
     xaxis = list(
       title = "",
@@ -2836,7 +2844,7 @@ p40 <- plot_ly(
 p40
 
 #///////////////////////////////////////////////////////////////////////////////
-# Gráficos Encuesta LGBTQIA+
+# Gráficos Encuesta LGBTIQA+
 # Gráfico. Respeto de derechos de personas LGBTIQA+ según identidad de género----
 # Preparar datos
 respeto_1 <- bd_lgbt_2 %>%
@@ -3079,7 +3087,7 @@ p44
 #///////////////////////////////////////////////////////////////////////////////
 # Gráfico. Situaciones de violencia por identidad de género----
 # Preparar datos - Femenino
-violencias_fem <- data.frame(
+violencias_fem <- tibble(
   tipo_violencia = c("Hostigamiento", "Le ridiculizaron", "Le acosaron sexualmente"),
   porcentaje = c(31, 44, 37)
 )
@@ -3130,7 +3138,7 @@ p45
 
 #///////////////////////////////////////////////////////////////////////////////
 # Preparar datos - Masculino
-violencias_masc <- data.frame(
+violencias_masc <- tibble(
   tipo_violencia = c("Le ridiculizaron", "Le insultaron", "Recibió hostigamiento"),
   porcentaje = c(50, 38, 31)
 )
@@ -3181,7 +3189,7 @@ p46
 
 #///////////////////////////////////////////////////////////////////////////////
 # Preparar datos - Trans
-violencias_trans <- data.frame(
+violencias_trans <- tibble(
   tipo_violencia = c("No respetaron su IG*", "Dificultaron el derecho a registrar su IG*",
                     "Le ridiculizaron"),
   porcentaje = c(91, 26, 22)
@@ -3233,7 +3241,7 @@ p47
 
 #///////////////////////////////////////////////////////////////////////////////
 # Preparar datos - Género diverso
-violencias_gd <- data.frame(
+violencias_gd <- tibble(
   tipo_violencia = c("No respetaron su IG*", "Le ridiculizaron", 
                      "Dificultaron el derecho a registrar su IG*"),
   porcentaje = c(88, 29, 21)
@@ -3287,7 +3295,7 @@ p48
 #///////////////////////////////////////////////////////////////////////////////
 # Gráfico. Situaciones de violencia por orientación sexual----
 # Preparar datos - Lesbiana
-violencias_lesb <- data.frame(
+violencias_lesb <- tibble(
   tipo_violencia = c("No respetaron su IG*", "Le ridiculizaron", "Le acosaron sexualmente",
                      "Le insultaron", "Le gritaron"),
   porcentaje = c(41, 36, 36, 32, 32)
@@ -3344,7 +3352,7 @@ p49
 
 #///////////////////////////////////////////////////////////////////////////////
 # Preparar datos - Gay
-violencias_gay <- data.frame(
+violencias_gay <- tibble(
   tipo_violencia = c("Le ridiculizaron", "Le insultaron", "No respetaron su IG*",
                      "Le gritaron", "Hostigamiento"),
   porcentaje = c(46, 46, 29, 25, 25)
@@ -3397,7 +3405,7 @@ p50
 
 #///////////////////////////////////////////////////////////////////////////////
 # # Preparar datos - Bisexual
-violencias_bi <- data.frame(
+violencias_bi <- tibble(
   tipo_violencia = c("Le insultaron", "Le acosaron sexualmente", "Le ridiculizaron", 
                      "No respetaron su IG*"),
   porcentaje = c(24, 29, 35, 37)
@@ -3449,7 +3457,7 @@ p51
 
 #///////////////////////////////////////////////////////////////////////////////
 # # Preparar datos - Pansexual
-violencias_pan <- data.frame(
+violencias_pan <- tibble(
   tipo_violencia = c("Le acosaron sexualmente", "Hostigamiento", "Le ridiculizaron",
                      "No respetaron su IG*"),
   porcentaje = c(25, 25, 36, 59)
@@ -3564,7 +3572,7 @@ p53 <- plot_ly(
 ) %>%
   layout(
     title = list(
-      text = "<b>Gráfico 53. Calidad de vida en la USACH como persona LGBTQIA+</b>",
+      text = "<b>Gráfico 53. Calidad de vida en la USACH como persona LGBTIQA++</b>",
       font = list(size = 13),
       x = 0.5,
       xanchor = 'center'
@@ -3606,3 +3614,1196 @@ p53 <- plot_ly(
   )
 
 p53
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráficos estudiantes trans----
+# Gráfico. Compromiso USACH con el reconocimiento diversidad género----
+compromiso <- tibble(genero = c(
+  "Femenino", "Masculino", "Género diverso", "Trans*", "Prefiero no decir"),
+  porcentaje = c(88, 83, 63, 92, 67))
+
+# Graficar
+p54 <- plot_ly(
+  data = compromiso,
+  x = ~genero,          
+  y = ~porcentaje,              
+  type = "bar",
+  color = ~genero,      
+  colors = colorRampPalette(brewer.pal(5, "RdPu"))(5),
+  textposition = 'none',
+  text = ~paste0(porcentaje, "%"),    
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Porcentaje:", porcentaje, "%"
+  )
+) %>%
+  layout(
+    title = list(
+      text = "<b>Gráfico 54. ¿La USACH está comprometida con el reconocimiento de la diversidad de género?</b><br><span style='font-size:13px'>Personas que responden 'Sí'</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(title = "", tickangle = 0, categoryorder = "total ascending"),
+    yaxis = list(title = "", ticksuffix = "%", range = c(0,100)),
+    barmode = "group",          
+    showlegend = F,
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i><br><i>*Contempla ponderación entre trans masculino (82%) y trans femenino (100%).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
+  )
+
+p54
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. USACH como espacio seguro y libre de discriminación----
+seguro <- tibble(genero = c( "Femenino", "Masculino", "Género diverso", "Trans*", "Prefiero no decir"),
+                 porcentaje = c(69, 75, 61, 53, 50))
+
+# Graficar
+p55 <- plot_ly(
+  data = seguro,
+  x = ~genero,          
+  y = ~porcentaje,              
+  type = "bar",
+  color = ~genero,      
+  colors = colorRampPalette(brewer.pal(5, "RdPu"))(5),
+  textposition = 'none',
+  text = ~paste0(porcentaje, "%"),    
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Porcentaje:", porcentaje, "%"
+  )
+) %>%
+  layout(
+    title = list(
+      text = "<b>Gráfico 55. ¿La USACH es un espacio seguro (libre de discriminación y violencia)?</b><br><span style='font-size:13px'>Personas que responden 'Sí'</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(title = "", tickangle = 0, categoryorder = "total ascending"),
+    yaxis = list(title = "", ticksuffix = "%", range = c(0,80)),
+    barmode = "group",          
+    showlegend = F,
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i><br><i>*Contempla ponderación entre trans masculino (55%) y trans femenino (50%).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
+  )
+
+p55
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. Plataformas de comunicación----
+com <- tibble(genero = c( "Femenino", "Masculino", "Género diverso", "Trans*", "Prefiero no decir"),
+              porcentaje = c(79, 82, 59, 82, 50))
+
+# Graficar
+p56 <- plot_ly(
+  data = com,
+  x = ~genero,          
+  y = ~porcentaje,              
+  type = "bar",
+  color = ~genero,      
+  colors = colorRampPalette(brewer.pal(5, "RdPu"))(5),
+  textposition = 'none',
+  text = ~paste0(porcentaje, "%"),    
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Porcentaje:", porcentaje, "%"
+  )
+) %>%
+  layout(
+    title = list(
+      text = "<b>Gráfico 56. ¿Las plataformas de comunicación de la USACH integran y valoran la diversidad de género?</b><br><span style='font-size:13px'>Personas que responden 'Sí'</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(title = "", tickangle = 0, categoryorder = "total ascending"),
+    yaxis = list(title = "", ticksuffix = "%", range = c(0,90)),
+    barmode = "group",          
+    showlegend = F,
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i><br><i>*Contempla ponderación entre trans masculino (91%) y trans femenino (67%).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
+  )
+
+p56
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. Elementos de desigualdad. Notas 1-7----
+desigual <- tibble(v1 = c("Contenidos bibliográficos integran PG*", "En sala de clases se usa lenguaje inclusivo y no sexista",
+                          "En sala de clases se respeta la IG*"),
+                   nota = c(3.2, 3.6, 4.6))
+
+
+# Graficar
+p57 <- plot_ly(
+  data = desigual,
+  x = ~nota,          
+  y = ~v1,              
+  type = "bar",
+  orientation = 'h',
+  color = ~v1,      
+  colors = colorRampPalette(brewer.pal(3, "RdPu"))(3),
+  textposition = 'none',
+  text = ~paste0(nota),    
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Nota:", nota
+  )
+) %>%
+  layout(
+    title = list(
+      text = "<b>Gráfico 57. Elementos de desigualdad</b><br><span style='font-size:13px'>Dimensión relacional con el profesorado</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(title = "", tickangle = 0, range = c(1,7), tickvals = 1:7),
+    yaxis = list(title = "", categoryorder = "total ascending"),
+    barmode = "group",          
+    showlegend = F,
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.3,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i><br><i>PG* = Perspectiva de género</i><br><i>IG* = Identidad de género.</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
+  )
+
+p57
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. Respeto identidad de género en trámites. Notas 1-7----
+respeto_ig <- tibble(genero = c("Femenino", "Masculino", "Género diverso", "Trans*", "Prefiero no decir", "Total"),
+                     nota = c(4.3, 4.6, 3.9, 4.1, 3, 4))
+
+# Graficar
+p58 <- plot_ly(
+  data = respeto_ig,
+  x = ~nota,          
+  y = ~genero,              
+  type = "bar",
+  orientation = 'h',
+  color = ~genero,      
+  colors = colorRampPalette(brewer.pal(6, "RdPu"))(6),
+  textposition = 'none',
+  text = ~paste0(nota),    
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Nota:", nota
+  )
+) %>%
+  layout(
+    title = list(
+      text = "<b>Gráfico 58. Elementos de desigualdad</b><br><span style='font-size:13px'>Respeto identidad de género en trámites</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(title = "", tickangle = 0, range = c(1,5), tickvals = 1:5),
+    yaxis = list(title = "", categoryorder = "total ascending"),
+    barmode = "group",          
+    showlegend = F,
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i><br><i>*Contempla el promedio ponderado entre trans masculino (3,7) y trans femenino(4,7).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
+  )
+
+p58
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. Demandas del estudiantado para la comunidad trans-GD----
+admision <- tibble(genero = c("Femenino", "Masculino", "Género diverso", "Trans*", "Prefiero no decir"),
+                   porcentaje = c(87, 67, 93, 100, 50))
+
+# Graficar
+p59 <- plot_ly(
+  data = admision,
+  x = ~genero,          
+  y = ~porcentaje,              
+  type = "bar",
+  color = ~genero,      
+  colors = colorRampPalette(brewer.pal(5, "RdPu"))(5),
+  textposition = 'none',
+  text = ~paste0(porcentaje, "%"),    
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Porcentaje:", porcentaje, "%"
+  )
+) %>%
+  layout(
+    title = list(
+      text = "<b>Gráfico 59. Es fundamental que la USACH cuente con un proceso de admisión que reconozca la DG*</b><br><span style='font-size:13px'>Personas que están 'de acuerdo' o 'muy de acuerdo'</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(title = "", tickangle = 0, categoryorder = "total ascending"),
+    yaxis = list(title = "", ticksuffix = "%", range = c(0,100)),
+    barmode = "group",          
+    showlegend = F,
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i><br><i>DG* = diversidad de género</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
+  )
+
+p59
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. Aprobación sobre cupo de ingreso trans----
+cupo <- tibble(genero = c("Femenino", "Masculino", "Género diverso", "Trans*", "Prefiero no decir", "Total"),
+               nota = c(4.1, 3.2, 5.1, 5.1, 4.3, 4))
+cupo <- cupo %>%
+  mutate(
+    genero = factor(genero,
+                    levels = c("Total",
+                               "Prefiero no decir",
+                               "Trans*",
+                               "Género diverso",
+                               "Masculino",
+                               "Femenino"),
+                    ordered = T))
+
+# Graficar
+p60 <- plot_ly(
+  data = cupo,
+  x = ~nota,          
+  y = ~genero,              
+  type = "bar",
+  orientation = 'h',
+  color = ~genero,      
+  colors = colorRampPalette(brewer.pal(6, "RdPu"))(6),
+  textposition = 'none',
+  text = ~paste0(nota),    
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Nota:", nota
+  )
+) %>%
+  layout(
+    title = list(
+      text = "<b>Gráfico 60. Aprobación sobre cupo de ingreso trans</b>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(title = "", tickangle = 0, range = c(1,6), tickvals = 1:6),
+    yaxis = list(title = "", categoryorder = "array", autorange = "reversed"),
+    barmode = "group",          
+    showlegend = F,
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i><br><i>*Contempla el promedio ponderado entre trans masculino (5,0) y trans femenino(5,5).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
+  )
+
+p60
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. Reconocimiento diversidad: Firmar listas de asistencia o evaluaciones con nombre social----
+firmar <- tibble(genero = c("Femenino", "Masculino", "Género diverso", "Trans", "Prefiero no decir"),
+                   porcentaje = c(89, 66, 95, 100, 67))
+
+# Graficar
+p61 <- plot_ly(
+  data = firmar,
+  x = ~genero,          
+  y = ~porcentaje,              
+  type = "bar",
+  color = ~genero,      
+  colors = colorRampPalette(brewer.pal(5, "RdPu"))(5),
+  textposition = 'none',
+  text = ~paste0(porcentaje, "%"),    
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Porcentaje:", porcentaje, "%"
+  )
+) %>%
+  layout(
+    title = list(
+      text = "<b>Gráfico 61. Firmar con nombre social aunque no se haya realizado el cambio legal o institucional</b><br><span style='font-size:13px'>Personas que están 'de acuerdo' o 'muy de acuerdo'</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(title = "", tickangle = 0, categoryorder = "total ascending"),
+    yaxis = list(title = "", ticksuffix = "%", range = c(0,100)),
+    barmode = "group",          
+    showlegend = F,
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
+  )
+
+p61
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. Infraestructura respetuosa de la diversidad de género----
+infra <- tibble(genero = c("Femenino", "Masculino", "Género diverso", "Trans*", "Prefiero no decir"),
+                porcentaje = c(83, 66, 93, 88, 83))
+
+
+# Graficar
+p62 <- plot_ly(
+  data = infra,
+  x = ~genero,          
+  y = ~porcentaje,              
+  type = "bar",
+  color = ~genero,      
+  colors = colorRampPalette(brewer.pal(5, "RdPu"))(5),
+  textposition = 'none',
+  text = ~paste0(porcentaje, "%"),    
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Porcentaje:", porcentaje, "%"
+  )
+) %>%
+  layout(
+    title = list(
+      text = "<b>Gráfico 62. Infraestructura respetuosa a la diversidad de género</b><br><span style='font-size:13px'>Personas que están 'de acuerdo' o 'muy de acuerdo'</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(title = "", tickangle = 0, categoryorder = "total ascending"),
+    yaxis = list(title = "", ticksuffix = "%", range = c(0,100)),
+    barmode = "group",          
+    showlegend = F,
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i><br><i>*Contempla la ponderación entre trans masculino (91%) y trans femenino (83%).</i>" ,
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
+  )
+
+p62
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. Servicio de salud mental para acompañar procesión de transción----
+salud <- tibble(genero = c("Femenino", "Masculino", "Género diverso", "Trans*", "Prefiero no decir"),
+                porcentaje = c(73, 68, 76, 76, 67))
+
+# Graficar
+p63 <- plot_ly(
+  data = salud,
+  x = ~genero,          
+  y = ~porcentaje,              
+  type = "bar",
+  color = ~genero,      
+  colors = colorRampPalette(brewer.pal(5, "RdPu"))(5),
+  textposition = 'none',
+  text = ~paste0(porcentaje, "%"),    
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Porcentaje:", porcentaje, "%"
+  )
+) %>%
+  layout(
+    title = list(
+      text = "<b>Gráfico 63. Servicio de salud mental para acompañar procesos de transición</b><br><span style='font-size:13px'>Personas que están 'de acuerdo' o 'muy de acuerdo'</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(title = "", tickangle = 0, categoryorder = "total ascending"),
+    yaxis = list(title = "", ticksuffix = "%", range = c(0,100)),
+    barmode = "group",          
+    showlegend = F,
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i><br><i>*Contempla la ponderación entre trans masculino (82%) y trans femenino (67%).</i>" ,
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
+  )
+
+p63
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráficos. Violencia de género. Expresión, vivencia y reconocimiento----
+vg_1 <- tibble(v1 = c("La vestimenta de las mujeres no está relacionado a ser víctimas de acoso",
+                      "Las personas LGBTIQA+ tienen derecho a expresar afectividades en público",
+                      "Los hombres son tan víctimas como las mujeres de violencia de género"),
+               porcentaje = c(96, 95, 61))
+
+# Graficar
+p64 <- plot_ly(
+  data = vg_1,
+  x = ~porcentaje,          
+  y = ~v1,              
+  type = "bar",
+  orientation = 'h',
+  color = ~v1,      
+  colors = colorRampPalette(brewer.pal(3, "PuBu"))(3),
+  textposition = 'none',
+  text = ~paste0(porcentaje),    
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Porcentaje:", porcentaje, "%"
+  )
+) %>%
+  layout(
+    title = list(
+      text = "<b>Gráfico 64. Expresión, vivencias y reconocimiento</b><br><span style='font-size:13px'>Personas que están 'de acuerdo' o 'muy de acuerdo'</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(
+      title = "", 
+      tickangle = 0, 
+      range = c(0, 100),
+      ticksuffix = "%"  
+    ),
+    yaxis = list(
+      title = "", 
+      categoryorder = "array", 
+      autorange = "reversed",
+      ticklabelposition = "outside right",  
+      tickfont = list(size = 11)  
+    ),
+    barmode = "group",          
+    showlegend = F,
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
+  )
+
+p64
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. Tránsito y consolidación de percepciones----
+vg_2 <- tibble(v1 = c("Las denuncias de acoso son mayoritariamente verdaderas",
+                      "Casos de VG* deben ser abordados por la comunidad en conjunto",
+                      "No debe naturalizarse la VG* en espacios cotidianos ni laborales",
+                      "No es algo puntual ni una exageración de quienes viven VG*"),
+               porcentaje = c(91, 93, 94, 97))
+
+# Graficar
+p65 <- plot_ly(
+  data = vg_2,
+  x = ~porcentaje,          
+  y = ~v1,              
+  type = "bar",
+  orientation = 'h',
+  color = ~v1,      
+  colors = colorRampPalette(brewer.pal(3, "PuBu"))(3),
+  textposition = 'none',
+  text = ~paste0(porcentaje),    
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Porcentaje:", porcentaje, "%"
+  )
+) %>%
+  layout(
+    title = list(
+      text = "<b>Gráfico 65. Tránsito y consolidación de percepciones</b><br><span style='font-size:13px'>Personas que están 'de acuerdo' o 'muy de acuerdo'</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(
+      title = "", 
+      tickangle = 0, 
+      range = c(0, 100),
+      ticksuffix = "%"  
+    ),
+    yaxis = list(
+      title = "", 
+      categoryorder = "array", 
+      autorange = "reversed",
+      ticklabelposition = "outside right",  
+      tickfont = list(size = 11)  
+    ),
+    barmode = "group",          
+    showlegend = F,
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i><br><i>VG* = Violencia de género</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
+  )
+
+p65
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. Ni el alcohol ni las drogas son causantes de VG----
+vg_3 <- tibble(estamento = c("Funcionariado", "Estamento académico/profesorado por hora", "Estudiantes"),
+               porcentaje = c(78, 86, 83))
+
+# Graficar
+p66 <- plot_ly(
+  data = vg_3,
+  x = ~porcentaje,          
+  y = ~estamento,              
+  type = "bar",
+  orientation = 'h',
+  color = ~estamento,      
+  colors = colorRampPalette(brewer.pal(3, "PuBu"))(3),
+  textposition = 'none',
+  text = ~paste0(porcentaje),    
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Porcentaje:", porcentaje, "%"
+  )
+) %>%
+  layout(
+    title = list(
+      text = "<b>Gráfico 66. Ni el alcohol ni las drogas son causantes de VG*</b><br><span style='font-size:13px'>Personas que están 'de acuerdo' o 'muy de acuerdo'. Por estamento</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(
+      title = "", 
+      tickangle = 0, 
+      range = c(0, 100),
+      ticksuffix = "%"  
+    ),
+    yaxis = list(
+      title = "", 
+      categoryorder = "array", 
+      autorange = "reversed",
+      ticklabelposition = "outside right",  
+      tickfont = list(size = 11)  
+    ),
+    barmode = "group",          
+    showlegend = F,
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i><br><i>VG* = Violencia de género</i>",
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
+  )
+
+p66
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. Las personas que ejercen violencia tiene problemas psicológicos----
+vg_4 <- tibble(genero = c("Femenino", "Masculino", "Trans/Género diverso", "Prefiero no decir"),
+               porcentaje = c(56, 67, 47, 63))
+
+# Graficar
+p67 <- plot_ly(
+  data = vg_4,
+  x = ~genero,          
+  y = ~porcentaje,              
+  type = "bar",
+  color = ~genero,      
+  colors = colorRampPalette(brewer.pal(4, "PuBu"))(4),
+  textposition = 'none',
+  text = ~paste0(porcentaje, "%"),    
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Porcentaje:", porcentaje, "%"
+  )
+) %>%
+  layout(
+    title = list(
+      text = "<b>Gráfico 67. Las personas que ejercen violencia tienen problemas psicológicos</b><br><span style='font-size:13px'>Personas que están 'de acuerdo' o 'muy de acuerdo'. Por género</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(title = "", tickangle = 0, categoryorder = "total ascending"),
+    yaxis = list(title = "", ticksuffix = "%", range = c(0,70)),
+    barmode = "group",          
+    showlegend = F,
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>" ,
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
+  )
+
+p67
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. USACH espacio seguro mujeres/disidencias----
+vg_5 <- tibble(genero = c("Para mujeres", "Para población LGBTIQA+"),
+                  porcentaje = c(55, 63))
+# Graficar
+p68 <- plot_ly(
+  data = vg_5,
+  x = ~genero,          
+  y = ~porcentaje,              
+  type = "bar",
+  color = ~genero,      
+  colors = c("Para mujeres" = "#FF69B4", "Para población LGBTIQA+" = "#6600FF"),
+  textposition = 'none',
+  text = ~paste0(porcentaje, "%"),    
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Porcentaje:", porcentaje, "%"
+  )
+) %>%
+  layout(
+    title = list(
+      text = "<b>Gráfico 68. La USACH es un espacio seguro</b><br><span style='font-size:13px'>Personas que están 'de acuerdo' o 'muy de acuerdo'</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(title = "", tickangle = 0, categoryorder = "total ascending"),
+    yaxis = list(title = "", ticksuffix = "%", range = c(0,70)),
+    barmode = "group",          
+    showlegend = F,
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>" ,
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
+  )
+
+p68
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. Lugares donde ocurren los hechos de violencia----
+vg_6 <- tibble(
+  estamento = rep(c("Funcionario", "Académico", "Estudiantil"), each = 5),
+  v1 = rep(c("Al interior del campus", 
+             "Fuera del campus por actividades laborales o académicas", 
+             "Fuera del campus en contexto no universitario", 
+             "TICs* con personas de la universidad", 
+             "No recuerda"), 
+           times = 3),
+  porcentaje = c(
+    # Porcentajes para funcionarios
+    96, 6, 6, 9, 5,
+    # Porcentajes para académicos 
+    90, 4, 9, 16, 2,
+    # Porcentajes para estudiantes
+    82, 8, 31, 32, 5
+  )
+)
+
+# Graficar
+p69 <-plot_ly(
+  data = vg_6,
+  y = ~v1,
+  x = ~porcentaje,
+  color = ~estamento,
+  type = "bar",
+  orientation = "h",
+  text = ~paste("Estamento:", estamento, "<br>Lugar:", v1, "<br>Porcentaje:", porcentaje, "%"),
+  colors = colorRampPalette(brewer.pal(3, "PuBu"))(3),
+  hoverinfo = "text",
+  textposition = "none"
+) %>%
+  layout(
+    title = list(
+      text = "<b>Gráfico 69. Lugar donde ocurren hechos de violencia</b><br><span style='font-size:13px'>Por estamento</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(title = "", tickangle = 0, range = c(0,100), ticksuffix = "%"),
+    yaxis = list(title = "", categoryorder = "total ascending"),
+    barmode = "group",          
+    legend = list(
+      orientation = "v", 
+      x = 1.02,  
+      y = 0.5,   
+      xanchor = "left", 
+      title = list(text = "<b>Estamento</b>", font = list(size = 12)),
+      font = list(size = 12)
+    ),
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i><br><i>TICs* = Tecnologías de la Información y Comunicación</i>" ,
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
+  )
+
+p69
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. Percepciones: ¿Qué tipos de violencia ocurren en la USACH y cómo se da según género? - Mujeres----
+vg_7 <- tibble(v1 = c("Mansplainning", "Miradas sexualizadas", "Bromas u ofensas", "Tocaciones", "Hostigamiento por redes sociales",
+                      "Ofensas por no usar IG* dominante"),
+               porcentaje = c(46, 40, 30, 23, 10, 10))
+
+# Graficar
+p70 <- plot_ly(
+  data = vg_7,
+  x = ~porcentaje,          
+  y = ~v1,              
+  type = "bar",
+  color = ~v1, 
+  orientation = "h",
+  colors = "#9933FF",
+  textposition = 'none',
+  text = ~paste0(porcentaje, "%"),    
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Porcentaje:", porcentaje, "%"
+  )
+) %>%
+  layout(
+    title = list(
+      text = "<b>Gráfico 70. Tipos de violencia de género que se dan en la USACH</b><br><span style='font-size:13px'>Mujeres</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(title = "", tickangle = 0, ticksuffix = "%", range = c(0,50)),
+    yaxis = list(title = "",  categoryorder = "total ascending"),
+    barmode = "group",          
+    showlegend = F,
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i><br><i>IG* = Identidad de género</i>" ,
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
+  )
+
+p70
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. Percepciones: ¿Qué tipos de violencia ocurren en la USACH y cómo se da según género? - Personas trans y GD----
+vg_8 <- tibble(v1 = c("Mansplainning", "Miradas sexualizadas", "Bromas u ofensas", "Tocaciones", "Hostigamiento por redes sociales",
+                      "Ofensas por no usar IG* dominante"),
+               porcentaje = c(44, 49, 35, 32, 14, 21))
+
+# Graficar
+p71 <- plot_ly(
+  data = vg_8,
+  x = ~porcentaje,          
+  y = ~v1,              
+  type = "bar",
+  color = ~v1, 
+  orientation = "h",
+  colors = "#9933FF",
+  textposition = 'none',
+  text = ~paste0(porcentaje, "%"),    
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Porcentaje:", porcentaje, "%"
+  )
+) %>%
+  layout(
+    title = list(
+      text = "<b>Gráfico 71. Tipos de violencia de género que se dan en la USACH</b><br><span style='font-size:13px'>Personas trans y de género diverso</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(title = "", tickangle = 0, ticksuffix = "%", range = c(0,50)),
+    yaxis = list(title = "",  categoryorder = "total ascending"),
+    barmode = "group",          
+    showlegend = F,
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i><br><i>IG* = Identidad de género</i>" ,
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
+  )
+
+p71
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. Percepciones: ¿Qué tipos de violencia ocurren en la USACH y cómo se da según género? - Hombres----
+vg_9 <- tibble(v1 = c("Mansplainning", "Miradas sexualizadas", "Bromas u ofensas", "Tocaciones", "Hostigamiento por redes sociales",
+                      "Ofensas por no usar IG* dominante"),
+               porcentaje = c(11, 31, 9, 9, 5, 5))
+
+# Graficar
+p72 <- plot_ly(
+  data = vg_9,
+  x = ~porcentaje,          
+  y = ~v1,              
+  type = "bar",
+  color = ~v1, 
+  orientation = "h",
+  colors = "#9933FF",
+  textposition = 'none',
+  text = ~paste0(porcentaje, "%"),    
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Porcentaje:", porcentaje, "%"
+  )
+) %>%
+  layout(
+    title = list(
+      text = "<b>Gráfico 72. Tipos de violencia de género que se dan en la USACH</b><br><span style='font-size:13px'>Hombres</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(title = "", tickangle = 0, ticksuffix = "%", range = c(0,40)),
+    yaxis = list(title = "",  categoryorder = "total ascending"),
+    barmode = "group",          
+    showlegend = F,
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i><br><i>IG* = Identidad de género</i>" ,
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
+  )
+
+p72
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. Percepciones: ¿Qué tipos de violencia ocurren en la USACH y cómo se da según género? - Prefiero no decir----
+vg_10 <- tibble(v1 = c("Mansplainning", "Miradas sexualizadas", "Bromas u ofensas", "Tocaciones", "Hostigamiento por redes sociales",
+                      "Ofensas por no usar IG* dominante"),
+               porcentaje = c(31, 49, 34, 28, 13, 19))
+
+# Graficar
+p73 <- plot_ly(
+  data = vg_10,
+  x = ~porcentaje,          
+  y = ~v1,              
+  type = "bar",
+  color = ~v1, 
+  orientation = "h",
+  colors = "#9933FF",
+  textposition = 'none',
+  text = ~paste0(porcentaje, "%"),    
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Porcentaje:", porcentaje, "%"
+  )
+) %>%
+  layout(
+    title = list(
+      text = "<b>Gráfico 73. Tipos de violencia de género que se dan en la USACH</b><br><span style='font-size:13px'>Prefiero no decir mi género</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(title = "", tickangle = 0, ticksuffix = "%", range = c(0,50)),
+    yaxis = list(title = "",  categoryorder = "total ascending"),
+    barmode = "group",          
+    showlegend = F,
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i><br><i>IG* = Identidad de género</i>" ,
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
+  )
+
+p73
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. Consecuencias de la violencia de género----
+vg_11 <- tibble(
+  estamento = rep(c("Funcionario", "Académico", "Estudiantil"), each = 4),
+  v1 = rep(c("Malestar físico", 
+             "Malestar psicológico", 
+             "Bajo rendimiento o productividad/notas", 
+             "Pérdida de oportunidades laborales/académicas"), 
+           times = 3),
+  porcentaje = c(
+    # Porcentaje para funcionarios
+    25, 47, 21, 24,
+    # Porcentaje para académicos
+    25, 41, 21, 27,
+    # Porcentaje para estudiantes
+    19, 39, 17, 9
+  )) %>%
+  mutate(
+    v1 = factor(v1,
+                    levels = c("Malestar físico",
+                               "Malestar psicológico",
+                               "Bajo rendimiento o productividad/notas",
+                               "Pérdida de oportunidades laborales/académicas"),
+                    ordered = T))
+  
+
+# Graficar
+p74 <-plot_ly(
+  data = vg_11,
+  y = ~v1,
+  x = ~porcentaje,
+  color = ~estamento,
+  type = "bar",
+  orientation = "h",
+  text = ~paste("Estamento:", estamento, "<br>Lugar:", v1, "<br>Porcentaje:", porcentaje, "%"),
+  colors = colorRampPalette(brewer.pal(3, "PuBu"))(3),
+  hoverinfo = "text",
+  textposition = "none"
+) %>%
+  layout(
+    title = list(
+      text = "<b>Gráfico 74. Consecuencias de la violencia de género</b><br><span style='font-size:13px'>Por estamento</span>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(title = "", tickangle = 0, range = c(0,60), ticksuffix = "%"),
+    yaxis = list(title = "", categoryorder = "array", autorange = "reversed"),
+    barmode = "group",          
+    legend = list(
+      orientation = "v", 
+      x = 1.02,  
+      y = 0.5,   
+      xanchor = "left", 
+      title = list(text = "<b>Estamento</b>", font = list(size = 12)),
+      font = list(size = 12)
+    ),
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i><br><i>Puede señalar más de una consecuencia</i>" ,
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
+  )
+
+p74
+
+#///////////////////////////////////////////////////////////////////////////////
+# Gráfico. Expectativas de quienes sufrieron violencia de género----
+vg_12 <- tibble(v1 = c("Validación de la experiencia", "Campañas, talleres o actividades preventivas",
+                       "Apoyo de autoridades/jefaturas", "Tratamiento psicológico", "Apoyo académico/laboral",
+                       "Orientación jurídica"),
+                porcentaje = c(51, 33, 21, 20, 14, 12))
+
+# Graficar
+p75 <- plot_ly(
+  data = vg_12,
+  x = ~porcentaje,          
+  y = ~v1,              
+  type = "bar",
+  orientation = "h",
+  color = ~v1,      
+  colors = colorRampPalette(brewer.pal(6, "PuBu"))(6),
+  textposition = 'none',
+  text = ~paste0(porcentaje, "%"),    
+  hoverinfo = "text",
+  hovertext = ~paste(
+    "<br>Porcentaje:", porcentaje, "%"
+  )
+) %>%
+  layout(
+    title = list(
+      text = "<b>Gráfico 75. Expectativas de quienes sufrieron violencia de género</b>",
+      font = list(size = 13),
+      x = 0.5,
+      xanchor = 'center',
+      yanchor = 'top'
+    ),
+    xaxis = list(title = "", ticksuffix = "%", range = c(0,60)),
+    yaxis = list( title = "", tickangle = 0, categoryorder = "total ascending"),
+    barmode = "group",          
+    showlegend = F,
+    margin = list(b = 120, t = 80),
+    annotations = list(
+      list(
+        x = 0.5,   
+        y = -0.225,  
+        xref = "paper",  
+        yref = "paper",
+        text = "<i>Fuente: Observatorio Género y Diversidad (2025).</i>" ,
+        showarrow = F,
+        font = list(size = 10.5, color = "grey"),
+        align = "center"
+      )
+    )
+  )
+
+p75
