@@ -4,38 +4,42 @@ editor_options:
     wrap: sentence
 ---
 
-# **Indicadores de género estratégicos para el aseguramiento de la calidad en la Usach**
+# **Plataforma interactiva de visualización: Sistema de Indicadores de Género Estratégicos (SIGEs)**
 
-### **Plataforma interactiva con perspectiva de género y foco en educación superior**
+### **En la ruta de la reacreditación institucional con perspectiva de género**
 
-#### **Elaborada por Observatorio de Género y Diversidad**
+#### **Elaborada por el Observatorio de Género y Diversidad, Dirección de Género, Equidad y Diversidad, USACH**
 ___
 
 El Observatorio de Género y Diversidad, en el cumplimiento de sus objetivos y en el marco de las normativas institucionales y los desafíos en materia de aseguramiento de la calidad, presenta a la comunidad universitaria un conjunto estratégico de indicadores de género (número) en áreas de relevancia de la educación superior.
 
-Los indicadores han sido elaborados en base a diversas fuentes nacionales e institucionales:
+Los indicadores han sido elaborados en base a diversas fuentes nacionales, institucionales y elaborados por el Observatorio de Género y Diversidad:
 
 -   Información desagregada dispuesta por el Servicio de Información de Educación Superior (SIES) del Ministerio de Educación de Chile a través de su página: www.mifuturo.cl
 
--   Información entregada por el Departamento de Estudios que ha sido insumo para la participación de la Usach, a través de su Dirección de Género, Equidad y Diversidad, en la Alianza de Mujeres en la Academia (AMA).
-    Esta iniciativa es una red interuniversitaria conformada por instituciones públicas y privadas de todo el país cuyo principal objetivo es impulsar la participación y visibilidad de las mujeres en la academia.
-    Las universidades que participan de esta alianza dan repuesta a la Encuesta EMA con información agregada sobre matrícula y cuerpo académico.
+-   Datos proporcionados por el Departamento de Estudios, perteneciente a la Dirección de Desarrollo Institucional y Aseguramiento de la Calidad de la USACH.
+
+-   Datos proporcionados por la Unidad de Datos, Estadísticas y Sistemas perteneciente a la Vicerrectoría de Investigación, Innovación y Creación de la USACH.
+
+-   Indicadores elaborados a partir de los estudios realizados por el Observatorio de Género y Diversidad y la Dirección de Género, Equidad y Diversidad entre los años 2022 y 2024.
 
 Los indicadores acá presentados han sido analizados mediante técnicas descriptivas uni y bivariadas, utilizando el software de análisis estadístico RStudio (versión 2025.5).
 Para la visualización se ha utilizado el paquete de desarrollo para aplicaciones web interactivas Shiny (versión 1.10) y el paquete para gráficos interactivos Plotly (versión 4.10.4) y Plotly.js (versión 2.11.1).
-La plataforma cuenta con un total de 10 dimensiones y 53 indicadores con las siguientes características:
 
+La plataforma cuenta con un total de 8 dimensiones y 80 indicadores:
+
+-   Las dimensiones abordan la distribución del cuerpo académico y su jeraquización según género y grado (1); publicaciones en revistas indexadas por género y áreas del conocimiento (2); Distribución de los puestos directivos por género (3);
+    Matrícula total y de 1er año de pregrado en la USACH por género y áreas del conocimiento, así como la tasa de retención de 1er año por género y área del conocimiento (4); Titulación por género y área del conocimiento (5); Cuidados y corresponsabilidad en la USACH (6);
+    Calidad de vida y violencias de género en personas LGBTIQA+ en la USACH (7); Violencias de género en la USACH (8).
+    
+La batería de indicadores cuenta con las siguientes características:
+
+-   Indicadores cuantitativos elaborados a partir de información estadística.
+-   Indicadores cualitativos elaborados a partir de estudios sobre género, diversidad, violencia y derechos humanos en la universidad.
 -   Desagregados por género, para analizar la situación de hombres y mujeres desde una perspectiva comparada y promover la focalización de políticas universitarias y estrategias que promuevan la igualdad sustantiva.
 -   Interactivos, para apoyar la toma de decisiones en diversos ámbitos de interés de nuestra institución y desde diversas unidades (académicas y de gobierno central).
 -   Se concentran en el período 2018-2024, con el propósito de mirar los avances y desafíos que tenemos como institución.
-
-Los indicadores de género visualizados en la plataforma se centran, en esta ocasión, en tres grandes áreas:
-
--   Trayectoria del estamento académico: grados académicos, jerarquías y publicaciones en revistas indexadas, desagregados por género.
-
--   Trayectoria del estamento estudiantil: matrícula total y primer año, retención (primer año) y titulación, todos desagregados por género y área del conocimiento.
-
--   Evolución de puestos directivos por género.
+-   Para los datos de matrícula en la USACH, se cuenta con información actualizada al mes de julio del año 2025. 
 
 \
 El Observatorio de Género y Diversidad, unidad anclada en la Dirección de Género, Equidad y Diversidad de la Universidad de Santiago, espera que esta nueva herramienta de análisis y visualización apoye la reflexión colectiva en materia de igualdad sustantiva, así como la toma de decisiones de la comunidad universitaria, con miras a los nuevos procesos de acreditación institucional y el aseguramiento de la calidad en nuestra casa de estudios.
