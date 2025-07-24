@@ -88,7 +88,7 @@ ui <- navbarPage(
              div(
                class = "welcome-panel",
                h1(class = "welcome-title", "Plataforma interactiva de visualización: Sistema de Indicadores de Género Estratégicos (SIGEs)"),
-               p(class = "welcome-subtitle", "Visualización de indicadores clave de la participación de mujeres en la comunidad universitaria"),
+               p(class = "welcome-subtitle", "En la ruta de la reacreditación institucional con perspectiva de género"),
                tags$a(href = "https://github.com/diegoesturillo/Plataforma-Indicadores", target = "_blank",
                       tags$img(src = "logo_ogd.png", height = "200px", 
                                style = "margin-top: 50px; margin-bottom: 20px; cursor: pointer;")
@@ -101,9 +101,10 @@ ui <- navbarPage(
                br(),
                div(class = "button-group",
                    actionButton("go_presentacion", "Presentación", class = "button"),
-                   actionButton("go_consideraciones", "Consideraciones metodológicas", class = "button"),
                    actionButton("go_academicos", "Estamento académico", class = "button"),
+                   actionButton("go_jce", "Jornadas Completas Equivalentes", class = "button"),
                    actionButton("go_jerarquia", "Jerarquía académica", class = "button"),
+                   actionButton("go_jerarquia_jce", "Jerarquía académica JCE", class = "button"),
                    actionButton("go_publicaciones", "Publicaciones", class = "button"),
                    actionButton("go_directivos", "Puestos Directivos", class = "button"),
                    actionButton("go_genero", "Matrícula por género", class = "button"),
@@ -111,7 +112,8 @@ ui <- navbarPage(
                    actionButton("go_titulados", "Titulación por género y área del conocimiento", class = "button"),
                    actionButton("go_desglose_titulados", "Desglose titulación por área del conocimiento", class = "button"),
                    actionButton("go_cuidados_corresp", "Cuidados y corresponsabilidad", class = "button"),
-                   actionButton("go_lgbt", "LGBTIQA+", class = "button")
+                   actionButton("go_lgbt", "LGBTIQA+", class = "button"),
+                   actionButton("go_violencia", "Violencia de género", class = "button")
                )
              )
            )
@@ -129,39 +131,6 @@ ui <- navbarPage(
         includeMarkdown("www/presentacion.md")
       )
     )
-  ),
-  # Consideraciones metodológicas----
-  tabPanel("Consideraciones metodológicas",
-           fluidPage(
-             div(style = "background-color: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); color: #212529;",
-                 
-                 h2("Consideraciones metodológicas", 
-                    style = "color: #00A499; font-weight: bold;"),
-                 
-                 tags$hr(style = "border-top: 2px solid #00A499;"),
-                 
-                 p("Esta plataforma fue desarrollada para ofrecer una visualización clara y accesible de los indicadores de género en la comunidad universitaria USACH. 
-                   A continuación, se presentan algunas directrices y criterios metodológicos que orientaron la construcción de los gráficos incluidos:", 
-                   style = "font-size: 17px; line-height: 1.6;"),
-                 
-                 tags$ul(style = "font-size: 17px; padding-left: 20px; line-height: 1.6;",
-                         tags$li("No se graficaron datos sobre el puesto de rectoría y prorrectoría, ya que implican un (1) solo puesto."),
-                         tags$li("La información del gráfico de publicaciones académicas para el año 2024 considera el reporte al mes de agosto, por lo que no representa el total final."),
-                         tags$li("Los gráficos fueron elaborados utilizando herramientas interactivas, permitiendo mayor exploración por parte de la persona usuaria."),
-                         tags$li("Haciendo un click en una variable de interés, esta se retira de la visualización. Con doble click, esta se puede ver de forma aislada."),
-                         tags$li("Al pasar el cursor por el gráfico, se despliega un menú con diversas funciones en la parte superior. Una de estas ('compare data on hover') permite comparar los todos los puntos del gráfico. Esto es especialmente útil para aquellos gráficos de líneas donde se solapan los valores."),
-                         tags$li("Toda la información ha sido anonimizada y se presenta con fines exclusivamente analíticos.")
-                 ),
-                 
-                 br(),
-                 div(style = "background-color: #EA7600; color: white; padding: 15px; border-radius: 5px; font-size: 16px;",
-                     strong("Nota:"),
-                     span(" Esta plataforma se actualizará periódicamente. 
-                     Para mayor detalle sobre la metodología o los datos, contactar al Observatorio Género y Diversidad, unidad anclada a la Dirección de Género, Equidad y Diversidad de la USACH 
-                          (direccion.genero@usach.cl).")
-                 )
-             )
-           )
   ),
   # Estamento académico----
   tabPanel("Estamento académico",
@@ -186,7 +155,71 @@ ui <- navbarPage(
            fluidRow(
              column(6, plotlyOutput("p3")),
              column(6, plotlyOutput("p4")))
-))),
+           )
+          ),
+         fluidPage(
+           div(style = "background-color: #f0f0f0;
+              border-left: 6px solid #EA7600;
+              border-right: 6px solid #EA7600;
+              padding: 15px 20px;
+              margin-bottom: 20px;
+              border-radius: 8px;
+              font-size: 14px;
+              color: #333;
+              box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
+               tags$p(style = "font-weight: bold; font-size: 16px; margin-top: 0; margin-bottom: 10px; color: #000000;",
+                      "Notas metodológicas:"),
+               tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                      "(1) El recuento del estamento académico en esta pestaña está hecho en base al número de docentes (personas)"),
+               tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                      "(2) Se considera  en el recuento tanto al personal en calidad jurídica de planta o contrata como honorarios.")
+           )
+          )
+         ),
+  # Estamento académico----
+  tabPanel("Jornadas Completas Equivalentes",
+           div(
+             style = "background-color: #f0f0f0;
+                  border-left: 6px solid #00A499;
+                  border-right: 6px solid #00A499;
+                  padding: 15px 20px;
+                  margin-bottom: 20px;
+                  border-radius: 8px;
+                  font-size: 16px;
+                  color: #333;
+                  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
+             tags$p("En esta sección se muestra una caracterización del estamento académico por género y grado académico para el periodo 2018-2024."),
+             tags$p("Para ver datos y porcentajes en cada año del gráfico seleccionado, pase el cursor sobre el punto de interés."),
+             tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada.")
+           ),
+           fluidPage(
+             fluidRow(
+               column(6, plotlyOutput("p5")),
+               column(6, plotlyOutput("p6")),
+               fluidRow(
+                 column(6, plotlyOutput("p7")),
+                 column(6, plotlyOutput("p8")))
+             )
+           ),
+           fluidPage(
+             div(style = "background-color: #f0f0f0;
+              border-left: 6px solid #EA7600;
+              border-right: 6px solid #EA7600;
+              padding: 15px 20px;
+              margin-bottom: 20px;
+              border-radius: 8px;
+              font-size: 14px;
+              color: #333;
+              box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
+                 tags$p(style = "font-weight: bold; font-size: 16px; margin-top: 0; margin-bottom: 10px; color: #000000;",
+                        "Notas metodológicas:"),
+                 tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                        "(1) El recuento presentando en estos gráficos corresponde a las Jornadas Completas Equivalentes (JCE)."),
+                 tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                        "(2) Considera tanto el personal en calidad jurídica de planta, contrata y honorarios")
+             )
+           )
+  ),
   # Jerarquía académica----
   tabPanel("Jerarquía académica",
            fluidPage(
@@ -206,8 +239,68 @@ ui <- navbarPage(
              tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada.")
              ),
              fluidRow(
-               column(6, plotlyOutput("p5")),
-               column(6, plotlyOutput("p6"))
+               column(6, plotlyOutput("p9")),
+               column(6, plotlyOutput("p10"))
+             ),
+             fluidPage(
+               div(style = "background-color: #f0f0f0;
+              border-left: 6px solid #EA7600;
+              border-right: 6px solid #EA7600;
+              padding: 15px 20px;
+              margin-bottom: 20px;
+              border-radius: 8px;
+              font-size: 14px;
+              color: #333;
+              box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
+                   tags$p(style = "font-weight: bold; font-size: 16px; margin-top: 0; margin-bottom: 10px; color: #000000;",
+                          "Notas metodológicas:"),
+                   tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                          "(1) El recuento del estamento académicos por jerarquía considera el número de docentes (personas)."),
+                   tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                          "(2) Considera el personal en calidad jurídica de planta, contrata Y honorarios.")
+               )
+             )
+           )
+  ),
+  # Jerarquía académica por JCE----
+  tabPanel("Jerarquía académica JCE",
+           fluidPage(
+             div(
+               style = "background-color: #f0f0f0;
+                      border-left: 6px solid #00A499;
+                      border-right: 6px solid #00A499;
+                      padding: 15px 20px;
+                      margin-bottom: 20px;
+                      border-radius: 8px;
+                      font-size: 16px;
+                      color: #333;
+                      box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
+               tags$p("En esta sección se pueden visualizar las diferencias de jerarquía académica por género, considerando los distintos niveles de la carrera académica para el periodo 2018-2024."
+               ),
+               tags$p("Para ver datos y porcentajes en cada año del gráfico seleccionado, pase el cursor sobre el punto de interés."),
+               tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada.")
+             ),
+             fluidRow(
+               column(6, plotlyOutput("p11")),
+               column(6, plotlyOutput("p12"))
+             ),
+             fluidPage(
+               div(style = "background-color: #f0f0f0;
+              border-left: 6px solid #EA7600;
+              border-right: 6px solid #EA7600;
+              padding: 15px 20px;
+              margin-bottom: 20px;
+              border-radius: 8px;
+              font-size: 14px;
+              color: #333;
+              box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
+                   tags$p(style = "font-weight: bold; font-size: 16px; margin-top: 0; margin-bottom: 10px; color: #000000;",
+                          "Notas metodológicas:"),
+                   tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                          "(1) El recuento del estamento académico por jerarquía en esta pestaña considera las Jornadas Completas Equivalentes (JCE)."),
+                   tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                          "(2) Considera el personal en calidad jurídica de planta, contrata y honorarios.")
+               )
              )
            )
   ),
@@ -231,18 +324,41 @@ ui <- navbarPage(
              ),
              fluidRow(
                column(12, align = "center",
-                      div(style = "width: 50%;", plotlyOutput("p7"))),
-               fluidRow(column(6, plotlyOutput("p8")),
-                        column(6, plotlyOutput("p9"))),
-               fluidRow(column(6, plotlyOutput("p10")),
-                        column(6, plotlyOutput("p11"))),
+                      div(style = "width: 50%;", plotlyOutput("p13"))),
+               fluidRow(column(6, plotlyOutput("p14")),
+                        column(6, plotlyOutput("p15"))),
+               fluidRow(column(6, plotlyOutput("p16")),
+                        column(6, plotlyOutput("p_scielo"))
+               ),
                fluidRow(
                  column(12, align = "center",
-                        div(style = "width: 50%;", plotlyOutput("p12")))
+                        div(style = "width: 50%;", plotlyOutput("p17")))
                )
-             )
-           )
-  ),
+               ),
+             fluidPage(
+               div(style = "background-color: #f0f0f0;
+              border-left: 6px solid #EA7600;
+              border-right: 6px solid #EA7600;
+              padding: 15px 20px;
+              margin-bottom: 20px;
+              border-radius: 8px;
+              font-size: 14px;
+              color: #333;
+              box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
+                   tags$p(style = "font-weight: bold; font-size: 16px; margin-top: 0; margin-bottom: 10px; color: #000000;",
+                          "Notas metodológicas:"),
+                   tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                          "(1) Los gráficos presentados muestran  principalmente las diferencias por géneros basándose en autorías de un solo sexo. 
+                          Se añadió también una tercera línea que muestra las publicaciones con autorías de género mixto (al menos un hombre o una mujer en una misma publicación)."),
+                   tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                          "(2) Los gráficos 14, 15, 16 y 17 (N° de publicaciones por base de datos/directorio de indexación) considera publicaciones que pueden estar indexadas en más de una misma base de datos/directorio.
+                          Todas las publicaciones contabilizadas se encuentran indexadas en Scopus."),
+                   tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                          "(3) Para respetar la parsimonia visual, el gráfico 18 muestra las publicaciones por disciplina OECD. Al pasar el cursos sobre los puntos, se puede ver el desglose por género.")
+                   )
+                  )
+                 )
+           ),
   # Puestos directivos----
   tabPanel("Puestos directivos",
            fluidPage(
@@ -256,23 +372,40 @@ ui <- navbarPage(
                       font-size: 16px;
                       color: #333;
                       box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
-               tags$p("Visualización de la representación femenina en cargos directivos dentro de la universidad para el periodo 2018-2024."
-             ),
+               tags$p("Visualización de la representación femenina en cargos directivos dentro de la universidad para el periodo 2018-2024."),
              tags$p("Para ver datos y porcentajes en cada año del gráfico seleccionado, pase el cursor sobre el punto de interés."),
              tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada.")
              ),
              fluidRow(
-               column(6, plotlyOutput("p13")),
-               column(6, plotlyOutput("p14")),
+               column(6, plotlyOutput("p18")),
+               column(6, plotlyOutput("p19")),
                
              ),
              br(),
              fluidRow(
-               column(6, plotlyOutput("p15")),
-               column(6, plotlyOutput("p16"))
-             )
-           )
-  ),
+               column(6, plotlyOutput("p20")),
+               column(6, plotlyOutput("p21"))
+               )
+              ),
+           fluidPage(
+             div(style = "background-color: #f0f0f0;
+              border-left: 6px solid #EA7600;
+              border-right: 6px solid #EA7600;
+              padding: 15px 20px;
+              margin-bottom: 20px;
+              border-radius: 8px;
+              font-size: 14px;
+              color: #333;
+              box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
+                 tags$p(style = "font-weight: bold; font-size: 16px; margin-top: 0; margin-bottom: 10px; color: #000000;",
+                        "Notas metodológicas:"),
+                 tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                        "(1) Los datos presentados consideran hasta agosto de 2024."),
+                 tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                        "(2) No se graficó el puesto de rectoría ni prorrectoria porque es representado por una (1) sola persona.")
+                 )
+                )
+               ),
   # Matrícula de pregrado por género----
   tabPanel("Matrícula por género",
            fluidPage(
@@ -292,8 +425,8 @@ ui <- navbarPage(
              tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada.")
              ),
              fluidRow(
-               column(6, plotlyOutput("p17")),
-               column(6, plotlyOutput("p18"))
+               column(6, plotlyOutput("p22")),
+               column(6, plotlyOutput("p23"))
              ),
              br(),
              fluidRow(
@@ -304,10 +437,27 @@ ui <- navbarPage(
              ),
              fluidRow(
                column(12, align = "center",
-                      div(style = "width: 50%;", plotlyOutput("p19")))
-             )
-           )
-  ),
+                      div(style = "width: 50%;", plotlyOutput("p24"))
+                      )
+                     )
+                    ),
+           fluidPage(
+             div(style = "background-color: #f0f0f0;
+              border-left: 6px solid #EA7600;
+              border-right: 6px solid #EA7600;
+              padding: 15px 20px;
+              margin-bottom: 20px;
+              border-radius: 8px;
+              font-size: 14px;
+              color: #333;
+              box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
+                 tags$p(style = "font-weight: bold; font-size: 16px; margin-top: 0; margin-bottom: 10px; color: #000000;",
+                        "Notas metodológicas:"),
+                 tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                        "(1) Los números presentados en los gráficos consideran solamente planes regulares.")
+                 )
+                )
+               ),
   # Matrícula de pregrado por área de conocimiento----
   tabPanel("Matrícula por área del conocimiento",
            fluidPage(
@@ -327,8 +477,8 @@ ui <- navbarPage(
              tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada.")
              ),
              fluidRow(
-               column(6, plotlyOutput("p20")),
-               column(6, plotlyOutput("p21"))
+               column(6, plotlyOutput("p25")),
+               column(6, plotlyOutput("p26"))
              ),
              fluidRow(
                column(12, 
@@ -338,10 +488,28 @@ ui <- navbarPage(
              ),
              br(),
              fluidRow(
-               column(12, plotlyOutput("p22"))
-             )
-           )
-  ),
+               column(12, plotlyOutput("p27"))
+               )
+              ),
+           fluidPage(
+             div(style = "background-color: #f0f0f0;
+              border-left: 6px solid #EA7600;
+              border-right: 6px solid #EA7600;
+              padding: 15px 20px;
+              margin-bottom: 20px;
+              border-radius: 8px;
+              font-size: 14px;
+              color: #333;
+              box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
+                 tags$p(style = "font-weight: bold; font-size: 16px; margin-top: 0; margin-bottom: 10px; color: #000000;",
+                        "Notas metodológicas:"),
+                 tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                        "(1) Los números presentados en los gráficos consideran solamente planes regulares."),
+                 tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                        "(2) Se muestran, a su vez, las áreas de conocimiento genéricas que utiliza el MINEDUC.")
+                 )
+                )
+               ),
   # Titulación----
   tabPanel("Titulación por género y área del conocimiento",
            fluidPage(
@@ -361,11 +529,29 @@ ui <- navbarPage(
              tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada.")
              ),
              fluidRow(
-               column(6, plotlyOutput("p23")),
-               column(6, plotlyOutput("p24"))
-             )
-           )
-  ),
+               column(6, plotlyOutput("p28")),
+               column(6, plotlyOutput("p29"))
+               )
+              ),
+           fluidPage(
+             div(style = "background-color: #f0f0f0;
+              border-left: 6px solid #EA7600;
+              border-right: 6px solid #EA7600;
+              padding: 15px 20px;
+              margin-bottom: 20px;
+              border-radius: 8px;
+              font-size: 14px;
+              color: #333;
+              box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
+                 tags$p(style = "font-weight: bold; font-size: 16px; margin-top: 0; margin-bottom: 10px; color: #000000;",
+                        "Notas metodológicas:"),
+                 tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                        "(1) Los números presentados en los gráficos consideran solamente planes regulares."),
+                 tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                        "(2) Se muestran, a su vez, las áreas de conocimiento genéricas que utiliza el MINEDUC.")
+                 )
+                )
+               ),
   # Desglose titulación----
   tabPanel(
     "Desglose titulación por área del conocimiento",
@@ -386,28 +572,46 @@ ui <- navbarPage(
       tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada.")
       ),
     fluidRow(
-      column(6, plotlyOutput("p25")),
-      column(6, plotlyOutput("p26"))
+      column(6, plotlyOutput("p30")),
+      column(6, plotlyOutput("p31"))
     ),
     fluidRow(
-      column(6, plotlyOutput("p27")),
-      column(6, plotlyOutput("p28"))
+      column(6, plotlyOutput("p32")),
+      column(6, plotlyOutput("p33"))
     ),
     fluidRow(
-      column(6, plotlyOutput("p29")),
-      column(6, plotlyOutput("p30"))
+      column(6, plotlyOutput("p34")),
+      column(6, plotlyOutput("p35"))
     ),
     fluidRow(
-      column(6, plotlyOutput("p31")),
-      column(6, plotlyOutput("p32"))
+      column(6, plotlyOutput("p36")),
+      column(6, plotlyOutput("p37"))
     ),
     fluidRow(
       fluidRow(
         column(12, align = "center",
-               div(style = "width: 50%;", plotlyOutput("p33"))))
-    )
-  )
-  ),
+               div(style = "width: 50%;", plotlyOutput("p38"))))
+      )
+     ),
+    fluidPage(
+      div(style = "background-color: #f0f0f0;
+              border-left: 6px solid #EA7600;
+              border-right: 6px solid #EA7600;
+              padding: 15px 20px;
+              margin-bottom: 20px;
+              border-radius: 8px;
+              font-size: 14px;
+              color: #333;
+              box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
+          tags$p(style = "font-weight: bold; font-size: 16px; margin-top: 0; margin-bottom: 10px; color: #000000;",
+                 "Notas metodológicas:"),
+          tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                 "(1) Los números presentados en los gráficos consideran planes regulares."),
+          tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                 "(2) Se muestran, a su vez, las áreas de conocimiento genéricas que utiliza el MINEDUC.")
+      )
+     )
+    ),
   # Cuidados y corresponsabilidad----
   tabPanel("Cuidados y corresponsabilidad",
            fluidPage(
@@ -427,8 +631,8 @@ ui <- navbarPage(
            tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada.")
   ),
              fluidRow(
-               column(6, plotlyOutput("p34")),
-               column(6, plotlyOutput("p35")),
+               column(6, plotlyOutput("p39")),
+               column(6, plotlyOutput("p40")),
                fluidRow(
                  column(12, 
                         tags$hr(style = "border-top: 2px solid #00A499; margin: 30px 0;"),
@@ -437,24 +641,49 @@ ui <- navbarPage(
                ),
                
                fluidRow(
-                 column(6, plotlyOutput("p36")),
-                 column(6, plotlyOutput("p37")),
+                 column(6, plotlyOutput("p41")),
+                 column(6, plotlyOutput("p42")),
                  fluidRow(
                    column(12, 
                           tags$hr(style = "border-top: 2px solid #00A499; margin: 30px 0;"),
                           h4("Estrategias individuales de conciliación, efectos subjetivos y apoyos desde la comunidad", style = "text-align: center; color: #00A499; font-weight: bold;")
                ),
                fluidRow(
-                 column(6, plotlyOutput("p38")),
-                 column(6, plotlyOutput("p39")),
+                 column(6, plotlyOutput("p43")),
+                 column(6, plotlyOutput("p44")),
                  
                  fluidRow(
                    column(12, align = "center",
-                          div(style = "width: 50%;", plotlyOutput("p40")))
-             )
-           ))
-)))),
-# Cuidados y corresponsabilidad----
+                          div(style = "width: 50%;", plotlyOutput("p45"))
+                          )
+                         )
+                        )
+                       )
+                      )
+                     )
+                    ),
+  fluidPage(
+    div(style = "background-color: #f0f0f0;
+              border-left: 6px solid #EA7600;
+              border-right: 6px solid #EA7600;
+              padding: 15px 20px;
+              margin-bottom: 20px;
+              border-radius: 8px;
+              font-size: 14px;
+              color: #333;
+              box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
+        tags$p(style = "font-weight: bold; font-size: 16px; margin-top: 0; margin-bottom: 10px; color: #000000;",
+               "Notas metodológicas:"),
+        tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+               "(1) Los gráficos  están basados en los resultados de la Encuesta Cuidados y Corresponsabilidad en la Usach, realizada el año 2023."),
+        tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+               "(2) La muestra obtenida fue de 1.077 personas de todos los estamentos. Sin embargo, para la mayoría de los gráficos se considera la población de género femenino y masculino, con un recuento de 1.040 personas."),
+        tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+               "(3) Se realizaron pruebas estadísticas (Alpha de Cronbach) para medir confiabilidad de la batería de indicadores del instrumento y los datos constatan que los resultados son consistentes.")
+        )
+       )
+      ),
+# LGBTIQA+----
 tabPanel("LGBTIQA+",
          fluidPage(
            div(
@@ -472,10 +701,10 @@ tabPanel("LGBTIQA+",
            tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada.")
            ),
            fluidRow(
-             column(6, plotlyOutput("p41")),
-             column(6, plotlyOutput("p42")),
-             column(6, plotlyOutput("p43")),
-             column(6, plotlyOutput("p44")),
+             column(6, plotlyOutput("p46")),
+             column(6, plotlyOutput("p47")),
+             column(6, plotlyOutput("p48")),
+             column(6, plotlyOutput("p49")),
              fluidRow(
                column(12, 
                       tags$hr(style = "border-top: 2px solid #00A499; margin: 30px 0;"),
@@ -484,24 +713,24 @@ tabPanel("LGBTIQA+",
              ),
            ),
            fluidRow(
-             column(6, plotlyOutput("p45")),
-             column(6, plotlyOutput("p46"))
+             column(6, plotlyOutput("p50")),
+             column(6, plotlyOutput("p51"))
            ),
            fluidRow(
-             column(6, plotlyOutput("p47")),
-             column(6, plotlyOutput("p48"))
+             column(6, plotlyOutput("p52")),
+             column(6, plotlyOutput("p53"))
            ),
            fluidRow(
              column(12, 
                     tags$hr(style = "border-top: 2px solid #00A499; margin: 30px 0;"),
                     h4("Tipos de violencias experimentadas por la población LGBTIQA+, por orientación sexual", style = "text-align: center; color: #00A499; font-weight: bold;"),
            fluidRow(
-             column(6, plotlyOutput("p49")),
-             column(6, plotlyOutput("p50"))
+             column(6, plotlyOutput("p54")),
+             column(6, plotlyOutput("p55"))
            ),
            fluidRow(
-             column(6, plotlyOutput("p51")),
-             column(6, plotlyOutput("p52"))
+             column(6, plotlyOutput("p56")),
+             column(6, plotlyOutput("p57"))
            ),
            fluidRow(
              column(12, 
@@ -509,10 +738,175 @@ tabPanel("LGBTIQA+",
                     h4(style = "text-align: center; color: #00A499; font-weight: bold;"),
                     fluidRow(
                       column(12, align = "center",
-                             div(style = "width: 50%;", plotlyOutput("p53")))
+                             div(style = "width: 50%;", plotlyOutput("p58")))
            
-         ))))))))
+         ),
+         fluidRow(
+           column(12, 
+                  tags$hr(style = "border-top: 2px solid #00A499; margin: 30px 0;"),
+                  h4("Trayectoria de estudiantes trans y de género diverso: elementos de promoción de la igualdad", style = "text-align: center; color: #00A499; font-weight: bold;"),
+                  fluidRow(
+                    column(6, plotlyOutput("p59")),
+                    column(6, plotlyOutput("p60"))
+                    ),
+         fluidRow(
+           column(12, align = "center",
+                  div(style = "width: 50%;", plotlyOutput("p61"))
+                  )
+                 )
+                )
+               )
+              )
+             )
+            ),
+         fluidRow(
+           column(12,
+                  tags$hr(style = "border-top: 2px solid #00A499; margin: 30px 0;"),
+                  h4("Trayectoria de estudiantes trans y de género diverso: elementos de desigualdad", style = "text-align: center; color: #00A499; font-weight: bold;"),
+                  fluidRow(
+                    column(6, plotlyOutput("p62")),
+                    column(6, plotlyOutput("p63"))
+              )
+             )
+            ),
+         fluidRow(
+           column(12, 
+                  tags$hr(style = "border-top: 2px solid #00A499; margin: 30px 0;"),
+                  h4("Trayectoria de estudiantes trans y de género diverso: proceso de admisión", style = "text-align: center; color: #00A499; font-weight: bold;"),
+                  fluidRow(
+                    column(6, plotlyOutput("p64")),
+                    column(6, plotlyOutput("p65"))
+                  )
+           )
+          ),
+         fluidRow(
+           column(12, 
+                  tags$hr(style = "border-top: 2px solid #00A499; margin: 30px 0;"),
+                  h4("Trayectoria de estudiantes trans y de género diverso: reconocimiento de la diversidad", style = "text-align: center; color: #00A499; font-weight: bold;"),
+                  fluidRow(
+                    column(6, plotlyOutput("p66")),
+                    column(6, plotlyOutput("p67"))
+                  ),
+         fluidRow(
+         column(12, align = "center",
+                div(style = "width: 50%;", plotlyOutput("p68"))
+                )
+               )
+              )
+             )
+            )
+           ),
+         fluidPage(
+           div(style = "background-color: #f0f0f0;
+              border-left: 6px solid #EA7600;
+              border-right: 6px solid #EA7600;
+              padding: 15px 20px;
+              margin-bottom: 20px;
+              border-radius: 8px;
+              font-size: 14px;
+              color: #333;
+              box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
+               tags$p(style = "font-weight: bold; font-size: 16px; margin-top: 0; margin-bottom: 10px; color: #000000;",
+                      "Notas metodológicas:"),
+               tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                      "(1) Los gráficos presentados provienen de dos estudios: desde el Gráfico 46 al 58 forman parte del estudio sobre calidad de vida de la población LGBTIQA+ en la USACH del año 2023. 
+                      El resto de gráficos provienen del estudio 'Trayectorias de estudiantes trans y género diverso' del año 2022."),
+               tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                      "(2) La muestra obtenida del primer estudio fueron 962 personas, la cual contempla todos los estamentos de la universidad. Para el segundo, se obtuvo una muestra de 296 estudiantes."),
+               tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                      "(3) Se realizaron pruebas estadísticas (Alpha de Cronbach) para medir confiabilidad de la batería de indicadores del instrumento y los datos constatan que los resultados son consistentes.")
+               )
+              )
+             ),
+tabPanel("Diagnóstico violencia de género",
+         fluidPage(
+           div(
+             style = "background-color: #f0f0f0;
+                      border-left: 6px solid #00A499;
+                      border-right: 6px solid #00A499;
+                      padding: 15px 20px;
+                      margin-bottom: 20px;
+                      border-radius: 8px;
+                      font-size: 16px;
+                      color: #333;
+                      box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
+             tags$p("En esta sección se pueden ver distintos indicadores relativos al diagnóstico sobre violencia de género en la USACH."
+             ),tags$p("Para ver datos y porcentajes en cada año del gráfico seleccionado, pase el cursor sobre el punto de interés."),
+             tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada.")
+           ),
+          fluidRow(
+            column(6, plotlyOutput("p69")),
+            column(6, plotlyOutput("p70"))
+          ),
+          fluidRow(
+            column(6, plotlyOutput("p71")),
+            column(6, plotlyOutput("p72"))
+          ),
+          fluidRow(
+            column(12, align = "center",
+                   div(style = "width: 50%;", plotlyOutput("p73"))
+          )
+         ),
+         fluidRow(
+           column(12,
+                  tags$hr(style = "border-top: 2px solid #00A499; margin: 30px 0;"),
+                  h4("Lugares y espacios donde ocurre la violencia de género", style = "text-align: center; color: #00A499; font-weight: bold;"),
+                  fluidRow(
+                    column(12, align = "center",
+                    div(style = "width: 50%;", plotlyOutput("p74"))
+                    )
+                   )
+                  )
+                 ),
+         fluidRow(
+           column(12,
+                  tags$hr(style = "border-top: 2px solid #00A499; margin: 30px 0;"),
+                  h4("Percepciones: ¿Qué tipo de violencia ocurre en la USACH y cómo se da según género?", style = "text-align: center; color: #00A499; font-weight: bold;"),
+                  fluidRow(
+                    column(6, plotlyOutput("p75")),
+                    column(6, plotlyOutput("p76"))
+                  ),
+                  fluidRow(
+                    column(6, plotlyOutput("p77")),
+                    column(6, plotlyOutput("p78"))
+                  )
+                 )
+                ),
+         fluidRow(
+           column(12,
+                  tags$hr(style = "border-top: 2px solid #00A499; margin: 30px 0;"),
+                  h4("Consecuencias y expectativas de quienes viven violencia de género", style = "text-align: center; color: #00A499; font-weight: bold;"),
+                  fluidRow(
+                    column(6, plotlyOutput("p79")),
+                    column(6, plotlyOutput("p80"))
+                           )
+                          )
+                         )
+                        ),
+         fluidPage(
+           div(style = "background-color: #f0f0f0;
+              border-left: 6px solid #EA7600;
+              border-right: 6px solid #EA7600;
+              padding: 15px 20px;
+              margin-bottom: 20px;
+              border-radius: 8px;
+              font-size: 14px;
+              color: #333;
+              box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
+               tags$p(style = "font-weight: bold; font-size: 16px; margin-top: 0; margin-bottom: 10px; color: #000000;",
+                      "Notas metodológicas:"),
+               tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                      "(1) Los gráficos presentados provienen del diagnóstico sobre violencia de género en la USACH del año 2022."),
+               tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                      "(2) La muestra obtenida, que contempló todos los estamentos de la universidad, fue de 1810 personas."),
+               tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                      "(3) Se realizaron pruebas estadísticas (Alpha de Cronbach) para medir confiabilidad de la batería de indicadores del instrumento y los datos constatan que los resultados son consistentes.")
+               )
+              )
+             )
+            )
 
+                     
 # Server----
 
 server <- function(input, output, session) {
@@ -520,14 +914,17 @@ server <- function(input, output, session) {
   observeEvent(input$go_presentacion, {
   updateTabsetPanel(session, "tabs", selected = "Presentación")
 })
-  observeEvent(input$go_consideraciones, {
-    updateTabsetPanel(session, "tabs", selected = "Consideraciones metodológicas")
-  })
   observeEvent(input$go_academicos, {
     updateTabsetPanel(session, "tabs", selected = "Estamento académico")
   })
+  observeEvent(input$go_jce, {
+    updateTabsetPanel(session, "tabs", selected = "Jornadas Completas Equivalentes")
+  })
   observeEvent(input$go_jerarquia, {
     updateTabsetPanel(session, "tabs", selected = "Jerarquía académica")
+  })
+  observeEvent(input$go_jerarquia_jce, {
+    updateTabsetPanel(session, "tabs", selected = "Jerarquía académica JCE")
   })
   observeEvent(input$go_publicaciones, {
     updateTabsetPanel(session, "tabs", selected = "Publicaciones")
@@ -552,38 +949,63 @@ server <- function(input, output, session) {
     })
   observeEvent(input$go_lgbt, {
     updateTabsetPanel(session, "tabs", selected = "LGBTIQA+")
+    
+  })
+  observeEvent(input$go_violencia, {
+    updateTabsetPanel(session, "tabs", selected = "Diagnóstico violencia de género")
+    
   })
   
   # Plots----
+  # Pestaña Estamento académico----
   output$p1 <- renderPlotly({ p1 })
   output$p2 <- renderPlotly({ p2 })
   output$p3 <- renderPlotly({ p3 })
   output$p4 <- renderPlotly({ p4 })
+  
+  # Pestaña JCE----
   output$p5 <- renderPlotly({ p5 })
   output$p6 <- renderPlotly({ p6 })
   output$p7 <- renderPlotly({ p7 })
   output$p8 <- renderPlotly({ p8 })
+  
+  # Pestaña Jerarquía académica----
   output$p9 <- renderPlotly({ p9 })
   output$p10 <- renderPlotly({ p10 })
+  
+  # Pestaña Jerarquía académica JCE----
   output$p11 <- renderPlotly({ p11 })
   output$p12 <- renderPlotly({ p12 })
+  
+  # Pestaña Publicaciones----
   output$p13 <- renderPlotly({ p13 })
   output$p14 <- renderPlotly({ p14 })
   output$p15 <- renderPlotly({ p15 })
   output$p16 <- renderPlotly({ p16 })
   output$p17 <- renderPlotly({ p17 })
+  output$p_scielo <- renderPlotly({ p_scielo })
+  
+  # Pestaña Puestos directivos----
   output$p18 <- renderPlotly({ p18 })
   output$p19 <- renderPlotly({ p19 })
   output$p20 <- renderPlotly({ p20 })
   output$p21 <- renderPlotly({ p21 })
+  
+  # Pestaña Matrícula por género-----
   output$p22 <- renderPlotly({ p22 })
   output$p23 <- renderPlotly({ p23 })
   output$p24 <- renderPlotly({ p24 })
+  
+  # Pestaña Matrícula por género y área del conocimiento----
   output$p25 <- renderPlotly({ p25 })
   output$p26 <- renderPlotly({ p26 })
   output$p27 <- renderPlotly({ p27 })
+  
+  # Pestaña Titulación por género y área del conocimiento----
   output$p28 <- renderPlotly({ p28 })
   output$p29 <- renderPlotly({ p29 })
+  
+  # Pestaña Desglose titulación----
   output$p30 <- renderPlotly({ p30 })
   output$p31 <- renderPlotly({ p31 })
   output$p32 <- renderPlotly({ p32 })
@@ -593,6 +1015,8 @@ server <- function(input, output, session) {
   output$p36 <- renderPlotly({ p36 })
   output$p37 <- renderPlotly({ p37 })
   output$p38 <- renderPlotly({ p38 })
+  
+  # Pestaña Cuidados y Corresponsabilidad----
   output$p39 <- renderPlotly({ p39 })
   output$p40 <- renderPlotly({ p40 })
   output$p41 <- renderPlotly({ p41 })
@@ -600,6 +1024,8 @@ server <- function(input, output, session) {
   output$p43 <- renderPlotly({ p43 })
   output$p44 <- renderPlotly({ p44 })
   output$p45 <- renderPlotly({ p45 })
+  
+  # Pestaña LGBTIQA+----
   output$p46 <- renderPlotly({ p46 })
   output$p47 <- renderPlotly({ p47 })
   output$p48 <- renderPlotly({ p48 })
@@ -608,6 +1034,35 @@ server <- function(input, output, session) {
   output$p51 <- renderPlotly({ p51 })
   output$p52 <- renderPlotly({ p52 })
   output$p53 <- renderPlotly({ p53 })
+  output$p54 <- renderPlotly({ p54 })
+  output$p55 <- renderPlotly({ p55 })
+  output$p56 <- renderPlotly({ p56 })
+  output$p57 <- renderPlotly({ p57 })
+  output$p58 <- renderPlotly({ p58 })
+  output$p59 <- renderPlotly({ p59 })
+  output$p60 <- renderPlotly({ p60 })
+  output$p61 <- renderPlotly({ p61 })
+  output$p62 <- renderPlotly({ p62 })
+  output$p63 <- renderPlotly({ p63 })
+  output$p64 <- renderPlotly({ p64 })
+  output$p65 <- renderPlotly({ p65 })
+  output$p66 <- renderPlotly({ p66 })
+  output$p67 <- renderPlotly({ p67 })
+  output$p68 <- renderPlotly({ p68 })
+  
+  # Pestaña Violencia de género----
+  output$p69 <- renderPlotly({ p69 })
+  output$p70 <- renderPlotly({ p70 })
+  output$p71 <- renderPlotly({ p71 })
+  output$p72 <- renderPlotly({ p72 })
+  output$p73 <- renderPlotly({ p73 })
+  output$p74 <- renderPlotly({ p74 })
+  output$p75 <- renderPlotly({ p75 })
+  output$p76 <- renderPlotly({ p76 })
+  output$p77 <- renderPlotly({ p77 })
+  output$p78 <- renderPlotly({ p78 })
+  output$p79 <- renderPlotly({ p79 })
+  output$p80 <- renderPlotly({ p80 })
 }
 
 shinyApp(ui, server)
