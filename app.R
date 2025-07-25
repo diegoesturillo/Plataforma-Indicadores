@@ -628,7 +628,11 @@ ui <- navbarPage(
                tags$p("En esta sección se puede ver la distribución de cuidados de niñas, niños y adolescentes (NNA) y personas adultas con dependencia funcional en la comunidad universitaria."
              ),
            tags$p("Para ver datos y porcentajes en cada año del gráfico seleccionado, pase el cursor sobre el punto de interés."),
-           tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada.")
+           tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada."),
+           tags$p("Para más detalles de los resultados correspondientes a estos estudios, revisar la página web de la",
+           tags$a("Dirección de Género, Equidad y Diversidad", href = "https://direcciondegenero.usach.cl/documentos-0)",
+                  target = "_blank")
+           ),
   ),
              fluidRow(
                column(6, plotlyOutput("p39")),
@@ -698,7 +702,11 @@ tabPanel("LGBTIQA+",
                       box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
              tags$p("En esta sección se pueden ver distintos indicadores relativos a la experiencia de vida de la comunidad LGBTQIA+ en la universidad."
            ),tags$p("Para ver datos y porcentajes en cada año del gráfico seleccionado, pase el cursor sobre el punto de interés."),
-           tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada.")
+           tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada."),
+           tags$p("Para más detalles de los resultados correspondientes a estos estudios, revisar la página web de la",
+                  tags$a("Dirección de Género, Equidad y Diversidad", href = "https://direcciondegenero.usach.cl/documentos-0)",
+                         target = "_blank")
+           ),
            ),
            fluidRow(
              column(6, plotlyOutput("p46")),
@@ -832,7 +840,11 @@ tabPanel("Diagnóstico violencia de género",
                       box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
              tags$p("En esta sección se pueden ver distintos indicadores relativos al diagnóstico sobre violencia de género en la USACH."
              ),tags$p("Para ver datos y porcentajes en cada año del gráfico seleccionado, pase el cursor sobre el punto de interés."),
-             tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada.")
+             tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada."),
+             tags$p("Para más detalles de los resultados correspondientes a estos estudios, revisar la página web de la",
+                    tags$a("Dirección de Género, Equidad y Diversidad", href = "https://direcciondegenero.usach.cl/documentos-0)",
+                           target = "_blank")
+             ),
            ),
           fluidRow(
             column(6, plotlyOutput("p69")),
