@@ -28,15 +28,15 @@ Para la visualización se ha utilizado el paquete de desarrollo para aplicacione
 
 La plataforma cuenta con un total de 8 dimensiones y 80 indicadores:
 
--   Las dimensiones abordan la distribución del cuerpo académico y su jeraquización según género y grado (1); publicaciones en revistas indexadas por género y áreas del conocimiento (2); Distribución de los puestos directivos por género (3);
-    Matrícula total y de 1er año de pregrado en la USACH por género y áreas del conocimiento, así como la tasa de retención de 1er año por género y área del conocimiento (4); Titulación por género y área del conocimiento (5); Cuidados y corresponsabilidad en la USACH (6);
+-   Las dimensiones abordan la distribución del cuerpo académico y su jeraquización según sexo/género y grado (1); publicaciones en revistas indexadas por sexo/género y áreas del conocimiento (2); Distribución de los puestos directivos por sexo/género (3);
+    Matrícula total y de 1er año de pregrado en la USACH por sexo/género y áreas del conocimiento, así como la tasa de retención de 1er año por sexo/género y área del conocimiento (4); Titulación por sexo/género y área del conocimiento (5); Cuidados y corresponsabilidad en la USACH (6);
     Calidad de vida y violencias de género en personas LGBTIQA+ en la USACH (7); Violencias de género en la USACH (8).
     
 La batería de indicadores cuenta con las siguientes características:
 
 -   Indicadores cuantitativos elaborados a partir de información estadística.
 -   Indicadores cualitativos elaborados a partir de estudios sobre género, diversidad, violencia y derechos humanos en la universidad.
--   Desagregados por género, para analizar la situación de hombres y mujeres desde una perspectiva comparada y promover la focalización de políticas universitarias y estrategias que promuevan la igualdad sustantiva.
+-   Desagregados por sexo/género, para analizar la situación de hombres y mujeres desde una perspectiva comparada y promover la focalización de políticas universitarias y estrategias que promuevan la igualdad sustantiva.
 -   Interactivos, para apoyar la toma de decisiones en diversos ámbitos de interés de nuestra institución y desde diversas unidades (académicas y de gobierno central).
 -   Se concentran en el período 2018-2024, con el propósito de mirar los avances y desafíos que tenemos como institución.
 -   Para los datos de matrícula en la USACH, se cuenta con información actualizada al mes de julio del año 2025. 
