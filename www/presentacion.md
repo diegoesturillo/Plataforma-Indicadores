@@ -26,7 +26,7 @@ Los indicadores han sido elaborados en base a diversas fuentes nacionales, insti
 Los indicadores acá presentados han sido analizados mediante técnicas descriptivas uni y bivariadas, utilizando el software de análisis estadístico RStudio (versión 2025.5).
 Para la visualización se ha utilizado el paquete de desarrollo para aplicaciones web interactivas Shiny (versión 1.10) y el paquete para gráficos interactivos Plotly (versión 4.10.4) y Plotly.js (versión 2.11.1).
 
-La plataforma cuenta con un total de 8 dimensiones y 80 indicadores:
+La plataforma cuenta con un total de 8 dimensiones y 81 indicadores:
 
 -   Las dimensiones abordan la distribución del cuerpo académico y su jeraquización según sexo/género y grado (1); publicaciones en revistas indexadas por sexo/género y áreas del conocimiento (2); Distribución de los puestos directivos por sexo/género (3);
     Matrícula total y de 1er año de pregrado en la USACH por sexo/género y áreas del conocimiento, así como la tasa de retención de 1er año por sexo/género y área del conocimiento (4); Titulación por sexo/género y área del conocimiento (5); Cuidados y corresponsabilidad en la USACH (6);
