@@ -1,6 +1,6 @@
 # Preparación plataforma de visualización indicadores de género USACH 2018-2024
 # Cargar paquetes
-pacman::p_load(here, ggrepel, markdown, plotly, RColorBrewer, readxl, scales, shiny, shinythemes, tidyverse)
+pacman::p_load(fontawesome, here, ggrepel, markdown, plotly, RColorBrewer, readxl, scales, shiny, shinythemes, tidyverse)
 
 source("02-proc/graficos_plotly_app.R")
 
@@ -101,8 +101,8 @@ ui <- navbarPage(
                br(),
                div(class = "button-group",
                    actionButton("go_presentacion", "Presentación", class = "button"),
-                   actionButton("go_academicos", "Estamento académico", class = "button"),
-                   actionButton("go_jce", "Jornadas Completas Equivalentes", class = "button"),
+                   actionButton("go_academicos", "Estamento académico y docente", class = "button"),
+                   actionButton("go_jce", "Jornadas Completas Equivalentes (JCE)", class = "button"),
                    actionButton("go_jerarquia", "Jerarquía académica", class = "button"),
                    actionButton("go_jerarquia_jce", "Jerarquía académica JCE", class = "button"),
                    actionButton("go_publicaciones", "Publicaciones", class = "button"),
@@ -113,11 +113,15 @@ ui <- navbarPage(
                    actionButton("go_desglose_titulados", "Desglose titulación por área del conocimiento", class = "button"),
                    actionButton("go_cuidados_corresp", "Cuidados y corresponsabilidad", class = "button"),
                    actionButton("go_lgbt", "LGBTIQA+", class = "button"),
-                   actionButton("go_violencia", "Violencia de género", class = "button")
-               )
-             )
-           )
-  ),
+                   actionButton("go_violencia", "Diagnóstico violencia de género", class = "button"),
+                   div(style = "text-align: center; margin-top: 30px; color: #FFF; font-size: 0.9em;",
+                       fa("sync", fill = "#FFF"),  
+                       span(paste("Última actualización:", format(Sys.Date(), "%d de %b de %Y")))
+                   )
+                  )
+                 )
+                )
+               ),
   # Presentación----
   tabPanel(
     "Presentación",
@@ -132,8 +136,8 @@ ui <- navbarPage(
       )
     )
   ),
-  # Estamento académico----
-  tabPanel("Estamento académico",
+  # Estamento académico y docente----
+  tabPanel("Estamento académico y docente",
            div(
              style = "background-color: #f0f0f0;
                   border-left: 6px solid #00A499;
@@ -144,7 +148,7 @@ ui <- navbarPage(
                   font-size: 16px;
                   color: #333;
                   box-shadow: 2px 2px 8px rgba(0,0,0,0.1);",
-             tags$p("En esta sección se muestra una caracterización del estamento académico por género y grado académico para el periodo 2018-2024."),
+             tags$p("En esta sección se muestra una caracterización del estamento académico y docente por género y grado académico para el periodo 2018-2024."),
              tags$p("Para ver datos y porcentajes en cada año del gráfico seleccionado, pase el cursor sobre el punto de interés."),
              tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada.")
            ),
@@ -170,14 +174,17 @@ ui <- navbarPage(
                tags$p(style = "font-weight: bold; font-size: 16px; margin-top: 0; margin-bottom: 10px; color: #000000;",
                       "Notas metodológicas:"),
                tags$p(style = "margin-top: 0; margin-bottom: 0;", 
-                      "(1) El recuento del estamento académico en esta pestaña está hecho en base al número de docentes (personas)"),
+                      "(1) El estamento académico y docente está compuesto por todas aquellas personas que realicen docencia, 
+                      independiente de su situación contractual (planta/contrata u honorarios) y jerarquización, por lo que contempla académicos y profesoras por hora de clase. Se excluyen ayudantes en situación becarial."),
                tags$p(style = "margin-top: 0; margin-bottom: 0;", 
-                      "(2) Se considera  en el recuento tanto al personal en calidad jurídica de planta o contrata como honorarios.")
+                      "(2) El recuento del estamento académico y docente en esta pestaña está hecho en base al número de docentes (cantidad de personas)"),
+               tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                      "(3) A su vez, se considera  en el recuento tanto al personal en calidad jurídica de planta o contrata como honorarios.")
            )
           )
          ),
-  # Estamento académico----
-  tabPanel("Jornadas Completas Equivalentes",
+  # Estamento académico por JCE----
+  tabPanel("Jornadas Completas Equivalentes (JCE)",
            div(
              style = "background-color: #f0f0f0;
                   border-left: 6px solid #00A499;
@@ -214,9 +221,13 @@ ui <- navbarPage(
                  tags$p(style = "font-weight: bold; font-size: 16px; margin-top: 0; margin-bottom: 10px; color: #000000;",
                         "Notas metodológicas:"),
                  tags$p(style = "margin-top: 0; margin-bottom: 0;", 
-                        "(1) El recuento presentando en estos gráficos corresponde a las Jornadas Completas Equivalentes (JCE)."),
+                        "(1) De acuerdo con la Subsecretaría de Educación Superior (SES, 2024), las Jornadas Completas Equivalentes (JCE) 
+                        son una unidad de comparación de la dedicación horaria del personal académico (y docente), que se obtiene al dividir el número total de horas por las que está contratada/o
+                        una o un académica/o en una institución de educación superior (IES) por 44, donde esta última cifra corresponde o se asimila a una jornada de trabajo completa normal"),
                  tags$p(style = "margin-top: 0; margin-bottom: 0;", 
-                        "(2) Considera tanto el personal en calidad jurídica de planta, contrata y honorarios")
+                        "(2) El recuento presentando en estos gráficos corresponde a las Jornadas Completas Equivalentes (JCE)."),
+                 tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                        "(3) A su vez, se considera  en el recuento tanto al personal en calidad jurídica de planta o contrata como honorarios.")
              )
            )
   ),
@@ -255,9 +266,11 @@ ui <- navbarPage(
                    tags$p(style = "font-weight: bold; font-size: 16px; margin-top: 0; margin-bottom: 10px; color: #000000;",
                           "Notas metodológicas:"),
                    tags$p(style = "margin-top: 0; margin-bottom: 0;", 
-                          "(1) El recuento del estamento académicos por jerarquía considera el número de docentes (personas)."),
+                          "(1) El recuento del estamento académico y docente por jerarquía en esta pestaña considera el número de docentes ( cantidad de personas)."),
                    tags$p(style = "margin-top: 0; margin-bottom: 0;", 
-                          "(2) Considera el personal en calidad jurídica de planta, contrata Y honorarios.")
+                          "(2) Considerar que las jerarquías titular, asociado/a, asistente e instructor/a aplican solamente para el cuerpo académico regular y no para el profesorado por hora."),
+                   tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                          "(3) A su vez, se considera  en el recuento tanto al personal en calidad jurídica de planta o contrata como honorarios.")
                )
              )
            )
@@ -297,9 +310,9 @@ ui <- navbarPage(
                    tags$p(style = "font-weight: bold; font-size: 16px; margin-top: 0; margin-bottom: 10px; color: #000000;",
                           "Notas metodológicas:"),
                    tags$p(style = "margin-top: 0; margin-bottom: 0;", 
-                          "(1) El recuento del estamento académico por jerarquía en esta pestaña considera las Jornadas Completas Equivalentes (JCE)."),
+                          "(1) El recuento del estamento académico y docente por jerarquía en esta pestaña considera las Jornadas Completas Equivalentes (JCE)."),
                    tags$p(style = "margin-top: 0; margin-bottom: 0;", 
-                          "(2) Considera el personal en calidad jurídica de planta, contrata y honorarios.")
+                          "(2) A su vez, se considera  en el recuento tanto al personal en calidad jurídica de planta o contrata como honorarios.")
                )
              )
            )
@@ -348,13 +361,15 @@ ui <- navbarPage(
                    tags$p(style = "font-weight: bold; font-size: 16px; margin-top: 0; margin-bottom: 10px; color: #000000;",
                           "Notas metodológicas:"),
                    tags$p(style = "margin-top: 0; margin-bottom: 0;", 
-                          "(1) Los gráficos presentados muestran  principalmente las diferencias por géneros basándose en autorías de un solo sexo. 
-                          Se añadió también una tercera línea que muestra las publicaciones con autorías de género mixto (al menos un hombre o una mujer en una misma publicación)."),
+                          "(1) Para contabilizar las publicaciones, se agruparon y consolidaron los id's de publicación en función del año y género para las autorías, lo que entrega la cantidad de publicaciones únicas."),
                    tags$p(style = "margin-top: 0; margin-bottom: 0;", 
-                          "(2) Los gráficos 14, 15, 16 y 17 (N° de publicaciones por base de datos/directorio de indexación) considera publicaciones que pueden estar indexadas en más de una misma base de datos/directorio.
-                          Todas las publicaciones contabilizadas se encuentran indexadas en Scopus."),
+                          "(2) Los gráficos presentados muestran  principalmente las diferencias por géneros basándose en autorías de un solo sexo. 
+                          Se añadió también una tercera línea que muestra las publicaciones con autorías de género mixto (al menos un hombre o una mujer como autor/a de una publicación)."),
                    tags$p(style = "margin-top: 0; margin-bottom: 0;", 
-                          "(3) Para respetar la parsimonia visual, el gráfico 18 muestra las publicaciones por disciplina OECD. Al pasar el cursos sobre los puntos, se puede ver el desglose por género.")
+                          "(3) Los gráficos 14, 15, 16 y 17 (N° de publicaciones por base de datos/directorio de indexación) considera publicaciones que pueden estar indexadas en más de una misma base de datos/directorio.
+                          Es por esto que no se consideran estrictamente publicaciones únicas."),
+                   tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                          "(4) Para respetar la parsimonia visual, el gráfico 18 muestra las publicaciones por disciplina OECD. Al pasar el cursos sobre los puntos, se puede ver el desglose por género.")
                    )
                   )
                  )
@@ -400,9 +415,13 @@ ui <- navbarPage(
                  tags$p(style = "font-weight: bold; font-size: 16px; margin-top: 0; margin-bottom: 10px; color: #000000;",
                         "Notas metodológicas:"),
                  tags$p(style = "margin-top: 0; margin-bottom: 0;", 
-                        "(1) Los datos presentados consideran hasta agosto de 2024."),
+                        "(1) Los datos presentados consideran hasta agosto de 2024. Para los vicedecanatos se cuenta con información desde el año 2021."),
                  tags$p(style = "margin-top: 0; margin-bottom: 0;", 
-                        "(2) No se graficó el puesto de rectoría ni prorrectoria porque es representado por una (1) sola persona.")
+                        "(2) Cabe mencionarse que han habido cambios en la estructura orgánica de la Universidad, por que lo ha ido variando la cantidad de puestos requeridos."),
+                 tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                        "(3) No se graficó el puesto de rectoría ni prorrectoria porque es representado por una (1) sola persona."),
+                 tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                        "(4) Los puestos de direcciones y jefaturas competen puestos tanto académicos como administrativos.")
                  )
                 )
                ),
@@ -454,7 +473,14 @@ ui <- navbarPage(
                  tags$p(style = "font-weight: bold; font-size: 16px; margin-top: 0; margin-bottom: 10px; color: #000000;",
                         "Notas metodológicas:"),
                  tags$p(style = "margin-top: 0; margin-bottom: 0;", 
-                        "(1) Los números presentados en los gráficos consideran solamente planes regulares.")
+                        "(1) Los números presentados en los gráficos consideran solamente planes regulares."),
+                 tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                        "(2) Para el gráfico 24 se cuenta con información hasta el año 2023."),
+                 tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                        "(3) La tasa de retención de 1er año se entiende, según el MINEDUC (2023), como 
+                        el porcentaje de estudiantes que estando matriculadas/os en la carrera respectiva el año de referencia 
+                        como estudiantes de primer año, se mantiene en la misma institución y en la misma generación o cohorte de origen.
+                        La ecuación sería: (Número de estudiantes de la cohorte 'n' matriculados como alumnos regulares en el año 'n+1/Número total de estudiantes de la cohorte 'n')* 100.")
                  )
                 )
                ),
@@ -506,7 +532,15 @@ ui <- navbarPage(
                  tags$p(style = "margin-top: 0; margin-bottom: 0;", 
                         "(1) Los números presentados en los gráficos consideran solamente planes regulares."),
                  tags$p(style = "margin-top: 0; margin-bottom: 0;", 
-                        "(2) Se muestran, a su vez, las áreas de conocimiento genéricas que utiliza el MINEDUC.")
+                        "(2) Para facilitar la visualización, se muestran en los gráficos las áreas de conocimiento genéricas que utiliza el MINEDUC.
+                        Sin embargo, dentro de la misma base de datos de matrícula se integran columnas aparte con la clasificación por áreas y sub-áreas CINE-F 1997 y 2013 de la UNESCO."),
+                 tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                        "(3) La tasa de retención de 1er año se entiende, según el MINEDUC (2023), como 
+                        el porcentaje de estudiantes que estando matriculadas/os en la carrera respectiva el año de referencia 
+                        como estudiantes de primer año, se mantiene en la misma institución y en la misma generación o cohorte de origen.
+                        La ecuación sería: (Número de estudiantes de la cohorte 'n' matriculados como alumnos regulares en el año 'n+1/Número total de estudiantes de la cohorte 'n')* 100."),
+                 tags$p(style = "margin-top: 0; margin-bottom: 0;", 
+                        "(4) Para el gráfico 27 se cuenta con información hasta el año 2023. Para el caso de la tasa de retención para Derecho (área de conocimiento y carrera en sí misma), al ser un programa relativamente nuevo, se tienen datos desde el año 2019.")
                  )
                 )
                ),
@@ -546,9 +580,12 @@ ui <- navbarPage(
                  tags$p(style = "font-weight: bold; font-size: 16px; margin-top: 0; margin-bottom: 10px; color: #000000;",
                         "Notas metodológicas:"),
                  tags$p(style = "margin-top: 0; margin-bottom: 0;", 
-                        "(1) Los números presentados en los gráficos consideran solamente planes regulares."),
+                        "(1) Los números presentados en los gráficos consideran solamente planes regulares.
+                        A su vez, refiere al término de planes comunes/bachilleratos o ciclos iniciales, licenciaturas no conducentes a título profesional,
+                        profesionales con y sin licenciatura y técnicos de nivel superior."),
                  tags$p(style = "margin-top: 0; margin-bottom: 0;", 
-                        "(2) Se muestran, a su vez, las áreas de conocimiento genéricas que utiliza el MINEDUC.")
+                        "(2) Se priorizó la visualización por áreas de conocimiento génericas que utiliza el MINEDUC.
+                        Sin embargo, dentro de la misma base de datos de matrícula se integran columnas aparte con la clasificación por áreas y sub-áreas CINE-F 1997 y 2013 de la UNESCO.")
                  )
                 )
                ),
@@ -608,7 +645,8 @@ ui <- navbarPage(
           tags$p(style = "margin-top: 0; margin-bottom: 0;", 
                  "(1) Los números presentados en los gráficos consideran planes regulares."),
           tags$p(style = "margin-top: 0; margin-bottom: 0;", 
-                 "(2) Se muestran, a su vez, las áreas de conocimiento genéricas que utiliza el MINEDUC.")
+                 "(2) Se priorizó la visualización por áreas de conocimiento génericas que utiliza el MINEDUC.
+                        Sin embargo, dentro de la misma base de datos de matrícula se integran columnas aparte con la clasificación por áreas y sub-áreas CINE-F 1997 y 2013 de la UNESCO.")
       )
      )
     ),
@@ -630,7 +668,7 @@ ui <- navbarPage(
            tags$p("Para ver datos y porcentajes en cada año del gráfico seleccionado, pase el cursor sobre el punto de interés."),
            tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada."),
            tags$p("Para más detalles de los resultados correspondientes a estos estudios, revisar la página web de la",
-           tags$a("Dirección de Género, Equidad y Diversidad", href = "https://direcciondegenero.usach.cl/documentos-0)",
+           tags$a("Dirección de Género, Equidad y Diversidad", href = "https://direcciondegenero.usach.cl/documentos-0",
                   target = "_blank")
            ),
   ),
@@ -704,7 +742,7 @@ tabPanel("LGBTIQA+",
            ),tags$p("Para ver datos y porcentajes en cada año del gráfico seleccionado, pase el cursor sobre el punto de interés."),
            tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada."),
            tags$p("Para más detalles de los resultados correspondientes a estos estudios, revisar la página web de la",
-                  tags$a("Dirección de Género, Equidad y Diversidad", href = "https://direcciondegenero.usach.cl/documentos-0)",
+                  tags$a("Dirección de Género, Equidad y Diversidad", href = "https://direcciondegenero.usach.cl/documentos-0",
                          target = "_blank")
            ),
            ),
@@ -752,7 +790,7 @@ tabPanel("LGBTIQA+",
          fluidRow(
            column(12, 
                   tags$hr(style = "border-top: 2px solid #00A499; margin: 30px 0;"),
-                  h4("Trayectoria de estudiantes trans y de género diverso: elementos de promoción de la igualdad", style = "text-align: center; color: #00A499; font-weight: bold;"),
+                  h4("Estudio Diálogos diversos. Trayectorias de estudiantes trans y de género diverso.", style = "text-align: center; color: #00A499; font-weight: bold;"),
                   fluidRow(
                     column(6, plotlyOutput("p59")),
                     column(6, plotlyOutput("p60"))
@@ -820,12 +858,14 @@ tabPanel("LGBTIQA+",
                       "(1) Los gráficos presentados provienen de dos estudios: desde el Gráfico 46 al 58 forman parte del estudio sobre calidad de vida de la población LGBTIQA+ en la USACH del año 2023. 
                       El resto de gráficos provienen del estudio 'Trayectorias de estudiantes trans y género diverso' del año 2022."),
                tags$p(style = "margin-top: 0; margin-bottom: 0;", 
-                      "(2) La muestra obtenida del primer estudio fueron 962 personas, la cual contempla todos los estamentos de la universidad. Para el segundo, se obtuvo una muestra de 296 estudiantes."),
+                      "(2) La muestra obtenida del primer estudio fueron 962 personas, la cual contempla todos los estamentos de la universidad. Para el estudio de trayectorias de estudiantes trans y de género diverso, se obtuvo una muestra de 296 estudiantes.
+                      Para ambos estudios contestan personas que se identifican como parte de la comunidad LGBTIQA+"),
                tags$p(style = "margin-top: 0; margin-bottom: 0;", 
                       "(3) Se realizaron pruebas estadísticas (Alpha de Cronbach) para medir confiabilidad de la batería de indicadores del instrumento y los datos constatan que los resultados son consistentes.")
                )
               )
              ),
+# Diagnóstico violencia de género----
 tabPanel("Diagnóstico violencia de género",
          fluidPage(
            div(
@@ -842,7 +882,7 @@ tabPanel("Diagnóstico violencia de género",
              ),tags$p("Para ver datos y porcentajes en cada año del gráfico seleccionado, pase el cursor sobre el punto de interés."),
              tags$p("Además, como los gráficos son interactivos, puede activar y desactivar variables en las leyendas haciendo doble click en la variable de interés para mirarla de forma aislada."),
              tags$p("Para más detalles de los resultados correspondientes a estos estudios, revisar la página web de la",
-                    tags$a("Dirección de Género, Equidad y Diversidad", href = "https://direcciondegenero.usach.cl/documentos-0)",
+                    tags$a("Dirección de Género, Equidad y Diversidad", href = "https://direcciondegenero.usach.cl/documentos-0",
                            target = "_blank")
              ),
            ),
@@ -927,10 +967,10 @@ server <- function(input, output, session) {
   updateTabsetPanel(session, "tabs", selected = "Presentación")
 })
   observeEvent(input$go_academicos, {
-    updateTabsetPanel(session, "tabs", selected = "Estamento académico")
+    updateTabsetPanel(session, "tabs", selected = "Estamento académico y docente")
   })
   observeEvent(input$go_jce, {
-    updateTabsetPanel(session, "tabs", selected = "Jornadas Completas Equivalentes")
+    updateTabsetPanel(session, "tabs", selected = "Jornadas Completas Equivalentes (JCE)")
   })
   observeEvent(input$go_jerarquia, {
     updateTabsetPanel(session, "tabs", selected = "Jerarquía académica")
